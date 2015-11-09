@@ -9,7 +9,6 @@ public class Team
     String teamName;
     private ArrayList<Match> teamMatches;
 
-    
     public Team(int id, String name)
     {
         teamID = id;
@@ -26,7 +25,7 @@ public class Team
     {
         return teamID;
     }
-    
+
     public int getAvgScoreAtCompetition(int compID)
     {
         double avgScore = 0.0;
