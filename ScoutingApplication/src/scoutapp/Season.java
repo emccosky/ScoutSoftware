@@ -21,8 +21,17 @@ public class Season
         competitions.add(comp);
     }
 
-    public void addMatch()
+    public void addTeam(Team team)
     {
-        
+        teams.add(team);
+    }
+    
+    public void addMatch(Match match)
+    {
+        for(Competition comp : competitions)
+        {
+            if(comp.getCompetitionID() == match.getMatchCompetitionID())
+                comp.addMatch(match);
+        }
     }
 }
