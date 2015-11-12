@@ -25,7 +25,27 @@ public class Competition
 
     public void addMatch(Match match) //Adds the match to the competition and to the teams involved
     {
-        
+        matches.add(match);
+    }
+
+    public ArrayList<Match> getMatches()
+    {
+        return matches;
+    }
+
+    public ArrayList<Integer> getTeamIDs()
+    {
+        return teamIDs;
+    }
+
+    public void setMatches(ArrayList<Match> a)
+    {
+        matches = a;
+    }
+
+    public void setTeamIDs(ArrayList<Integer> IDs)
+    {
+        teamIDs = IDs;
     }
 
     public int getCompetitionID()
