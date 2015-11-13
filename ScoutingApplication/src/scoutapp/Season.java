@@ -16,13 +16,32 @@ public class Season
         startYear = 2015;
     }
 
+      public int getStartYear() {
+        return startYear;
+    }
+
+    public void setStartYear(int startYear) {
+        this.startYear = startYear;
+    }
+
+    public ArrayList<Competition> getCompetitions() {
+        return competitions;
+    }
+
+    public void setCompetitions(ArrayList<Competition> competitions) {
+        this.competitions = competitions;
+    }
+
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(ArrayList<Team> teams) {
+        this.teams = teams;
+    }
+
     public void addCompetition(Competition comp)
     {
         competitions.add(comp);
-    }
-
-    public void addMatch()
-    {
-        
     }
 }
