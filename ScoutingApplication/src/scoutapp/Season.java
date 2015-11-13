@@ -28,6 +28,7 @@ public class Season
         return competitions;
     }
 
+<<<<<<< HEAD
     public void setCompetitions(ArrayList<Competition> competitions) {
         this.competitions = competitions;
     }
@@ -43,5 +44,19 @@ public class Season
     public void addCompetition(Competition comp)
     {
         competitions.add(comp);
+=======
+    public void addTeam(Team team)
+    {
+        teams.add(team);
+    }
+    
+    public void addMatch(Match match)
+    {
+        for(Competition comp : competitions)
+        {
+            if(comp.getCompetitionID() == match.getMatchCompetitionID())
+                comp.addMatch(match);
+        }
+>>>>>>> origin/Use-Interface
     }
 }
