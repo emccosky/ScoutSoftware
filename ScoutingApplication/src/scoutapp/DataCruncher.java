@@ -30,14 +30,15 @@ public final class DataCruncher
 
     public static double getAvgMatchScore(int teamID, ArrayList<Match> matches) //Returns the average match score of a given match set
     {
-        return -1;
+        double score = -1.0;
+        return format(score);
     }
 
     public static double getDefensiveness(int teamID, ArrayList<Match> matches)
     {
-        double ret = 0.0;
+        double defensiveness = 0.0;
         
-        return format(ret);
+        return format(defensiveness);
     }
 
     public static double getConsistency(int teamID, ArrayList<Match> matches)
@@ -49,12 +50,14 @@ public final class DataCruncher
 
     public static int getMMR(int teamID, ArrayList<Match> matches)
     {
-        return -1;
+        int mmr = -1;
+        return mmr;
     }
 
     public static int getAvgMMROfPartners(int teamID, ArrayList<Match> matches)
     {
-        return -1;
+        int mmr = -1;
+        return mmr;
     }
 
     public static String getPredictedScoreRange(int teamID, ArrayList<Match> matches)
@@ -64,11 +67,13 @@ public final class DataCruncher
 
     public static int getRP(int teamID, ArrayList<Match> matches)
     {
-        return -1;
+        int rp = -1;
+        return rp;
     }
 
     public static int getQP(int teamID, ArrayList<Match> matches)
     {
-        return -1;
+        int qp = -1;
+        return qp;
     }
 }

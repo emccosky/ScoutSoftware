@@ -26,6 +26,24 @@ public class Team
         return teamID;
     }
 
+    public ArrayList<Match> getMatches()
+    {
+        return teamMatches;
+    }
+    
+    public ArrayList<Match> getMatchesFromCompetition(int compID)
+    {
+        ArrayList<Match> competitionMatches = new ArrayList<Match>();
+        for(Match m : teamMatches)
+        {
+            if(m.getMatchCompetitionID() == compID)
+            {
+                competitionMatches.add(m);
+            }
+        }
+        return competitionMatches;
+    }
+
     public double getAvgScore()
     {
         double avg = DataCruncher.getAvgMatchScore(teamID, teamMatches);
@@ -34,7 +52,7 @@ public class Team
 
     public double getAvgScoreAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         for(Match m : teamMatches)
         {
             if(m.getMatchCompetitionID() == compID)
@@ -54,14 +72,7 @@ public class Team
 
     public int getMMRAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int MMR = DataCruncher.getMMR(teamID, competitionMatches);
         return MMR;
     }
@@ -74,14 +85,7 @@ public class Team
 
     public int getAvgPartnerMMRAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, competitionMatches);
         return avgPartnerMMR;
     }
@@ -94,14 +98,7 @@ public class Team
 
     public double getConsistencyAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         double consistency = DataCruncher.getConsistency(teamID, competitionMatches);
         return consistency;
     }
@@ -114,14 +111,7 @@ public class Team
 
     public double getDefensivenessAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         double defensiveness = DataCruncher.getDefensiveness(teamID, competitionMatches);
         return defensiveness;
     }
@@ -134,14 +124,7 @@ public class Team
 
     public int getQPAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int QP = DataCruncher.getQP(teamID, competitionMatches);
         return QP;
     }
@@ -154,14 +137,7 @@ public class Team
 
     public int getRPAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int RP = DataCruncher.getRP(teamID, competitionMatches);
         return RP;
     }
@@ -174,14 +150,7 @@ public class Team
 
     public String getPredictedScoreRangeAtCompetition(int compID)
     {
-        ArrayList<Match> competitionMatches = new ArrayList<Match>();
-        for(Match m : teamMatches)
-        {
-            if(m.getMatchCompetitionID() == compID)
-            {
-                competitionMatches.add(m);
-            }
-        }
+        ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         String predictedScoreRange = DataCruncher.getPredictedScoreRange(teamID, competitionMatches);
         return predictedScoreRange;
     }
