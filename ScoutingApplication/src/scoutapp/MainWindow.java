@@ -99,8 +99,8 @@ public class MainWindow extends javax.swing.JFrame {
                 //Replace the other match with this one
             }
         }
-        
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

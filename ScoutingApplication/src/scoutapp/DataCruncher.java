@@ -30,27 +30,78 @@ public final class DataCruncher
 
     public static double getAvgMatchScore(int teamID, ArrayList<Match> matches) //Returns the average match score of a given match set
     {
-        double score = -1.0;
+        double score = 0.0;
+        int matchCount = 0;
+        for(Match m : matches)
+        {
+            if(m.getScore(teamID) != -1)
+            {
+                score += m.getScore(teamID);
+                matchCount++;
+            }
+        }
+        score /= matchCount;
+        if(matchCount == 0)
+            return -1;
         return format(score);
     }
 
     public static double getDefensiveness(int teamID, ArrayList<Match> matches)
     {
-        double defensiveness = 0.0;
-        
+        double defensiveness = -1.0;
+
         return format(defensiveness);
     }
 
     public static double getConsistency(int teamID, ArrayList<Match> matches)
     {
         double consistency = -1.0;
-        
+
         return format(consistency);
     }
 
+    public int calcMMR(int curMMR, int allyMMR, int score)
+    {
+        double newMMR = (double) curMMR;
+        double dAllyMMR = (double) allyMMR;
+        double dScore = (double) score;
+        double divisor = newMMR;
+        double subtract = dAllyMMR * dAllyMMR;
+        subtract /= 10000;
+        //subtract = subtract / divisor;
+        //subtract = subtract / 1100000;
+        if(curMMR < 1200)
+            divisor = 1200.0 / 1500.0;
+        else if(curMMR < 2000)
+            divisor = newMMR / 2000;
+        else
+            divisor = newMMR / 1500;
+        //System.out.println(divisor);
+        double add = score * 44;
+        //System.out.println(add);
+        add = add * add;
+        //System.out.println(add);
+        add = Math.pow(add, 1.0/3);
+        add = add / divisor;
+        //System.out.println(add);
+        // if(divisor < 1)
+        //   add = add * (1/divisor);
+        //else
+          //  add = add / divisor;
+        //System.out.println(newMMR);
+        //System.out.println(add);
+        newMMR += add;
+        //System.out.println(newMMR);
+        newMMR -= subtract;
+        //System.out.println(newMMR);
+        int finalMMR = (int) Math.round(newMMR);
+        return finalMMR;
+    }
+    
     public static int getMMR(int teamID, ArrayList<Match> matches)
     {
         int mmr = -1;
+        ArrayList<Integer> mmrs = new ArrayList();
         return mmr;
     }
 

@@ -30,7 +30,7 @@ public class Team
     {
         return teamMatches;
     }
-    
+
     public ArrayList<Match> getMatchesFromCompetition(int compID)
     {
         ArrayList<Match> competitionMatches = new ArrayList<Match>();
