@@ -3,20 +3,19 @@ package scoutapp;
 import java.util.*;
 import java.io.*;
 
-public class Season
-{
+public class Season {
+
     int startYear;
     public ArrayList<Competition> competitions;
     public ArrayList<Team> teams;
 
-    public Season()
-    {
+    public Season() {
         competitions = new ArrayList<Competition>();
         teams = new ArrayList<Team>();
         startYear = 2015;
     }
 
-      public int getStartYear() {
+    public int getStartYear() {
         return startYear;
     }
 
@@ -27,7 +26,6 @@ public class Season
     public ArrayList<Competition> getCompetitions() {
         return competitions;
     }
-
 
     public void setCompetitions(ArrayList<Competition> competitions) {
         this.competitions = competitions;
@@ -41,23 +39,29 @@ public class Season
         this.teams = teams;
     }
 
-    public void addCompetition(Competition comp)
-    {
+    public void addCompetition(Competition comp) {
         competitions.add(comp);
     }
-    
-    public void addTeam(Team team)
-    {
+
+    public void addTeam(Team team) {
         teams.add(team);
     }
-    
-    public void addMatch(Match match)
-    {
-        for(Competition comp : competitions)
-        {
-            if(comp.getCompetitionID() == match.getMatchCompetitionID())
-                comp.addMatch(match);
-        }
 
+    public void addMatch(Match match) {
+        for (Competition comp : competitions) {
+            if (comp.getCompetitionID() == match.getMatchCompetitionID()) {
+                comp.addMatch(match);
+            }
+        }
+    }
+    
+    public int getNextCompID() {
+        int highestID = -1;
+        for (Competition comp : competitions) {
+            if (comp.getCompetitionID() > highestID){
+                highestID = comp.getCompetitionID();
+            }
+        }
+        return ++highestID;
     }
 }

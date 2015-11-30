@@ -5,17 +5,25 @@
  */
 package scoutapp;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author spencersharp
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    public static Season season;
+    static private Season season;
+    private String[][] teamListData;
+    private String[][] teamMatchesData;
+    private String[][] rankingsData;
+    private String[][] matchesData;
+    private Competition currentComp;
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
+        initData();
         initComponents();
     }
 
@@ -28,58 +36,66 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem9 = new javax.swing.JMenuItem();
+        addTeamDialog = new javax.swing.JDialog();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        addDialog_teamNumField = new javax.swing.JTextField();
+        addDialog_teamNameField = new javax.swing.JTextField();
+        addDialog_addButton = new javax.swing.JButton();
+        addDialog_cancelButton = new javax.swing.JButton();
         Tabs = new javax.swing.JTabbedPane();
         Team_Tab = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         TeamTable = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        teamNameLabel = new javax.swing.JLabel();
+        teamNumLabel = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        teamMatchesTable = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        teamNameField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        teamLocationField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        teamNumField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        pushbotRadio = new javax.swing.JRadioButton();
+        notPushbotRadio = new javax.swing.JRadioButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        debrisFloorBox = new javax.swing.JCheckBox();
+        debrisLowBox = new javax.swing.JCheckBox();
+        debrisMidBox = new javax.swing.JCheckBox();
+        debrisHighBox = new javax.swing.JCheckBox();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jCheckBox16 = new javax.swing.JCheckBox();
-        jCheckBox17 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
+        lowZoneBox = new javax.swing.JCheckBox();
+        midZoneBox = new javax.swing.JCheckBox();
+        highZoneBox = new javax.swing.JCheckBox();
+        hangBox = new javax.swing.JCheckBox();
+        noneEndgameBox = new javax.swing.JCheckBox();
+        autoClimbersBox = new javax.swing.JCheckBox();
+        autoNoneBox = new javax.swing.JCheckBox();
+        autoLowZoneBox = new javax.swing.JCheckBox();
+        autoMidZoneBox = new javax.swing.JCheckBox();
+        autoHighZoneBox = new javax.swing.JCheckBox();
+        autoBeaconBox = new javax.swing.JCheckBox();
+        autoPartlyBox = new javax.swing.JCheckBox();
         jLabel19 = new javax.swing.JLabel();
-        jSlider1 = new javax.swing.JSlider();
+        debrisLevelSlider = new javax.swing.JSlider();
         jLabel20 = new javax.swing.JLabel();
-        jSlider2 = new javax.swing.JSlider();
+        climbLevelSlider = new javax.swing.JSlider();
         jLabel21 = new javax.swing.JLabel();
-        jSlider3 = new javax.swing.JSlider();
+        hangLevelSlider = new javax.swing.JSlider();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jTextField4 = new javax.swing.JTextField();
+        robotDesignField = new javax.swing.JTextArea();
+        baseTypeField = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        teamAdjectiveField = new javax.swing.JTextField();
+        addTeamButton = new javax.swing.JButton();
+        removeTeamButton = new javax.swing.JButton();
         Match_Tab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MatchTable = new javax.swing.JTable();
@@ -111,65 +127,106 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         RankTable = new javax.swing.JTable();
         GoToTeamPage = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        topMenuBar = new javax.swing.JMenuBar();
+        seasonMenu = new javax.swing.JMenu();
+        seasonOpenOption = new javax.swing.JMenuItem();
+        seasonSaveOption = new javax.swing.JMenuItem();
+        seasonSaveAsOption = new javax.swing.JMenuItem();
+        seasonCloseOption = new javax.swing.JMenuItem();
+        dataMenu = new javax.swing.JMenu();
+        dataImportTeamsOption = new javax.swing.JMenuItem();
+        dataExportTeamsOption = new javax.swing.JMenuItem();
+        dataExportRankingsOption = new javax.swing.JMenuItem();
+        dataImportMatchesOption = new javax.swing.JMenuItem();
+        dataExportMatchesOption = new javax.swing.JMenuItem();
+        compMenu = new javax.swing.JMenu();
+        compImportOption = new javax.swing.JMenuItem();
+        compExportOption = new javax.swing.JMenuItem();
+        currentCompMenu = new javax.swing.JMenu();
+        compCurrentSelectOption = new javax.swing.JMenuItem();
+        compCurrentReplaceOption = new javax.swing.JMenuItem();
 
-        jMenuItem9.setText("jMenuItem9");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Team Number:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Team Name:");
+
+        addDialog_addButton.setText("Add Team");
+        addDialog_addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDialog_addButtonActionPerformed(evt);
+            }
+        });
+
+        addDialog_cancelButton.setText("Cancel");
+        addDialog_cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDialog_cancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout addTeamDialogLayout = new javax.swing.GroupLayout(addTeamDialog.getContentPane());
+        addTeamDialog.getContentPane().setLayout(addTeamDialogLayout);
+        addTeamDialogLayout.setHorizontalGroup(
+            addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addTeamDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(addTeamDialogLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(addDialog_teamNumField))
+                        .addGroup(addTeamDialogLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(addDialog_teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(addTeamDialogLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(addDialog_addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addDialog_cancelButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        addTeamDialogLayout.setVerticalGroup(
+            addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addTeamDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(addDialog_teamNumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(addDialog_teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addDialog_addButton)
+                    .addComponent(addDialog_cancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1100, 700));
         setMinimumSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
 
-        TeamTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        TeamTable.setModel(new TeamListTableModel(teamListData));
+        TeamTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(TeamTable);
 
-        jLabel4.setFont(new java.awt.Font("Miriam", 1, 36)); // NOI18N
-        jLabel4.setText("Team Name Goes Here");
-        jLabel4.setMaximumSize(new java.awt.Dimension(512, 38));
-        jLabel4.setMinimumSize(new java.awt.Dimension(512, 38));
-        jLabel4.setPreferredSize(new java.awt.Dimension(512, 38));
+        teamNameLabel.setFont(new java.awt.Font("Miriam", 1, 36)); // NOI18N
+        teamNameLabel.setText("Team Name Goes Here");
+        teamNameLabel.setMaximumSize(new java.awt.Dimension(512, 38));
+        teamNameLabel.setMinimumSize(new java.awt.Dimension(512, 38));
+        teamNameLabel.setPreferredSize(new java.awt.Dimension(512, 38));
 
-        jLabel5.setFont(new java.awt.Font("Miriam", 1, 48)); // NOI18N
-        jLabel5.setText("####");
+        teamNumLabel.setFont(new java.awt.Font("Miriam", 1, 48)); // NOI18N
+        teamNumLabel.setText("####");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane5.setViewportView(jTable1);
+        teamMatchesTable.setModel(new TeamMatchesTableModel(teamMatchesData));
+        jScrollPane5.setViewportView(teamMatchesTable);
 
         jLabel6.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
         jLabel6.setText("Name:");
@@ -182,11 +239,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jRadioButton1.setFont(jRadioButton1.getFont().deriveFont(jRadioButton1.getFont().getSize()+3f));
-        jRadioButton1.setText("Pushbot");
+        pushbotRadio.setFont(pushbotRadio.getFont().deriveFont(pushbotRadio.getFont().getSize()+3f));
+        pushbotRadio.setText("Pushbot");
 
-        jRadioButton2.setFont(jRadioButton2.getFont().deriveFont(jRadioButton2.getFont().getSize()+3f));
-        jRadioButton2.setText("Not Push Bot");
+        notPushbotRadio.setFont(notPushbotRadio.getFont().deriveFont(notPushbotRadio.getFont().getSize()+3f));
+        notPushbotRadio.setText("Not Push Bot");
 
         jLabel13.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
         jLabel13.setText("Abilities:");
@@ -194,23 +251,23 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("Debris:");
 
-        jCheckBox1.setText("Floor Goal");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        debrisFloorBox.setText("Floor Goal");
+        debrisFloorBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                debrisFloorBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText("Low Goal");
+        debrisLowBox.setText("Low Goal");
 
-        jCheckBox3.setText("Mid Goal");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+        debrisMidBox.setText("Mid Goal");
+        debrisMidBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+                debrisMidBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox4.setText("High Goal");
+        debrisHighBox.setText("High Goal");
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setText("Autonomous:");
@@ -218,54 +275,54 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel18.setText("Robot Information");
 
-        jCheckBox5.setText("Low Zone");
-        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+        lowZoneBox.setText("Low Zone");
+        lowZoneBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox5ActionPerformed(evt);
+                lowZoneBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox6.setText("Mid Zone");
+        midZoneBox.setText("Mid Zone");
 
-        jCheckBox7.setText("High Zone");
-        jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
+        highZoneBox.setText("High Zone");
+        highZoneBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox7ActionPerformed(evt);
+                highZoneBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox8.setText("Hang");
+        hangBox.setText("Hang");
 
-        jCheckBox10.setText("None");
+        noneEndgameBox.setText("None");
 
-        jCheckBox11.setText("Climbers");
+        autoClimbersBox.setText("Climbers");
 
-        jCheckBox12.setText("None");
+        autoNoneBox.setText("None");
 
-        jCheckBox14.setText("Low Zone");
-        jCheckBox14.addActionListener(new java.awt.event.ActionListener() {
+        autoLowZoneBox.setText("Low Zone");
+        autoLowZoneBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox14ActionPerformed(evt);
+                autoLowZoneBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox15.setText("Mid Zone");
+        autoMidZoneBox.setText("Mid Zone");
 
-        jCheckBox16.setText("High Zone");
-        jCheckBox16.addActionListener(new java.awt.event.ActionListener() {
+        autoHighZoneBox.setText("High Zone");
+        autoHighZoneBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox16ActionPerformed(evt);
+                autoHighZoneBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox17.setText("Beacon");
-        jCheckBox17.addActionListener(new java.awt.event.ActionListener() {
+        autoBeaconBox.setText("Beacon");
+        autoBeaconBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox17ActionPerformed(evt);
+                autoBeaconBoxActionPerformed(evt);
             }
         });
 
-        jCheckBox9.setText("Partly");
+        autoPartlyBox.setText("Partly");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel19.setText("End Game:");
@@ -282,13 +339,13 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel23.setText("Base Type:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane6.setViewportView(jTextArea1);
+        robotDesignField.setColumns(20);
+        robotDesignField.setRows(5);
+        jScrollPane6.setViewportView(robotDesignField);
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        baseTypeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                baseTypeFieldActionPerformed(evt);
             }
         });
 
@@ -308,9 +365,9 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(78, 78, 78)
-                                .addComponent(jRadioButton1)
+                                .addComponent(pushbotRadio)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton2))
+                                .addComponent(notPushbotRadio))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel13))
@@ -322,38 +379,38 @@ public class MainWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
+                                .addComponent(debrisFloorBox)
                                 .addGap(33, 33, 33)
-                                .addComponent(jCheckBox2)
+                                .addComponent(debrisLowBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox3)
+                                .addComponent(debrisMidBox)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCheckBox4))
+                                .addComponent(debrisHighBox))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox11)
+                                .addComponent(autoClimbersBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox17)
+                                .addComponent(autoBeaconBox)
                                 .addGap(223, 223, 223))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox12)
+                                .addComponent(autoNoneBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox9)
+                                .addComponent(autoPartlyBox)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCheckBox14)
+                                .addComponent(autoLowZoneBox)
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox15)
+                                .addComponent(autoMidZoneBox)
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox16))
+                                .addComponent(autoHighZoneBox))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jCheckBox10)
+                                .addComponent(noneEndgameBox)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBox5)
+                                .addComponent(lowZoneBox)
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox6)
+                                .addComponent(midZoneBox)
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox7)
+                                .addComponent(highZoneBox)
                                 .addGap(10, 10, 10)
-                                .addComponent(jCheckBox8))
+                                .addComponent(hangBox))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel17)
@@ -368,12 +425,12 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel21)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(climbLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(hangLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addGap(18, 18, 18)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(debrisLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -385,13 +442,13 @@ public class MainWindow extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(baseTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel24))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField5)))
+                        .addComponent(teamAdjectiveField)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -399,58 +456,58 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(pushbotRadio)
+                    .addComponent(notPushbotRadio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addGap(11, 11, 11)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4))
+                    .addComponent(debrisFloorBox)
+                    .addComponent(debrisLowBox)
+                    .addComponent(debrisMidBox)
+                    .addComponent(debrisHighBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox11)
-                    .addComponent(jCheckBox17))
+                    .addComponent(autoClimbersBox)
+                    .addComponent(autoBeaconBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox14)
-                    .addComponent(jCheckBox15)
-                    .addComponent(jCheckBox16)
-                    .addComponent(jCheckBox12)
-                    .addComponent(jCheckBox9))
+                    .addComponent(autoLowZoneBox)
+                    .addComponent(autoMidZoneBox)
+                    .addComponent(autoHighZoneBox)
+                    .addComponent(autoNoneBox)
+                    .addComponent(autoPartlyBox))
                 .addGap(6, 6, 6)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jCheckBox10))
+                    .addComponent(lowZoneBox)
+                    .addComponent(midZoneBox)
+                    .addComponent(highZoneBox)
+                    .addComponent(hangBox)
+                    .addComponent(noneEndgameBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(debrisLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(climbLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSlider3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(hangLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(baseTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -458,9 +515,18 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(teamAdjectiveField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        addTeamButton.setText("Add Team");
+        addTeamButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTeamButtonActionPerformed(evt);
+            }
+        });
+
+        removeTeamButton.setText("Remove Team");
 
         javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
         Team_Tab.setLayout(Team_TabLayout);
@@ -468,13 +534,18 @@ public class MainWindow extends javax.swing.JFrame {
             Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Team_TabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addComponent(addTeamButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeTeamButton)))
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jLabel5)
+                        .addComponent(teamNumLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -482,15 +553,15 @@ public class MainWindow extends javax.swing.JFrame {
                             .addGroup(Team_TabLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(teamNameField))
                             .addGroup(Team_TabLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2))
+                                .addComponent(teamLocationField))
                             .addGroup(Team_TabLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3))
+                                .addComponent(teamNumField))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -503,42 +574,38 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(teamNumLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Team_TabLayout.createSequentialGroup()
                                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel10)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(teamNumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(teamLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane4))
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addTeamButton)
+                            .addComponent(removeTeamButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         Tabs.addTab("Teams", Team_Tab);
 
-        MatchTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        MatchTable.setModel(new MatchTableModel(matchesData));
         jScrollPane1.setViewportView(MatchTable);
 
         jLabel1.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
@@ -731,17 +798,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         SeasonRadio.setText("Season");
 
-        RankTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        RankTable.setModel(new RankingsTableModel(rankingsData));
         jScrollPane2.setViewportView(RankTable);
 
         GoToTeamPage.setText("Go to Team Page");
@@ -781,75 +838,83 @@ public class MainWindow extends javax.swing.JFrame {
 
         Tabs.addTab("Rankings", Rank_Tab);
 
-        jMenu1.setText("Season");
+        seasonMenu.setText("Season");
 
-        jMenuItem4.setText("Open");
-        jMenuItem4.setToolTipText("");
-        jMenu1.add(jMenuItem4);
-
-        jMenuItem1.setText("Save");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        seasonOpenOption.setText("Open");
+        seasonOpenOption.setToolTipText("");
+        seasonOpenOption.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                seasonOpenOptionActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        seasonMenu.add(seasonOpenOption);
 
-        jMenuItem2.setText("Save As");
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Close");
-        jMenu1.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Data");
-
-        jMenuItem5.setText("Import Teams");
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem6.setText("Export Teams");
-        jMenu2.add(jMenuItem6);
-
-        jMenuItem12.setText("Export Rankings");
-        jMenu2.add(jMenuItem12);
-
-        jMenuItem13.setText("Export Matches");
-        jMenu2.add(jMenuItem13);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Competition");
-
-        jMenuItem7.setText("Import");
-        jMenu3.add(jMenuItem7);
-
-        jMenuItem8.setText("Export");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        seasonSaveOption.setText("Save");
+        seasonSaveOption.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                seasonSaveOptionActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem8);
+        seasonMenu.add(seasonSaveOption);
 
-        jMenu4.setText("Current Competition");
+        seasonSaveAsOption.setText("Save As");
+        seasonMenu.add(seasonSaveAsOption);
 
-        jMenuItem10.setText("Select");
-        jMenu4.add(jMenuItem10);
+        seasonCloseOption.setText("Close");
+        seasonMenu.add(seasonCloseOption);
 
-        jMenuItem11.setText("Replace");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+        topMenuBar.add(seasonMenu);
+
+        dataMenu.setText("Data");
+
+        dataImportTeamsOption.setText("Import Teams");
+        dataMenu.add(dataImportTeamsOption);
+
+        dataExportTeamsOption.setText("Export Teams");
+        dataMenu.add(dataExportTeamsOption);
+
+        dataExportRankingsOption.setText("Export Rankings");
+        dataMenu.add(dataExportRankingsOption);
+
+        dataImportMatchesOption.setText("Import Matches");
+        dataMenu.add(dataImportMatchesOption);
+
+        dataExportMatchesOption.setText("Export Matches");
+        dataMenu.add(dataExportMatchesOption);
+
+        topMenuBar.add(dataMenu);
+
+        compMenu.setText("Competition");
+
+        compImportOption.setText("Import");
+        compMenu.add(compImportOption);
+
+        compExportOption.setText("Export");
+        compExportOption.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
+                compExportOptionActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem11);
+        compMenu.add(compExportOption);
 
-        jMenu3.add(jMenu4);
+        currentCompMenu.setText("Current Competition");
 
-        jMenuBar1.add(jMenu3);
+        compCurrentSelectOption.setText("Select");
+        currentCompMenu.add(compCurrentSelectOption);
 
-        setJMenuBar(jMenuBar1);
+        compCurrentReplaceOption.setText("Replace");
+        compCurrentReplaceOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compCurrentReplaceOptionActionPerformed(evt);
+            }
+        });
+        currentCompMenu.add(compCurrentReplaceOption);
+
+        compMenu.add(currentCompMenu);
+
+        topMenuBar.add(compMenu);
+
+        setJMenuBar(topMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -870,50 +935,94 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void seasonSaveOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonSaveOptionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_seasonSaveOptionActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void compExportOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compExportOptionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_compExportOptionActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void compCurrentReplaceOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compCurrentReplaceOptionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_compCurrentReplaceOptionActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void debrisFloorBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debrisFloorBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_debrisFloorBoxActionPerformed
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
+    private void debrisMidBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debrisMidBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    }//GEN-LAST:event_debrisMidBoxActionPerformed
 
-    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
+    private void lowZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowZoneBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox5ActionPerformed
+    }//GEN-LAST:event_lowZoneBoxActionPerformed
 
-    private void jCheckBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox7ActionPerformed
+    private void highZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highZoneBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox7ActionPerformed
+    }//GEN-LAST:event_highZoneBoxActionPerformed
 
-    private void jCheckBox14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox14ActionPerformed
+    private void autoLowZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoLowZoneBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox14ActionPerformed
+    }//GEN-LAST:event_autoLowZoneBoxActionPerformed
 
-    private void jCheckBox16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox16ActionPerformed
+    private void autoHighZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoHighZoneBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox16ActionPerformed
+    }//GEN-LAST:event_autoHighZoneBoxActionPerformed
 
-    private void jCheckBox17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox17ActionPerformed
+    private void autoBeaconBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoBeaconBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox17ActionPerformed
+    }//GEN-LAST:event_autoBeaconBoxActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void baseTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseTypeFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_baseTypeFieldActionPerformed
 
+    private void seasonOpenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonOpenOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seasonOpenOptionActionPerformed
+
+    private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
+        addTeamDialog.setVisible(true);
+    }//GEN-LAST:event_addTeamButtonActionPerformed
+
+    private void addDialog_cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_cancelButtonActionPerformed
+        addTeamDialog.setVisible(false);
+        addTeamDialog.dispose();
+    }//GEN-LAST:event_addDialog_cancelButtonActionPerformed
+
+    private void addDialog_addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_addButtonActionPerformed
+        String num = addDialog_teamNumField.getText();
+        String name = addDialog_teamNameField.getText();
+        addTeam(num, name, currentComp.getCompetitionID());
+        addTeamDialog.setVisible(false);
+        addTeamDialog.dispose();
+    }//GEN-LAST:event_addDialog_addButtonActionPerformed
+
+    private void initData() {
+        teamListData = new String[10][2];
+        teamMatchesData = new String[10][8];
+        rankingsData = new String[10][9];
+        matchesData = new String[10][11];
+        currentComp = new Competition(season.getNextCompID());
+    }
+    
+    private void addTeam(String num, String name, int compID) {
+        ArrayList<Team> tempTeams = season.getTeams();
+        ArrayList<Competition> tempComps = season.getCompetitions();
+        tempTeams.add(new Team(Integer.parseInt(num), name));
+        int currentCompSpot = 0;
+        for(int i = 0; i < tempComps.size(); i++) {
+            if (tempComps.get(i).getCompetitionID() == compID) {
+                currentCompSpot = i;
+            }
+        }
+        Competition tempComp = tempComps.get(currentCompSpot);
+        tempComp.addTeam(new Team(Integer.parseInt(num), name));
+        tempComps.set(currentCompSpot, tempComp);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -992,22 +1101,41 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTable TeamTable;
     private javax.swing.JPanel Team_Tab;
     private javax.swing.JRadioButton ThisCompRadio;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JButton addDialog_addButton;
+    private javax.swing.JButton addDialog_cancelButton;
+    private javax.swing.JTextField addDialog_teamNameField;
+    private javax.swing.JTextField addDialog_teamNumField;
+    private javax.swing.JButton addTeamButton;
+    private javax.swing.JDialog addTeamDialog;
+    private javax.swing.JCheckBox autoBeaconBox;
+    private javax.swing.JCheckBox autoClimbersBox;
+    private javax.swing.JCheckBox autoHighZoneBox;
+    private javax.swing.JCheckBox autoLowZoneBox;
+    private javax.swing.JCheckBox autoMidZoneBox;
+    private javax.swing.JCheckBox autoNoneBox;
+    private javax.swing.JCheckBox autoPartlyBox;
+    private javax.swing.JTextField baseTypeField;
+    private javax.swing.JSlider climbLevelSlider;
+    private javax.swing.JMenuItem compCurrentReplaceOption;
+    private javax.swing.JMenuItem compCurrentSelectOption;
+    private javax.swing.JMenuItem compExportOption;
+    private javax.swing.JMenuItem compImportOption;
+    private javax.swing.JMenu compMenu;
+    private javax.swing.JMenu currentCompMenu;
+    private javax.swing.JMenuItem dataExportMatchesOption;
+    private javax.swing.JMenuItem dataExportRankingsOption;
+    private javax.swing.JMenuItem dataExportTeamsOption;
+    private javax.swing.JMenuItem dataImportMatchesOption;
+    private javax.swing.JMenuItem dataImportTeamsOption;
+    private javax.swing.JMenu dataMenu;
+    private javax.swing.JCheckBox debrisFloorBox;
+    private javax.swing.JCheckBox debrisHighBox;
+    private javax.swing.JSlider debrisLevelSlider;
+    private javax.swing.JCheckBox debrisLowBox;
+    private javax.swing.JCheckBox debrisMidBox;
+    private javax.swing.JCheckBox hangBox;
+    private javax.swing.JSlider hangLevelSlider;
+    private javax.swing.JCheckBox highZoneBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1033,44 +1161,34 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
-    private javax.swing.JSlider jSlider3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JCheckBox lowZoneBox;
+    private javax.swing.JCheckBox midZoneBox;
+    private javax.swing.JCheckBox noneEndgameBox;
+    private javax.swing.JRadioButton notPushbotRadio;
+    private javax.swing.JRadioButton pushbotRadio;
+    private javax.swing.JButton removeTeamButton;
+    private javax.swing.JTextArea robotDesignField;
+    private javax.swing.JMenuItem seasonCloseOption;
+    private javax.swing.JMenu seasonMenu;
+    private javax.swing.JMenuItem seasonOpenOption;
+    private javax.swing.JMenuItem seasonSaveAsOption;
+    private javax.swing.JMenuItem seasonSaveOption;
+    private javax.swing.JTextField teamAdjectiveField;
+    private javax.swing.JTextField teamLocationField;
+    private javax.swing.JTable teamMatchesTable;
+    private javax.swing.JTextField teamNameField;
+    private javax.swing.JLabel teamNameLabel;
+    private javax.swing.JTextField teamNumField;
+    private javax.swing.JLabel teamNumLabel;
+    private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
 }
