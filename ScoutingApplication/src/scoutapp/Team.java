@@ -16,6 +16,22 @@ public class Team
         teamMatches = new ArrayList<Match>();
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public ArrayList<Match> getTeamMatches() {
+        return teamMatches;
+    }
+
+    public void setTeamMatches(ArrayList<Match> teamMatches) {
+        this.teamMatches = teamMatches;
+    }
+
     public void addMatch(Match match)
     {
         teamMatches.add(match);

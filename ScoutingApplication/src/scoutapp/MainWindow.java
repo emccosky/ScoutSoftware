@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    static private Season season;
+    private Season season;
     private String[][] teamListData;
     private String[][] teamMatchesData;
     private String[][] rankingsData;
@@ -146,6 +146,12 @@ public class MainWindow extends javax.swing.JFrame {
         compCurrentSelectOption = new javax.swing.JMenuItem();
         compCurrentReplaceOption = new javax.swing.JMenuItem();
 
+        addTeamDialog.setMaximumSize(new java.awt.Dimension(335, 160));
+        addTeamDialog.setMinimumSize(new java.awt.Dimension(335, 160));
+        addTeamDialog.setModal(true);
+        addTeamDialog.setPreferredSize(new java.awt.Dimension(335, 160));
+        addTeamDialog.setResizable(false);
+
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Team Number:");
 
@@ -187,7 +193,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(addDialog_addButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addDialog_cancelButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         addTeamDialogLayout.setVerticalGroup(
             addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +210,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addDialog_addButton)
                     .addComponent(addDialog_cancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1001,6 +1007,9 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
     private void initData() {
+        season = new Season();
+        currentComp = new Competition(season.getNextCompID());
+        season.addCompetition(currentComp);
         teamListData = new String[10][2];
         teamMatchesData = new String[10][8];
         rankingsData = new String[10][9];
@@ -1021,6 +1030,7 @@ public class MainWindow extends javax.swing.JFrame {
         Competition tempComp = tempComps.get(currentCompSpot);
         tempComp.addTeam(new Team(Integer.parseInt(num), name));
         tempComps.set(currentCompSpot, tempComp);
+        updateAll();
     }
     
     /**
@@ -1049,8 +1059,7 @@ public class MainWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        season = new Season();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1077,9 +1086,20 @@ public class MainWindow extends javax.swing.JFrame {
             {
                 //Replace the other match with this one
             }
-        }
-        
+        }   
     }
+    
+    //Update all the things
+    public void updateAll() {
+        ArrayList<Team> tempTeams = season.getTeams();
+        teamListData = new String[tempTeams.size()][2];
+        for(int i = 0; i < tempTeams.size(); i++){
+            teamListData[i][0] = tempTeams.get(i).getTeamID() + "";
+            teamListData[i][1] = tempTeams.get(i).getTeamName();
+        }
+        TeamTable.setModel(new TeamListTableModel(teamListData));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Blue1Label;
     private javax.swing.JLabel Blue2Label;
