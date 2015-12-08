@@ -5,7 +5,13 @@
  */
 package scoutapp;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -146,10 +152,8 @@ public class MainWindow extends javax.swing.JFrame {
         compCurrentSelectOption = new javax.swing.JMenuItem();
         compCurrentReplaceOption = new javax.swing.JMenuItem();
 
-        addTeamDialog.setMaximumSize(new java.awt.Dimension(335, 160));
         addTeamDialog.setMinimumSize(new java.awt.Dimension(335, 160));
         addTeamDialog.setModal(true);
-        addTeamDialog.setPreferredSize(new java.awt.Dimension(335, 160));
         addTeamDialog.setResizable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -214,12 +218,21 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1100, 700));
         setMinimumSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
 
         TeamTable.setModel(new TeamListTableModel(teamListData));
         TeamTable.getTableHeader().setReorderingAllowed(false);
+        TeamTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    viewTeamStats(TeamTable.getValueAt(row, 0));
+                }
+            }
+        });
         jScrollPane4.setViewportView(TeamTable);
 
         teamNameLabel.setFont(new java.awt.Font("Miriam", 1, 36)); // NOI18N
@@ -994,16 +1007,16 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_addTeamButtonActionPerformed
 
     private void addDialog_cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_cancelButtonActionPerformed
-        addTeamDialog.setVisible(false);
         addTeamDialog.dispose();
+        addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_cancelButtonActionPerformed
 
     private void addDialog_addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_addButtonActionPerformed
         String num = addDialog_teamNumField.getText();
         String name = addDialog_teamNameField.getText();
         addTeam(num, name, currentComp.getCompetitionID());
-        addTeamDialog.setVisible(false);
         addTeamDialog.dispose();
+        addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
     private void initData() {
@@ -1020,7 +1033,13 @@ public class MainWindow extends javax.swing.JFrame {
     private void addTeam(String num, String name, int compID) {
         ArrayList<Team> tempTeams = season.getTeams();
         ArrayList<Competition> tempComps = season.getCompetitions();
-        tempTeams.add(new Team(Integer.parseInt(num), name));
+        Team newTeam = null;
+        try {
+            newTeam = new Team(Integer.parseInt(num), name);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Team number must be a number!");
+        }
+        tempTeams.add(newTeam);
         int currentCompSpot = 0;
         for(int i = 0; i < tempComps.size(); i++) {
             if (tempComps.get(i).getCompetitionID() == compID) {
@@ -1028,9 +1047,16 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
         Competition tempComp = tempComps.get(currentCompSpot);
-        tempComp.addTeam(new Team(Integer.parseInt(num), name));
+        tempComp.addTeam(newTeam);
         tempComps.set(currentCompSpot, tempComp);
         updateAll();
+    }
+    
+    private void viewTeamStats(Object teamNum) {
+        //Try-Catch not needed, team num not a number already caught
+        Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
+        teamNumLabel.setText(selectedTeam.getTeamID() + "");
+        teamNameLabel.setText(selectedTeam.getTeamName() + "");
     }
     
     /**

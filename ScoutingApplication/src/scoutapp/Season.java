@@ -34,6 +34,15 @@ public class Season {
     public ArrayList<Team> getTeams() {
         return teams;
     }
+    
+    public Team getTeam(int teamNum) {
+        for (Team t : teams) {
+            if (t.getTeamID() == teamNum) {
+                return t;
+            }
+        }
+        return null;
+    }
 
     public void setTeams(ArrayList<Team> teams) {
         this.teams = teams;
