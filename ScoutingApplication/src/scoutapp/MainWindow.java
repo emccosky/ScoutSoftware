@@ -10,12 +10,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author spencersharp
+ * @author emccosky
  */
 public class MainWindow extends javax.swing.JFrame {
 
@@ -102,6 +101,7 @@ public class MainWindow extends javax.swing.JFrame {
         teamAdjectiveField = new javax.swing.JTextField();
         addTeamButton = new javax.swing.JButton();
         removeTeamButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         Match_Tab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MatchTable = new javax.swing.JTable();
@@ -547,6 +547,13 @@ public class MainWindow extends javax.swing.JFrame {
 
         removeTeamButton.setText("Remove Team");
 
+        jButton1.setText("Update Scouting");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
         Team_Tab.setLayout(Team_TabLayout);
         Team_TabLayout.setHorizontalGroup(
@@ -565,7 +572,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(teamNumLabel)
                         .addGap(18, 18, 18)
                         .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -583,8 +591,8 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(teamNumField))
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         Team_TabLayout.setVerticalGroup(
             Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,7 +602,8 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(teamNumLabel))
+                            .addComponent(teamNumLabel)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Team_TabLayout.createSequentialGroup()
@@ -1019,6 +1028,10 @@ public class MainWindow extends javax.swing.JFrame {
         addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
@@ -1055,8 +1068,16 @@ public class MainWindow extends javax.swing.JFrame {
     private void viewTeamStats(Object teamNum) {
         //Try-Catch not needed, team num not a number already caught
         Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
+        ArrayList<String> labels = selectedTeam.getLabels();
+        ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
         teamNumLabel.setText(selectedTeam.getTeamID() + "");
         teamNameLabel.setText(selectedTeam.getTeamName() + "");
+        teamNumField.setText(selectedTeam.getTeamID() + "");
+        teamNameField.setText(selectedTeam.getTeamName() + "");
+        teamLocationField.setText(selectedTeam.getLocation() + "");
+        for(String label : labels){
+            
+        }
     }
     
     /**
@@ -1182,6 +1203,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox hangBox;
     private javax.swing.JSlider hangLevelSlider;
     private javax.swing.JCheckBox highZoneBox;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

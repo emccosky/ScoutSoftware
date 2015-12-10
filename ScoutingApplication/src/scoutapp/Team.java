@@ -7,10 +7,22 @@ public class Team
 {
     int teamID;
     String teamName;
+    String location;
+    private static final ArrayList<String> labels = (ArrayList) Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZone","autoMidZone","autoHighZone","autoBeaconBox","autoPartlyBox");
+    ArrayList<Boolean> scouting;
+    private static final ArrayList<String> sliderLabels = (ArrayList) Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider");
+    ArrayList<Integer> sliders;
+    String baseType;
+    String adjective;
     private ArrayList<Match> teamMatches;
+    
 
     public Team(int id, String name)
     {
+        this.scouting = new ArrayList<Boolean>();
+        this.sliders = new ArrayList<Integer>();
+        baseType = "";
+        adjective = "";
         teamID = id;
         teamName = name;
         teamMatches = new ArrayList<Match>();
@@ -41,7 +53,55 @@ public class Team
     {
         return teamID;
     }
+    
+    public String getLocation() {
+        return location;
+    }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+    
+    public ArrayList<String> getSliderLabels() {
+        return sliderLabels;
+    }
+
+    public ArrayList<Boolean> getScouting() {
+        return scouting;
+    }
+
+    public void setScouting(ArrayList<Boolean> scouting) {
+        this.scouting = scouting;
+    }
+
+    public ArrayList<Integer> getSliders() {
+        return sliders;
+    }
+
+    public void setSliders(ArrayList<Integer> sliders) {
+        this.sliders = sliders;
+    }
+
+    public String getBaseType() {
+        return baseType;
+    }
+
+    public void setBaseType(String baseType) {
+        this.baseType = baseType;
+    }
+
+    public String getAdjective() {
+        return adjective;
+    }
+
+    public void setAdjective(String adjective) {
+        this.adjective = adjective;
+    }
+    
     public ArrayList<Match> getMatches()
     {
         return teamMatches;
