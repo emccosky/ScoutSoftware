@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 *.properties
 /ScoutingApplication/build/
+=======
+/ScoutingApplication/build/
+ScoutingApplication/src/scoutapp/tempRunData.java
+/ClassInheritanceTest/nbproject/private/
+/ClassInheritanceTest/build/
+>>>>>>> Data-Management-And-Analysis

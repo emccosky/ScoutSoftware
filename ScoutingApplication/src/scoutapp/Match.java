@@ -11,12 +11,17 @@ public class Match
     int red2ID;
     int blue1ID;
     int blue2ID;
-    int redScore;
-    int blueScore;
-    boolean red1Surrogate;
-    boolean red2Surrogate;
-    boolean blue1Surrogate;
-    boolean blue2Surrogate;
+    int redTotalScore;
+    int redScoreFromPenalties;
+    int redScoreAdjusted;
+    int blueTotalScore;
+    int blueScoreFromPenalties;
+    int blueScoreAdjusted;
+
+    boolean isRed1Surrogate;
+    boolean isRed2Surrogate;
+    boolean isBlue1Surrogate;
+    boolean isBlue2Surrogate;
 
     public Match(int compID, int mNum)
     {
@@ -26,12 +31,16 @@ public class Match
         this.red2ID = -1;
         this.blue1ID = -1;
         this.blue2ID = -1;
-        redScore = -1;
-        blueScore = -1;
-        red1Surrogate = false;
-        red2Surrogate = false;
-        blue1Surrogate = false;
-        blue2Surrogate = false;
+        redTotalScore = -1;
+        blueTotalScore = -1;
+        redScoreAdjusted = -1;
+        blueScoreAdjusted = -1;
+        redScoreFromPenalties = -1;
+        blueScoreFromPenalties = -1;
+        isRed1Surrogate = false;
+        isRed2Surrogate = false;
+        isBlue1Surrogate = false;
+        isBlue2Surrogate = false;
     }
 
     public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID)
@@ -42,15 +51,19 @@ public class Match
         this.red2ID = red2ID;
         this.blue1ID = blue1ID;
         this.blue2ID = blue2ID;
-        redScore = -1;
-        blueScore = -1;
-        red1Surrogate = false;
-        red2Surrogate = false;
-        blue1Surrogate = false;
-        blue2Surrogate = false;
+        redTotalScore = -1;
+        redScoreFromPenalties = -1;
+        redScoreAdjusted = -1;
+        blueTotalScore = -1;
+        blueScoreFromPenalties = -1;
+        blueScoreAdjusted = -1;
+        isRed1Surrogate = false;
+        isRed2Surrogate = false;
+        isBlue1Surrogate = false;
+        isBlue2Surrogate = false;
     }
 
-    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rScore, int bScore)
+    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore)
     {
         competitionID = compID;
         matchNum = mNum;
@@ -58,36 +71,65 @@ public class Match
         this.red2ID = red2ID;
         this.blue1ID = blue1ID;
         this.blue2ID = blue2ID;
-        redScore = rScore;
-        blueScore = bScore;
-        red1Surrogate = false;
-        red2Surrogate = false;
-        blue1Surrogate = false;
-        blue2Surrogate = false;
+        redTotalScore = rTotScore;
+        redScoreFromPenalties = -1;
+        redScoreAdjusted = -1;
+        blueTotalScore = bTotScore;
+        blueScoreFromPenalties = -1;
+        blueScoreAdjusted = -1;
+        isRed1Surrogate = false;
+        isRed2Surrogate = false;
+        isBlue1Surrogate = false;
+        isBlue2Surrogate = false;
     }
-    
-    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rScore, int bScore, boolean red1S, boolean red2S, boolean blue1S, boolean blue2S)
-    {
+
+    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore, boolean red1S, boolean red2S, boolean blue1S, boolean blue2S)
+    { 
         competitionID = compID;
         matchNum = mNum;
         this.red1ID = red1ID;
         this.red2ID = red2ID;
         this.blue1ID = blue1ID;
         this.blue2ID = blue2ID;
-        redScore = rScore;
-        blueScore = bScore;
-        red1Surrogate = red1S;
-        red2Surrogate = red2S;
-        blue1Surrogate = blue1S;
-        blue2Surrogate = blue2S;
+        redTotalScore = rTotScore;
+        redScoreFromPenalties = -1;
+        redScoreAdjusted = -1;
+        blueTotalScore = bTotScore;
+        blueScoreFromPenalties = -1;
+        blueScoreAdjusted = -1;
+        isRed1Surrogate = false;
+        isRed2Surrogate = false;
+        isBlue1Surrogate = false;
+        isBlue2Surrogate = false;
     }
 
+    //TODO: ADD CONSTRUCTOR FOR PENALTIES
     public int getScore(int teamID)
     {
         if(teamID == blue1ID || teamID == blue2ID)
-            return blueScore;
+            return blueTotalScore;
         else if(teamID == red1ID || teamID == red2ID)
-            return redScore;
+            return redTotalScore;
+        else
+            return -1;
+    }
+
+    public int getAdjustedScore(int teamID)
+    {
+        if(teamID == blue1ID || teamID == blue2ID)
+            return blueScoreAdjusted;
+        else if(teamID == red1ID || teamID == red2ID)
+            return redScoreAdjusted;
+        else
+            return -1;
+    }
+
+    public int getPointsFromPenalties(int teamID)
+    {
+        if(teamID == blue1ID || teamID == blue2ID)
+            return blueScoreFromPenalties;
+        else if(teamID == red1ID || teamID == red2ID)
+            return redScoreFromPenalties;
         else
             return -1;
     }
@@ -112,14 +154,34 @@ public class Match
         return red2ID;
     }
 
-    public int getMatchRedScore()
+    public int getMatchRedTotalScore()
     {
-        return redScore;
+        return redTotalScore;
     }
 
-    public int getMatchBlueScore()
+    public int getMatchBlueTotalScore()
     {
-        return blueScore;
+        return blueTotalScore;
+    }
+
+    public int getMatchBlueScoreFromPenalties()
+    {
+        return blueScoreFromPenalties;
+    }
+    
+    public int getMatchRedScoreFromPenalties()
+    {
+        return redScoreFromPenalties;
+    }
+    
+    public int getMatchRedScoreAdjusted()
+    {
+        return redScoreAdjusted;
+    }
+    
+    public int getMatchBlueScoreAdjusted()
+    {
+        return blueScoreAdjusted;
     }
 
     public boolean equals(Match a)
@@ -134,11 +196,33 @@ public class Match
             return false;
         if(red2ID != a.getMatchRed2ID())
             return false;
-        if(redScore != a.getMatchRedScore())
+        if(redScoreAdjusted != a.getMatchRedTotalScore())
             return false;
-        if(blueScore != a.getMatchBlueScore())
+        if(blueScoreAdjusted != a.getMatchBlueTotalScore())
+            return false;
+        if(blueScoreFromPenalties != a.getMatchBlueScoreFromPenalties())
+            return false;
+        if(redScoreFromPenalties != a.getMatchRedScoreFromPenalties())
+            return false;
+        if(redTotalScore != a.getMatchRedTotalScore())
+            return false;
+        if(blueTotalScore != a.getMatchBlueTotalScore())
             return false;
         return true;
+    }
+
+    public int getAlliancePartnerID(int teamID)
+    {
+        if(teamID == blue1ID)
+            return blue2ID;
+        else if(teamID == blue2ID)
+            return blue1ID;
+        else if(teamID == red1ID)
+            return red2ID;
+        else if(teamID == red2ID)
+            return red1ID;
+        else
+            return -1;
     }
 
     public int getMatchCompetitionID()

@@ -1199,7 +1199,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         TeamTable.setModel(new TeamListTableModel(teamListData));
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Blue1Label;
     private javax.swing.JLabel Blue2Label;

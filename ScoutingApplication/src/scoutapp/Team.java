@@ -18,6 +18,12 @@ public class Team
     private ArrayList<Match> teamMatches;
     
 
+    public Team(int id)
+    {
+        teamID = id;
+        teamName = "";
+        teamMatches = new ArrayList<Match>();
+    }
     public Team(int id, String name)
     {
         labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
@@ -57,6 +63,11 @@ public class Team
     public void addMatch(Match match)
     {
         teamMatches.add(match);
+    }
+
+    public void clearMatches()
+    {
+        teamMatches.clear();
     }
 
     public int getTeamID()
@@ -124,7 +135,7 @@ public class Team
     {
         return teamMatches;
     }
-    
+
     public ArrayList<Match> getMatchesFromCompetition(int compID)
     {
         ArrayList<Match> competitionMatches = new ArrayList<Match>();
@@ -171,16 +182,16 @@ public class Team
         return MMR;
     }
 
-    public int getAvgPartnerMMR()
+    public double getAvgPartnerMMR()
     {
-        int avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, teamMatches);
+        double avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, teamMatches);
         return avgPartnerMMR;
     }
 
-    public int getAvgPartnerMMRAtCompetition(int compID)
+    public double getAvgPartnerMMRAtCompetition(int compID)
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
-        int avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, competitionMatches);
+        double avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, competitionMatches);
         return avgPartnerMMR;
     }
 
