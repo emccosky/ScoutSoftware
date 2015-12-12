@@ -5,17 +5,30 @@
  */
 package scoutapp;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 /**
  *
  * @author spencersharp
+ * @author emccosky
  */
 public class MainWindow extends javax.swing.JFrame {
 
-    public static Season season;
+    private Season season;
+    private String[][] teamListData;
+    private String[][] teamMatchesData;
+    private String[][] rankingsData;
+    private String[][] matchesData;
+    private Competition currentComp;
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
+        initData();
         initComponents();
     }
 
@@ -28,22 +41,1097 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addTeamDialog = new javax.swing.JDialog();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        addDialog_teamNumField = new javax.swing.JTextField();
+        addDialog_teamNameField = new javax.swing.JTextField();
+        addDialog_addButton = new javax.swing.JButton();
+        addDialog_cancelButton = new javax.swing.JButton();
+        Tabs = new javax.swing.JTabbedPane();
+        Team_Tab = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TeamTable = new javax.swing.JTable();
+        teamNameLabel = new javax.swing.JLabel();
+        teamNumLabel = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        teamMatchesTable = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        teamNameField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        teamLocationField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        teamNumField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        pushbotRadio = new javax.swing.JRadioButton();
+        notPushbotRadio = new javax.swing.JRadioButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        debrisFloorBox = new javax.swing.JCheckBox();
+        debrisLowBox = new javax.swing.JCheckBox();
+        debrisMidBox = new javax.swing.JCheckBox();
+        debrisHighBox = new javax.swing.JCheckBox();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        lowZoneBox = new javax.swing.JCheckBox();
+        midZoneBox = new javax.swing.JCheckBox();
+        highZoneBox = new javax.swing.JCheckBox();
+        hangBox = new javax.swing.JCheckBox();
+        noneEndgameBox = new javax.swing.JCheckBox();
+        autoClimbersBox = new javax.swing.JCheckBox();
+        autoNoneBox = new javax.swing.JCheckBox();
+        autoLowZoneBox = new javax.swing.JCheckBox();
+        autoMidZoneBox = new javax.swing.JCheckBox();
+        autoHighZoneBox = new javax.swing.JCheckBox();
+        autoBeaconBox = new javax.swing.JCheckBox();
+        autoPartlyBox = new javax.swing.JCheckBox();
+        jLabel19 = new javax.swing.JLabel();
+        debrisLevelSlider = new javax.swing.JSlider();
+        jLabel20 = new javax.swing.JLabel();
+        climbLevelSlider = new javax.swing.JSlider();
+        jLabel21 = new javax.swing.JLabel();
+        hangLevelSlider = new javax.swing.JSlider();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        robotDesignField = new javax.swing.JTextArea();
+        baseTypeField = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        teamAdjectiveField = new javax.swing.JTextField();
+        addTeamButton = new javax.swing.JButton();
+        removeTeamButton = new javax.swing.JButton();
+        Match_Tab = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MatchTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        MatchNumLabel = new javax.swing.JLabel();
+        CompetitionLabel = new javax.swing.JLabel();
+        DateLabel = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        Blue1Label = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        Blue2Label = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        CommentsField = new javax.swing.JScrollPane();
+        BlueCommentsField = new javax.swing.JTextArea();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        Red1Label = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        Red2Label = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        RedCommentsField = new javax.swing.JTextArea();
+        Rank_Tab = new javax.swing.JPanel();
+        ThisCompRadio = new javax.swing.JRadioButton();
+        SeasonRadio = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        RankTable = new javax.swing.JTable();
+        GoToTeamPage = new javax.swing.JButton();
+        topMenuBar = new javax.swing.JMenuBar();
+        seasonMenu = new javax.swing.JMenu();
+        seasonOpenOption = new javax.swing.JMenuItem();
+        seasonSaveOption = new javax.swing.JMenuItem();
+        seasonSaveAsOption = new javax.swing.JMenuItem();
+        seasonCloseOption = new javax.swing.JMenuItem();
+        dataMenu = new javax.swing.JMenu();
+        dataImportTeamsOption = new javax.swing.JMenuItem();
+        dataExportTeamsOption = new javax.swing.JMenuItem();
+        dataExportRankingsOption = new javax.swing.JMenuItem();
+        dataImportMatchesOption = new javax.swing.JMenuItem();
+        dataExportMatchesOption = new javax.swing.JMenuItem();
+        compMenu = new javax.swing.JMenu();
+        compImportOption = new javax.swing.JMenuItem();
+        compExportOption = new javax.swing.JMenuItem();
+        currentCompMenu = new javax.swing.JMenu();
+        compCurrentSelectOption = new javax.swing.JMenuItem();
+        compCurrentReplaceOption = new javax.swing.JMenuItem();
+
+        addTeamDialog.setMinimumSize(new java.awt.Dimension(335, 160));
+        addTeamDialog.setModal(true);
+        addTeamDialog.setResizable(false);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("Team Number:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel5.setText("Team Name:");
+
+        addDialog_addButton.setText("Add Team");
+        addDialog_addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDialog_addButtonActionPerformed(evt);
+            }
+        });
+
+        addDialog_cancelButton.setText("Cancel");
+        addDialog_cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addDialog_cancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout addTeamDialogLayout = new javax.swing.GroupLayout(addTeamDialog.getContentPane());
+        addTeamDialog.getContentPane().setLayout(addTeamDialogLayout);
+        addTeamDialogLayout.setHorizontalGroup(
+            addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addTeamDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(addTeamDialogLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(addDialog_teamNumField))
+                        .addGroup(addTeamDialogLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(addDialog_teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(addTeamDialogLayout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(addDialog_addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addDialog_cancelButton)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        addTeamDialogLayout.setVerticalGroup(
+            addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addTeamDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(addDialog_teamNumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(addDialog_teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addTeamDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addDialog_addButton)
+                    .addComponent(addDialog_cancelButton))
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1100, 700));
+        setResizable(false);
+
+        TeamTable.setModel(new TeamListTableModel(teamListData));
+        TeamTable.getTableHeader().setReorderingAllowed(false);
+        TeamTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    viewTeamStats(TeamTable.getValueAt(row, 0));
+                }
+            }
+        });
+        jScrollPane4.setViewportView(TeamTable);
+
+        teamNameLabel.setFont(new java.awt.Font("Miriam", 1, 36)); // NOI18N
+        teamNameLabel.setText("Team Name Goes Here");
+        teamNameLabel.setMaximumSize(new java.awt.Dimension(512, 38));
+        teamNameLabel.setMinimumSize(new java.awt.Dimension(512, 38));
+        teamNameLabel.setPreferredSize(new java.awt.Dimension(512, 38));
+
+        teamNumLabel.setFont(new java.awt.Font("Miriam", 1, 48)); // NOI18N
+        teamNumLabel.setText("####");
+
+        teamMatchesTable.setModel(new TeamMatchesTableModel(teamMatchesData));
+        jScrollPane5.setViewportView(teamMatchesTable);
+
+        jLabel6.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
+        jLabel6.setText("Name:");
+
+        jLabel8.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
+        jLabel8.setText("Location:");
+
+        jLabel10.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
+        jLabel10.setText("Number:");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        pushbotRadio.setFont(pushbotRadio.getFont().deriveFont(pushbotRadio.getFont().getSize()+3f));
+        pushbotRadio.setText("Pushbot");
+
+        notPushbotRadio.setFont(notPushbotRadio.getFont().deriveFont(notPushbotRadio.getFont().getSize()+3f));
+        notPushbotRadio.setText("Not Push Bot");
+
+        jLabel13.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel13.setText("Abilities:");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("Debris:");
+
+        debrisFloorBox.setText("Floor Goal");
+        debrisFloorBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                debrisFloorBoxActionPerformed(evt);
+            }
+        });
+
+        debrisLowBox.setText("Low Goal");
+
+        debrisMidBox.setText("Mid Goal");
+        debrisMidBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                debrisMidBoxActionPerformed(evt);
+            }
+        });
+
+        debrisHighBox.setText("High Goal");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setText("Autonomous:");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setText("Robot Information");
+
+        lowZoneBox.setText("Low Zone");
+        lowZoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lowZoneBoxActionPerformed(evt);
+            }
+        });
+
+        midZoneBox.setText("Mid Zone");
+
+        highZoneBox.setText("High Zone");
+        highZoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                highZoneBoxActionPerformed(evt);
+            }
+        });
+
+        hangBox.setText("Hang");
+
+        noneEndgameBox.setText("None");
+
+        autoClimbersBox.setText("Climbers");
+
+        autoNoneBox.setText("None");
+
+        autoLowZoneBox.setText("Low Zone");
+        autoLowZoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoLowZoneBoxActionPerformed(evt);
+            }
+        });
+
+        autoMidZoneBox.setText("Mid Zone");
+
+        autoHighZoneBox.setText("High Zone");
+        autoHighZoneBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoHighZoneBoxActionPerformed(evt);
+            }
+        });
+
+        autoBeaconBox.setText("Beacon");
+        autoBeaconBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoBeaconBoxActionPerformed(evt);
+            }
+        });
+
+        autoPartlyBox.setText("Partly");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel19.setText("End Game:");
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel20.setText("Debris Scoring Level");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel21.setText("Mountain Climb Level");
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel22.setText("Hang Level:");
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel23.setText("Base Type:");
+
+        robotDesignField.setColumns(20);
+        robotDesignField.setRows(5);
+        jScrollPane6.setViewportView(robotDesignField);
+
+        baseTypeField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baseTypeFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel24.setText("Robot Design Comments:");
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel25.setText("Team Adjective:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(pushbotRadio)
+                                .addGap(18, 18, 18)
+                                .addComponent(notPushbotRadio))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel13))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel15)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(debrisFloorBox)
+                                .addGap(33, 33, 33)
+                                .addComponent(debrisLowBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(debrisMidBox)
+                                .addGap(18, 18, 18)
+                                .addComponent(debrisHighBox))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(autoClimbersBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(autoBeaconBox)
+                                .addGap(223, 223, 223))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(autoNoneBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(autoPartlyBox)
+                                .addGap(18, 18, 18)
+                                .addComponent(autoLowZoneBox)
+                                .addGap(10, 10, 10)
+                                .addComponent(autoMidZoneBox)
+                                .addGap(10, 10, 10)
+                                .addComponent(autoHighZoneBox))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(noneEndgameBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lowZoneBox)
+                                .addGap(10, 10, 10)
+                                .addComponent(midZoneBox)
+                                .addGap(10, 10, 10)
+                                .addComponent(highZoneBox)
+                                .addGap(10, 10, 10)
+                                .addComponent(hangBox))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17)
+                                    .addComponent(jLabel18)
+                                    .addComponent(jLabel19))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(climbLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(hangLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(18, 18, 18)
+                        .addComponent(debrisLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(baseTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel24))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(teamAdjectiveField)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pushbotRadio)
+                    .addComponent(notPushbotRadio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel13)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(debrisFloorBox)
+                    .addComponent(debrisLowBox)
+                    .addComponent(debrisMidBox)
+                    .addComponent(debrisHighBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(autoClimbersBox)
+                    .addComponent(autoBeaconBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(autoLowZoneBox)
+                    .addComponent(autoMidZoneBox)
+                    .addComponent(autoHighZoneBox)
+                    .addComponent(autoNoneBox)
+                    .addComponent(autoPartlyBox))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lowZoneBox)
+                    .addComponent(midZoneBox)
+                    .addComponent(highZoneBox)
+                    .addComponent(hangBox)
+                    .addComponent(noneEndgameBox))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(debrisLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(climbLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(hangLevelSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(baseTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(teamAdjectiveField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        addTeamButton.setText("Add Team");
+        addTeamButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTeamButtonActionPerformed(evt);
+            }
+        });
+
+        removeTeamButton.setText("Remove Team");
+
+        javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
+        Team_Tab.setLayout(Team_TabLayout);
+        Team_TabLayout.setHorizontalGroup(
+            Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Team_TabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addComponent(addTeamButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeTeamButton)))
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(teamNumLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Team_TabLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(teamNameField))
+                            .addGroup(Team_TabLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(teamLocationField))
+                            .addGroup(Team_TabLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(teamNumField))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        Team_TabLayout.setVerticalGroup(
+            Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Team_TabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(teamNumLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Team_TabLayout.createSequentialGroup()
+                                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(teamNumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(teamNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(teamLocationField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)))
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addTeamButton)
+                            .addComponent(removeTeamButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        Tabs.addTab("Teams", Team_Tab);
+
+        MatchTable.setModel(new MatchTableModel(matchesData));
+        jScrollPane1.setViewportView(MatchTable);
+
+        jLabel1.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel1.setText("Match Number:");
+
+        jLabel2.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel2.setText("Date:");
+
+        jLabel3.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel3.setText("Competition:");
+
+        MatchNumLabel.setFont(new java.awt.Font("Miriam", 0, 18)); // NOI18N
+        MatchNumLabel.setText("0");
+
+        CompetitionLabel.setFont(new java.awt.Font("Miriam", 0, 18)); // NOI18N
+        CompetitionLabel.setText("NULL");
+
+        DateLabel.setFont(new java.awt.Font("Miriam", 0, 18)); // NOI18N
+        DateLabel.setText("1-1-2015");
+
+        jPanel4.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        Blue1Label.setFont(new java.awt.Font("Miriam", 0, 14)); // NOI18N
+        Blue1Label.setText("NULL");
+
+        jLabel7.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel7.setText("Blue 1:");
+
+        jLabel9.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel9.setText("Blue 2:");
+
+        Blue2Label.setFont(new java.awt.Font("Miriam", 0, 14)); // NOI18N
+        Blue2Label.setText("NULL");
+
+        jLabel11.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
+        jLabel11.setText("Comments:");
+
+        BlueCommentsField.setColumns(20);
+        BlueCommentsField.setRows(5);
+        CommentsField.setViewportView(BlueCommentsField);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Blue1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Blue2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(CommentsField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(Blue1Label)
+                    .addComponent(jLabel9)
+                    .addComponent(Blue2Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CommentsField, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel12.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel12.setText("Red 1:");
+
+        Red1Label.setFont(new java.awt.Font("Miriam", 0, 14)); // NOI18N
+        Red1Label.setText("NULL");
+
+        jLabel14.setFont(new java.awt.Font("Miriam", 1, 18)); // NOI18N
+        jLabel14.setText("Red 2:");
+
+        jLabel16.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
+        jLabel16.setText("Comments:");
+
+        Red2Label.setFont(new java.awt.Font("Miriam", 0, 14)); // NOI18N
+        Red2Label.setText("NULL");
+
+        RedCommentsField.setColumns(20);
+        RedCommentsField.setRows(5);
+        jScrollPane3.setViewportView(RedCommentsField);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Red1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Red2Label, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(Red1Label)
+                    .addComponent(jLabel14)
+                    .addComponent(Red2Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout Match_TabLayout = new javax.swing.GroupLayout(Match_Tab);
+        Match_Tab.setLayout(Match_TabLayout);
+        Match_TabLayout.setHorizontalGroup(
+            Match_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+            .addGroup(Match_TabLayout.createSequentialGroup()
+                .addGroup(Match_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Match_TabLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(MatchNumLabel)
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CompetitionLabel)
+                        .addGap(257, 257, 257)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(Match_TabLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        Match_TabLayout.setVerticalGroup(
+            Match_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Match_TabLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Match_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(MatchNumLabel)
+                    .addComponent(CompetitionLabel)
+                    .addComponent(DateLabel))
+                .addGap(13, 13, 13)
+                .addGroup(Match_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        Tabs.addTab("Matches", Match_Tab);
+
+        ThisCompRadio.setText("This Competition");
+
+        SeasonRadio.setText("Season");
+
+        RankTable.setModel(new RankingsTableModel(rankingsData));
+        jScrollPane2.setViewportView(RankTable);
+
+        GoToTeamPage.setText("Go to Team Page");
+
+        javax.swing.GroupLayout Rank_TabLayout = new javax.swing.GroupLayout(Rank_Tab);
+        Rank_Tab.setLayout(Rank_TabLayout);
+        Rank_TabLayout.setHorizontalGroup(
+            Rank_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Rank_TabLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(ThisCompRadio)
+                .addGap(18, 18, 18)
+                .addComponent(SeasonRadio)
+                .addContainerGap(869, Short.MAX_VALUE))
+            .addGroup(Rank_TabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Rank_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Rank_TabLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(GoToTeamPage)))
+                .addContainerGap())
+        );
+        Rank_TabLayout.setVerticalGroup(
+            Rank_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Rank_TabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Rank_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ThisCompRadio)
+                    .addComponent(SeasonRadio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(GoToTeamPage)
+                .addContainerGap())
+        );
+
+        Tabs.addTab("Rankings", Rank_Tab);
+
+        seasonMenu.setText("Season");
+
+        seasonOpenOption.setText("Open");
+        seasonOpenOption.setToolTipText("");
+        seasonOpenOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seasonOpenOptionActionPerformed(evt);
+            }
+        });
+        seasonMenu.add(seasonOpenOption);
+
+        seasonSaveOption.setText("Save");
+        seasonSaveOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seasonSaveOptionActionPerformed(evt);
+            }
+        });
+        seasonMenu.add(seasonSaveOption);
+
+        seasonSaveAsOption.setText("Save As");
+        seasonMenu.add(seasonSaveAsOption);
+
+        seasonCloseOption.setText("Close");
+        seasonMenu.add(seasonCloseOption);
+
+        topMenuBar.add(seasonMenu);
+
+        dataMenu.setText("Data");
+
+        dataImportTeamsOption.setText("Import Teams");
+        dataMenu.add(dataImportTeamsOption);
+
+        dataExportTeamsOption.setText("Export Teams");
+        dataMenu.add(dataExportTeamsOption);
+
+        dataExportRankingsOption.setText("Export Rankings");
+        dataMenu.add(dataExportRankingsOption);
+
+        dataImportMatchesOption.setText("Import Matches");
+        dataMenu.add(dataImportMatchesOption);
+
+        dataExportMatchesOption.setText("Export Matches");
+        dataMenu.add(dataExportMatchesOption);
+
+        topMenuBar.add(dataMenu);
+
+        compMenu.setText("Competition");
+
+        compImportOption.setText("Import");
+        compMenu.add(compImportOption);
+
+        compExportOption.setText("Export");
+        compExportOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compExportOptionActionPerformed(evt);
+            }
+        });
+        compMenu.add(compExportOption);
+
+        currentCompMenu.setText("Current Competition");
+
+        compCurrentSelectOption.setText("Select");
+        currentCompMenu.add(compCurrentSelectOption);
+
+        compCurrentReplaceOption.setText("Replace");
+        compCurrentReplaceOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compCurrentReplaceOptionActionPerformed(evt);
+            }
+        });
+        currentCompMenu.add(compCurrentReplaceOption);
+
+        compMenu.add(currentCompMenu);
+
+        topMenuBar.add(compMenu);
+
+        setJMenuBar(topMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Tabs)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Tabs))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void seasonSaveOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonSaveOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seasonSaveOptionActionPerformed
+
+    private void compExportOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compExportOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_compExportOptionActionPerformed
+
+    private void compCurrentReplaceOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compCurrentReplaceOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_compCurrentReplaceOptionActionPerformed
+
+    private void debrisFloorBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debrisFloorBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_debrisFloorBoxActionPerformed
+
+    private void debrisMidBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debrisMidBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_debrisMidBoxActionPerformed
+
+    private void lowZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowZoneBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lowZoneBoxActionPerformed
+
+    private void highZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highZoneBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_highZoneBoxActionPerformed
+
+    private void autoLowZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoLowZoneBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoLowZoneBoxActionPerformed
+
+    private void autoHighZoneBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoHighZoneBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoHighZoneBoxActionPerformed
+
+    private void autoBeaconBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoBeaconBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoBeaconBoxActionPerformed
+
+    private void baseTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseTypeFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_baseTypeFieldActionPerformed
+
+    private void seasonOpenOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonOpenOptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seasonOpenOptionActionPerformed
+
+    private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
+        addTeamDialog.setVisible(true);
+    }//GEN-LAST:event_addTeamButtonActionPerformed
+
+    private void addDialog_cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_cancelButtonActionPerformed
+        addTeamDialog.dispose();
+        addTeamDialog.setVisible(false);
+    }//GEN-LAST:event_addDialog_cancelButtonActionPerformed
+
+    private void addDialog_addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_addButtonActionPerformed
+        String num = addDialog_teamNumField.getText();
+        String name = addDialog_teamNameField.getText();
+        addTeam(num, name, currentComp.getCompetitionID());
+        addTeamDialog.dispose();
+        addTeamDialog.setVisible(false);
+    }//GEN-LAST:event_addDialog_addButtonActionPerformed
+
+    private void initData() {
+        season = new Season();
+        currentComp = new Competition(season.getNextCompID());
+        season.addCompetition(currentComp);
+        teamListData = new String[10][2];
+        teamMatchesData = new String[10][8];
+        rankingsData = new String[10][9];
+        matchesData = new String[10][11];
+        currentComp = new Competition(season.getNextCompID());
+    }
+    
+    private void addTeam(String num, String name, int compID) {
+        ArrayList<Team> tempTeams = season.getTeams();
+        ArrayList<Competition> tempComps = season.getCompetitions();
+        Team newTeam = null;
+        try {
+            newTeam = new Team(Integer.parseInt(num), name);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Team number must be a number!");
+        }
+        tempTeams.add(newTeam);
+        int currentCompSpot = 0;
+        for(int i = 0; i < tempComps.size(); i++) {
+            if (tempComps.get(i).getCompetitionID() == compID) {
+                currentCompSpot = i;
+            }
+        }
+        Competition tempComp = tempComps.get(currentCompSpot);
+        tempComp.addTeam(newTeam);
+        tempComps.set(currentCompSpot, tempComp);
+        updateAll();
+    }
+    
+    private void viewTeamStats(Object teamNum) {
+        //save the info of the currently displayed team
+        saveCurrentTeamStats();
+        //Try-Catch not needed, team num not a number already caught
+        Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
+        //get team scouting info lists
+        ArrayList<String> labels = selectedTeam.getLabels();
+        ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
+        Boolean[] scouting = selectedTeam.getScouting();
+        Integer[] sliders = selectedTeam.getSliders();
+        teamNumLabel.setText(selectedTeam.getTeamID() + "");
+        teamNameLabel.setText(selectedTeam.getTeamName() + "");
+        teamNumField.setText(selectedTeam.getTeamID() + "");
+        teamNameField.setText(selectedTeam.getTeamName() + "");
+        teamLocationField.setText(selectedTeam.getLocation() + "");
+        
+        //Checkbox value setting
+        autoBeaconBox.setSelected(scouting[labels.indexOf("autoBeaconBox")]);
+        autoClimbersBox.setSelected(scouting[labels.indexOf("autoClimbersBox")]);
+        autoHighZoneBox.setSelected(scouting[labels.indexOf("autoHighZoneBox")]);
+        autoLowZoneBox.setSelected(scouting[labels.indexOf("autoLowZoneBox")]);
+        autoMidZoneBox.setSelected(scouting[labels.indexOf("autoMidZoneBox")]);
+        autoNoneBox.setSelected(scouting[labels.indexOf("autoNoneBox")]);
+        autoPartlyBox.setSelected(scouting[labels.indexOf("autoPartlyBox")]);
+        debrisFloorBox.setSelected(scouting[labels.indexOf("debrisFloorBox")]);
+        debrisHighBox.setSelected(scouting[labels.indexOf("debrisHighBox")]);
+        debrisLowBox.setSelected(scouting[labels.indexOf("debrisLowBox")]);
+        debrisMidBox.setSelected(scouting[labels.indexOf("debrisMidBox")]);
+        midZoneBox.setSelected(scouting[labels.indexOf("midZoneBox")]);
+        highZoneBox.setSelected(scouting[labels.indexOf("highZoneBox")]);
+        lowZoneBox.setSelected(scouting[labels.indexOf("lowZoneBox")]);
+        hangBox.setSelected(scouting[labels.indexOf("hangBox")]);
+        noneEndgameBox.setSelected(scouting[labels.indexOf("noneEndgameBox")]);
+        
+        //slider and text feld setting
+        debrisLevelSlider.setValue(sliders[sliderLabels.indexOf("debrisLevelSlider")]);
+        climbLevelSlider.setValue(sliders[sliderLabels.indexOf("climbLevelSlider")]);
+        hangLevelSlider.setValue(sliders[sliderLabels.indexOf("hangLevelSlider")]);
+        baseTypeField.setText(selectedTeam.getBaseType());
+        robotDesignField.setText(selectedTeam.getDesignComments());
+        teamAdjectiveField.setText(selectedTeam.getAdjective());
+    }
+    
+    private void saveCurrentTeamStats(){
+        if(!teamNumLabel.getText().equals("####")){
+            Team currentTeam = season.getTeam((int)Integer.parseInt(teamNumLabel.getText()));
+            ArrayList<String> labels = currentTeam.getLabels();
+            ArrayList<String> sliderLabels = currentTeam.getSliderLabels();
+            Boolean[] scouting = currentTeam.getScouting();
+            Integer[] sliders = currentTeam.getSliders();
+            
+            //set the team values based on whats in the fields
+            
+            //checkbox values
+            scouting[labels.indexOf("autoBeaconBox")] = autoBeaconBox.isSelected();
+            scouting[labels.indexOf("autoClimbersBox")]= autoClimbersBox.isSelected();
+            scouting[labels.indexOf("autoHighZoneBox")] = autoHighZoneBox.isSelected();
+            scouting[labels.indexOf("autoLowZoneBox")]=autoLowZoneBox.isSelected();
+            scouting[labels.indexOf("autoMidZoneBox")]=autoMidZoneBox.isSelected();
+            scouting[labels.indexOf("autoNoneBox")]=autoNoneBox.isSelected();
+            scouting[labels.indexOf("autoPartlyBox")]=autoPartlyBox.isSelected();
+            scouting[labels.indexOf("debrisFloorBox")]=debrisFloorBox.isSelected();
+            scouting[labels.indexOf("debrisHighBox")]=debrisHighBox.isSelected();
+            scouting[labels.indexOf("debrisLowBox")]=debrisLowBox.isSelected();
+            scouting[labels.indexOf("debrisMidBox")]=debrisMidBox.isSelected();
+            scouting[labels.indexOf("midZoneBox")]=midZoneBox.isSelected();
+            scouting[labels.indexOf("highZoneBox")]=highZoneBox.isSelected();
+            scouting[labels.indexOf("lowZoneBox")]=lowZoneBox.isSelected();
+            scouting[labels.indexOf("hangBox")]=hangBox.isSelected();
+            scouting[labels.indexOf("noneEndgameBox")]=noneEndgameBox.isSelected();
+
+            //slider and text feld values
+            sliders[sliderLabels.indexOf("debrisLevelSlider")]=debrisLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("climbLevelSlider")]=climbLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("hangLevelSlider")]=hangLevelSlider.getValue();
+            currentTeam.setBaseType(baseTypeField.getText());
+            currentTeam.setDesignComments(robotDesignField.getText());
+            currentTeam.setAdjective(teamAdjectiveField.getText());
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -70,8 +1158,7 @@ public class MainWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        season = new Season();
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -98,9 +1185,130 @@ public class MainWindow extends javax.swing.JFrame {
             {
                 //Replace the other match with this one
             }
+        }   
+    }
+    
+    //Update all the things
+    public void updateAll() {
+        //team tab team list
+        ArrayList<Team> tempTeams = season.getTeams();
+        teamListData = new String[tempTeams.size()][2];
+        for(int i = 0; i < tempTeams.size(); i++){
+            teamListData[i][0] = tempTeams.get(i).getTeamID() + "";
+            teamListData[i][1] = tempTeams.get(i).getTeamName();
         }
+        TeamTable.setModel(new TeamListTableModel(teamListData));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Blue1Label;
+    private javax.swing.JLabel Blue2Label;
+    private javax.swing.JTextArea BlueCommentsField;
+    private javax.swing.JScrollPane CommentsField;
+    private javax.swing.JLabel CompetitionLabel;
+    private javax.swing.JLabel DateLabel;
+    private javax.swing.JButton GoToTeamPage;
+    private javax.swing.JLabel MatchNumLabel;
+    private javax.swing.JTable MatchTable;
+    private javax.swing.JPanel Match_Tab;
+    private javax.swing.JTable RankTable;
+    private javax.swing.JPanel Rank_Tab;
+    private javax.swing.JLabel Red1Label;
+    private javax.swing.JLabel Red2Label;
+    private javax.swing.JTextArea RedCommentsField;
+    private javax.swing.JRadioButton SeasonRadio;
+    private javax.swing.JTabbedPane Tabs;
+    private javax.swing.JTable TeamTable;
+    private javax.swing.JPanel Team_Tab;
+    private javax.swing.JRadioButton ThisCompRadio;
+    private javax.swing.JButton addDialog_addButton;
+    private javax.swing.JButton addDialog_cancelButton;
+    private javax.swing.JTextField addDialog_teamNameField;
+    private javax.swing.JTextField addDialog_teamNumField;
+    private javax.swing.JButton addTeamButton;
+    private javax.swing.JDialog addTeamDialog;
+    private javax.swing.JCheckBox autoBeaconBox;
+    private javax.swing.JCheckBox autoClimbersBox;
+    private javax.swing.JCheckBox autoHighZoneBox;
+    private javax.swing.JCheckBox autoLowZoneBox;
+    private javax.swing.JCheckBox autoMidZoneBox;
+    private javax.swing.JCheckBox autoNoneBox;
+    private javax.swing.JCheckBox autoPartlyBox;
+    private javax.swing.JTextField baseTypeField;
+    private javax.swing.JSlider climbLevelSlider;
+    private javax.swing.JMenuItem compCurrentReplaceOption;
+    private javax.swing.JMenuItem compCurrentSelectOption;
+    private javax.swing.JMenuItem compExportOption;
+    private javax.swing.JMenuItem compImportOption;
+    private javax.swing.JMenu compMenu;
+    private javax.swing.JMenu currentCompMenu;
+    private javax.swing.JMenuItem dataExportMatchesOption;
+    private javax.swing.JMenuItem dataExportRankingsOption;
+    private javax.swing.JMenuItem dataExportTeamsOption;
+    private javax.swing.JMenuItem dataImportMatchesOption;
+    private javax.swing.JMenuItem dataImportTeamsOption;
+    private javax.swing.JMenu dataMenu;
+    private javax.swing.JCheckBox debrisFloorBox;
+    private javax.swing.JCheckBox debrisHighBox;
+    private javax.swing.JSlider debrisLevelSlider;
+    private javax.swing.JCheckBox debrisLowBox;
+    private javax.swing.JCheckBox debrisMidBox;
+    private javax.swing.JCheckBox hangBox;
+    private javax.swing.JSlider hangLevelSlider;
+    private javax.swing.JCheckBox highZoneBox;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JCheckBox lowZoneBox;
+    private javax.swing.JCheckBox midZoneBox;
+    private javax.swing.JCheckBox noneEndgameBox;
+    private javax.swing.JRadioButton notPushbotRadio;
+    private javax.swing.JRadioButton pushbotRadio;
+    private javax.swing.JButton removeTeamButton;
+    private javax.swing.JTextArea robotDesignField;
+    private javax.swing.JMenuItem seasonCloseOption;
+    private javax.swing.JMenu seasonMenu;
+    private javax.swing.JMenuItem seasonOpenOption;
+    private javax.swing.JMenuItem seasonSaveAsOption;
+    private javax.swing.JMenuItem seasonSaveOption;
+    private javax.swing.JTextField teamAdjectiveField;
+    private javax.swing.JTextField teamLocationField;
+    private javax.swing.JTable teamMatchesTable;
+    private javax.swing.JTextField teamNameField;
+    private javax.swing.JLabel teamNameLabel;
+    private javax.swing.JTextField teamNumField;
+    private javax.swing.JLabel teamNumLabel;
+    private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
 }

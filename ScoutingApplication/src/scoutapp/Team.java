@@ -7,7 +7,16 @@ public class Team
 {
     int teamID;
     String teamName;
+    String location;
+    ArrayList<String> labels = new ArrayList<String>();
+    Boolean[] scouting;
+    ArrayList<String> sliderLabels = new ArrayList<String>();
+    Integer[] sliders;
+    String baseType;
+    String designComments;
+    String adjective;
     private ArrayList<Match> teamMatches;
+    
 
     public Team(int id)
     {
@@ -17,9 +26,38 @@ public class Team
     }
     public Team(int id, String name)
     {
+        labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
+        sliderLabels.addAll(Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider"));
+        this.scouting = new Boolean[labels.size()];
+        for(int i = 0; i < labels.size(); i++){
+            scouting[i] = false;
+        }
+        this.sliders = new Integer[sliderLabels.size()];
+        for(int i = 0; i < sliderLabels.size(); i++){
+            sliders[i] = 0;
+        }
+        baseType = "";
+        designComments = "";
+        adjective = "";
         teamID = id;
         teamName = name;
         teamMatches = new ArrayList<Match>();
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public ArrayList<Match> getTeamMatches() {
+        return teamMatches;
+    }
+
+    public void setTeamMatches(ArrayList<Match> teamMatches) {
+        this.teamMatches = teamMatches;
     }
 
     public void addMatch(Match match)
@@ -36,7 +74,63 @@ public class Team
     {
         return teamID;
     }
+    
+    public String getLocation() {
+        return location;
+    }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+    
+    public ArrayList<String> getSliderLabels() {
+        return sliderLabels;
+    }
+
+    public Boolean[] getScouting() {
+        return scouting;
+    }
+
+    public void setScouting(Boolean[] scouting) {
+        this.scouting = scouting;
+    }
+
+    public Integer[] getSliders() {
+        return sliders;
+    }
+
+    public void setSliders(Integer[] sliders) {
+        this.sliders = sliders;
+    }
+
+    public String getBaseType() {
+        return baseType;
+    }
+
+    public void setBaseType(String baseType) {
+        this.baseType = baseType;
+    }
+
+    public String getDesignComments() {
+        return designComments;
+    }
+
+    public void setDesignComments(String designComments) {
+        this.designComments = designComments;
+    }
+    
+    public String getAdjective() {
+        return adjective;
+    }
+
+    public void setAdjective(String adjective) {
+        this.adjective = adjective;
+    }
+    
     public ArrayList<Match> getMatches()
     {
         return teamMatches;
