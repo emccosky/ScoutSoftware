@@ -8,20 +8,30 @@ public class Team
     int teamID;
     String teamName;
     String location;
-    private static final ArrayList<String> labels = (ArrayList) Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZone","autoMidZone","autoHighZone","autoBeaconBox","autoPartlyBox");
-    ArrayList<Boolean> scouting;
-    private static final ArrayList<String> sliderLabels = (ArrayList) Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider");
-    ArrayList<Integer> sliders;
+    ArrayList<String> labels = new ArrayList<String>();
+    Boolean[] scouting;
+    ArrayList<String> sliderLabels = new ArrayList<String>();
+    Integer[] sliders;
     String baseType;
+    String designComments;
     String adjective;
     private ArrayList<Match> teamMatches;
     
 
     public Team(int id, String name)
     {
-        this.scouting = new ArrayList<Boolean>();
-        this.sliders = new ArrayList<Integer>();
+        labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
+        sliderLabels.addAll(Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider"));
+        this.scouting = new Boolean[labels.size()];
+        for(int i = 0; i < labels.size(); i++){
+            scouting[i] = false;
+        }
+        this.sliders = new Integer[sliderLabels.size()];
+        for(int i = 0; i < sliderLabels.size(); i++){
+            sliders[i] = 0;
+        }
         baseType = "";
+        designComments = "";
         adjective = "";
         teamID = id;
         teamName = name;
@@ -70,19 +80,19 @@ public class Team
         return sliderLabels;
     }
 
-    public ArrayList<Boolean> getScouting() {
+    public Boolean[] getScouting() {
         return scouting;
     }
 
-    public void setScouting(ArrayList<Boolean> scouting) {
+    public void setScouting(Boolean[] scouting) {
         this.scouting = scouting;
     }
 
-    public ArrayList<Integer> getSliders() {
+    public Integer[] getSliders() {
         return sliders;
     }
 
-    public void setSliders(ArrayList<Integer> sliders) {
+    public void setSliders(Integer[] sliders) {
         this.sliders = sliders;
     }
 
@@ -94,6 +104,14 @@ public class Team
         this.baseType = baseType;
     }
 
+    public String getDesignComments() {
+        return designComments;
+    }
+
+    public void setDesignComments(String designComments) {
+        this.designComments = designComments;
+    }
+    
     public String getAdjective() {
         return adjective;
     }

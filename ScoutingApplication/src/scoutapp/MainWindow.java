@@ -101,7 +101,6 @@ public class MainWindow extends javax.swing.JFrame {
         teamAdjectiveField = new javax.swing.JTextField();
         addTeamButton = new javax.swing.JButton();
         removeTeamButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         Match_Tab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MatchTable = new javax.swing.JTable();
@@ -547,13 +546,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         removeTeamButton.setText("Remove Team");
 
-        jButton1.setText("Update Scouting");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
         Team_Tab.setLayout(Team_TabLayout);
         Team_TabLayout.setHorizontalGroup(
@@ -572,8 +564,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(teamNumLabel)
                         .addGap(18, 18, 18)
                         .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -602,8 +593,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(teamNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(teamNumLabel)
-                            .addComponent(jButton1))
+                            .addComponent(teamNumLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Team_TabLayout.createSequentialGroup()
@@ -1028,10 +1018,6 @@ public class MainWindow extends javax.swing.JFrame {
         addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
@@ -1066,17 +1052,83 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void viewTeamStats(Object teamNum) {
+        //save the info of the currently displayed team
+        saveCurrentTeamStats();
         //Try-Catch not needed, team num not a number already caught
         Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
+        //get team scouting info lists
         ArrayList<String> labels = selectedTeam.getLabels();
         ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
+        Boolean[] scouting = selectedTeam.getScouting();
+        Integer[] sliders = selectedTeam.getSliders();
         teamNumLabel.setText(selectedTeam.getTeamID() + "");
         teamNameLabel.setText(selectedTeam.getTeamName() + "");
         teamNumField.setText(selectedTeam.getTeamID() + "");
         teamNameField.setText(selectedTeam.getTeamName() + "");
         teamLocationField.setText(selectedTeam.getLocation() + "");
-        for(String label : labels){
+        
+        //Checkbox value setting
+        autoBeaconBox.setSelected(scouting[labels.indexOf("autoBeaconBox")]);
+        autoClimbersBox.setSelected(scouting[labels.indexOf("autoClimbersBox")]);
+        autoHighZoneBox.setSelected(scouting[labels.indexOf("autoHighZoneBox")]);
+        autoLowZoneBox.setSelected(scouting[labels.indexOf("autoLowZoneBox")]);
+        autoMidZoneBox.setSelected(scouting[labels.indexOf("autoMidZoneBox")]);
+        autoNoneBox.setSelected(scouting[labels.indexOf("autoNoneBox")]);
+        autoPartlyBox.setSelected(scouting[labels.indexOf("autoPartlyBox")]);
+        debrisFloorBox.setSelected(scouting[labels.indexOf("debrisFloorBox")]);
+        debrisHighBox.setSelected(scouting[labels.indexOf("debrisHighBox")]);
+        debrisLowBox.setSelected(scouting[labels.indexOf("debrisLowBox")]);
+        debrisMidBox.setSelected(scouting[labels.indexOf("debrisMidBox")]);
+        midZoneBox.setSelected(scouting[labels.indexOf("midZoneBox")]);
+        highZoneBox.setSelected(scouting[labels.indexOf("highZoneBox")]);
+        lowZoneBox.setSelected(scouting[labels.indexOf("lowZoneBox")]);
+        hangBox.setSelected(scouting[labels.indexOf("hangBox")]);
+        noneEndgameBox.setSelected(scouting[labels.indexOf("noneEndgameBox")]);
+        
+        //slider and text feld setting
+        debrisLevelSlider.setValue(sliders[sliderLabels.indexOf("debrisLevelSlider")]);
+        climbLevelSlider.setValue(sliders[sliderLabels.indexOf("climbLevelSlider")]);
+        hangLevelSlider.setValue(sliders[sliderLabels.indexOf("hangLevelSlider")]);
+        baseTypeField.setText(selectedTeam.getBaseType());
+        robotDesignField.setText(selectedTeam.getDesignComments());
+        teamAdjectiveField.setText(selectedTeam.getAdjective());
+    }
+    
+    private void saveCurrentTeamStats(){
+        if(!teamNumLabel.getText().equals("####")){
+            Team currentTeam = season.getTeam((int)Integer.parseInt(teamNumLabel.getText()));
+            ArrayList<String> labels = currentTeam.getLabels();
+            ArrayList<String> sliderLabels = currentTeam.getSliderLabels();
+            Boolean[] scouting = currentTeam.getScouting();
+            Integer[] sliders = currentTeam.getSliders();
             
+            //set the team values based on whats in the fields
+            
+            //checkbox values
+            scouting[labels.indexOf("autoBeaconBox")] = autoBeaconBox.isSelected();
+            scouting[labels.indexOf("autoClimbersBox")]= autoClimbersBox.isSelected();
+            scouting[labels.indexOf("autoHighZoneBox")] = autoHighZoneBox.isSelected();
+            scouting[labels.indexOf("autoLowZoneBox")]=autoLowZoneBox.isSelected();
+            scouting[labels.indexOf("autoMidZoneBox")]=autoMidZoneBox.isSelected();
+            scouting[labels.indexOf("autoNoneBox")]=autoNoneBox.isSelected();
+            scouting[labels.indexOf("autoPartlyBox")]=autoPartlyBox.isSelected();
+            scouting[labels.indexOf("debrisFloorBox")]=debrisFloorBox.isSelected();
+            scouting[labels.indexOf("debrisHighBox")]=debrisHighBox.isSelected();
+            scouting[labels.indexOf("debrisLowBox")]=debrisLowBox.isSelected();
+            scouting[labels.indexOf("debrisMidBox")]=debrisMidBox.isSelected();
+            scouting[labels.indexOf("midZoneBox")]=midZoneBox.isSelected();
+            scouting[labels.indexOf("highZoneBox")]=highZoneBox.isSelected();
+            scouting[labels.indexOf("lowZoneBox")]=lowZoneBox.isSelected();
+            scouting[labels.indexOf("hangBox")]=hangBox.isSelected();
+            scouting[labels.indexOf("noneEndgameBox")]=noneEndgameBox.isSelected();
+
+            //slider and text feld values
+            sliders[sliderLabels.indexOf("debrisLevelSlider")]=debrisLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("climbLevelSlider")]=climbLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("hangLevelSlider")]=hangLevelSlider.getValue();
+            currentTeam.setBaseType(baseTypeField.getText());
+            currentTeam.setDesignComments(robotDesignField.getText());
+            currentTeam.setAdjective(teamAdjectiveField.getText());
         }
     }
     
@@ -1138,6 +1190,7 @@ public class MainWindow extends javax.swing.JFrame {
     
     //Update all the things
     public void updateAll() {
+        //team tab team list
         ArrayList<Team> tempTeams = season.getTeams();
         teamListData = new String[tempTeams.size()][2];
         for(int i = 0; i < tempTeams.size(); i++){
@@ -1203,7 +1256,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox hangBox;
     private javax.swing.JSlider hangLevelSlider;
     private javax.swing.JCheckBox highZoneBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
