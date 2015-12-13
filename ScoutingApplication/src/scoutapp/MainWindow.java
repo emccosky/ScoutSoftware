@@ -7,9 +7,27 @@ package scoutapp;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+
+//Excel File Read Packages
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 /**
  *
@@ -1026,7 +1044,7 @@ public class MainWindow extends javax.swing.JFrame {
         teamMatchesData = new String[10][8];
         rankingsData = new String[10][9];
         matchesData = new String[10][11];
-        currentComp = new Competition(season.getNextCompID());
+        importMatches();
     }
     
     private void addTeam(String num, String name, int compID) {
@@ -1052,46 +1070,83 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void viewTeamStats(Object teamNum) {
-        //save the info of the currently displayed team
-        saveCurrentTeamStats();
-        //Try-Catch not needed, team num not a number already caught
-        Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
-        //get team scouting info lists
-        ArrayList<String> labels = selectedTeam.getLabels();
-        ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
-        Boolean[] scouting = selectedTeam.getScouting();
-        Integer[] sliders = selectedTeam.getSliders();
-        teamNumLabel.setText(selectedTeam.getTeamID() + "");
-        teamNameLabel.setText(selectedTeam.getTeamName() + "");
-        teamNumField.setText(selectedTeam.getTeamID() + "");
-        teamNameField.setText(selectedTeam.getTeamName() + "");
-        teamLocationField.setText(selectedTeam.getLocation() + "");
-        
-        //Checkbox value setting
-        autoBeaconBox.setSelected(scouting[labels.indexOf("autoBeaconBox")]);
-        autoClimbersBox.setSelected(scouting[labels.indexOf("autoClimbersBox")]);
-        autoHighZoneBox.setSelected(scouting[labels.indexOf("autoHighZoneBox")]);
-        autoLowZoneBox.setSelected(scouting[labels.indexOf("autoLowZoneBox")]);
-        autoMidZoneBox.setSelected(scouting[labels.indexOf("autoMidZoneBox")]);
-        autoNoneBox.setSelected(scouting[labels.indexOf("autoNoneBox")]);
-        autoPartlyBox.setSelected(scouting[labels.indexOf("autoPartlyBox")]);
-        debrisFloorBox.setSelected(scouting[labels.indexOf("debrisFloorBox")]);
-        debrisHighBox.setSelected(scouting[labels.indexOf("debrisHighBox")]);
-        debrisLowBox.setSelected(scouting[labels.indexOf("debrisLowBox")]);
-        debrisMidBox.setSelected(scouting[labels.indexOf("debrisMidBox")]);
-        midZoneBox.setSelected(scouting[labels.indexOf("midZoneBox")]);
-        highZoneBox.setSelected(scouting[labels.indexOf("highZoneBox")]);
-        lowZoneBox.setSelected(scouting[labels.indexOf("lowZoneBox")]);
-        hangBox.setSelected(scouting[labels.indexOf("hangBox")]);
-        noneEndgameBox.setSelected(scouting[labels.indexOf("noneEndgameBox")]);
-        
-        //slider and text feld setting
-        debrisLevelSlider.setValue(sliders[sliderLabels.indexOf("debrisLevelSlider")]);
-        climbLevelSlider.setValue(sliders[sliderLabels.indexOf("climbLevelSlider")]);
-        hangLevelSlider.setValue(sliders[sliderLabels.indexOf("hangLevelSlider")]);
-        baseTypeField.setText(selectedTeam.getBaseType());
-        robotDesignField.setText(selectedTeam.getDesignComments());
-        teamAdjectiveField.setText(selectedTeam.getAdjective());
+        if(teamNum != null){
+            //save the info of the currently displayed team
+            saveCurrentTeamStats();
+            //Try-Catch not needed, team num not a number already caught
+            Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
+            //get team scouting info lists
+            ArrayList<String> labels = selectedTeam.getLabels();
+            ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
+            Boolean[] scouting = selectedTeam.getScouting();
+            Integer[] sliders = selectedTeam.getSliders();
+            teamNumLabel.setText(selectedTeam.getTeamID() + "");
+            teamNameLabel.setText(selectedTeam.getTeamName() + "");
+            teamNumField.setText(selectedTeam.getTeamID() + "");
+            teamNameField.setText(selectedTeam.getTeamName() + "");
+            teamLocationField.setText(selectedTeam.getLocation() + "");
+
+            //Checkbox value setting
+            autoBeaconBox.setSelected(scouting[labels.indexOf("autoBeaconBox")]);
+            autoClimbersBox.setSelected(scouting[labels.indexOf("autoClimbersBox")]);
+            autoHighZoneBox.setSelected(scouting[labels.indexOf("autoHighZoneBox")]);
+            autoLowZoneBox.setSelected(scouting[labels.indexOf("autoLowZoneBox")]);
+            autoMidZoneBox.setSelected(scouting[labels.indexOf("autoMidZoneBox")]);
+            autoNoneBox.setSelected(scouting[labels.indexOf("autoNoneBox")]);
+            autoPartlyBox.setSelected(scouting[labels.indexOf("autoPartlyBox")]);
+            debrisFloorBox.setSelected(scouting[labels.indexOf("debrisFloorBox")]);
+            debrisHighBox.setSelected(scouting[labels.indexOf("debrisHighBox")]);
+            debrisLowBox.setSelected(scouting[labels.indexOf("debrisLowBox")]);
+            debrisMidBox.setSelected(scouting[labels.indexOf("debrisMidBox")]);
+            midZoneBox.setSelected(scouting[labels.indexOf("midZoneBox")]);
+            highZoneBox.setSelected(scouting[labels.indexOf("highZoneBox")]);
+            lowZoneBox.setSelected(scouting[labels.indexOf("lowZoneBox")]);
+            hangBox.setSelected(scouting[labels.indexOf("hangBox")]);
+            noneEndgameBox.setSelected(scouting[labels.indexOf("noneEndgameBox")]);
+
+            //slider and text feld setting
+            debrisLevelSlider.setValue(sliders[sliderLabels.indexOf("debrisLevelSlider")]);
+            climbLevelSlider.setValue(sliders[sliderLabels.indexOf("climbLevelSlider")]);
+            hangLevelSlider.setValue(sliders[sliderLabels.indexOf("hangLevelSlider")]);
+            baseTypeField.setText(selectedTeam.getBaseType());
+            robotDesignField.setText(selectedTeam.getDesignComments());
+            teamAdjectiveField.setText(selectedTeam.getAdjective());
+
+            //team Match list table
+            ArrayList<Competition> tempComps = season.getCompetitions();
+            ArrayList<Integer> tempIDs = new ArrayList<Integer>();
+            ArrayList<Match> tempMatches = new ArrayList<Match>();
+            ArrayList<Match> teamMatches = new ArrayList<Match>();
+            for(Competition comp : tempComps){
+                tempIDs = comp.getTeamIDs();
+                for (Integer id : tempIDs){
+                    if(id == selectedTeam.getTeamID()){
+                        tempMatches = comp.getMatches();
+                        for(Match tempMatch : tempMatches){
+                            if(tempMatch.contains(selectedTeam.getTeamID())){
+                                teamMatches.add(tempMatch);
+                            }
+                        }
+                    }
+                }
+            }
+            teamMatchesData = new String[teamMatches.size()][8];
+            if(teamMatches.size()>0){
+                for(int i = 0; i < teamMatches.size(); i++){
+                    teamMatchesData[i][0] = teamMatches.get(i).getMatchNum() + "";
+                    teamMatchesData[i][1] = teamMatches.get(i).getCompetitionID() + "";
+                    teamMatchesData[i][2] = teamMatches.get(i).getBlue1ID() + "";
+                    teamMatchesData[i][3] = teamMatches.get(i).getBlue2ID() + "";
+                    teamMatchesData[i][4] = teamMatches.get(i).getBlueTotalScore() + "";
+                    teamMatchesData[i][5] = teamMatches.get(i).getRed1ID() + "";
+                    teamMatchesData[i][6] = teamMatches.get(i).getRed2ID() + "";
+                    teamMatchesData[i][7] = teamMatches.get(i).getRedTotalScore() + "";
+                }
+                teamMatchesTable.setModel(new TeamMatchesTableModel(teamMatchesData));
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No teams added!");
+        }
     }
     
     private void saveCurrentTeamStats(){
@@ -1129,6 +1184,61 @@ public class MainWindow extends javax.swing.JFrame {
             currentTeam.setBaseType(baseTypeField.getText());
             currentTeam.setDesignComments(robotDesignField.getText());
             currentTeam.setAdjective(teamAdjectiveField.getText());
+        }
+    }
+    
+    private void importMatches(){
+        ArrayList<Team> teams;
+        ArrayList<Match> matches;
+        teams = new ArrayList<Team>();
+        matches = new ArrayList<Match>();
+        File myFile = new File("src/scoutapp/Data/SR_South_Bluford.xlsx");
+        InputStream inp = null;
+        try {
+            inp = new FileInputStream(myFile);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        XSSFWorkbook wb = null;
+        try {
+            wb = new XSSFWorkbook(inp);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Access the match result sheet
+        Sheet matchList = wb.getSheetAt(0);
+        Row matchNumRow = matchList.getRow(0);
+        Cell amount = matchNumRow.getCell(0);
+
+        //get the number of matches
+        Double matchNum = amount.getNumericCellValue();
+
+        //import each match and add to the matches list
+        System.out.println("Importing Matches...");
+        for(int i = 2; i < matchNum + 2; i++)
+        {
+            //get the teams and score data
+            Row row = matchList.getRow(i);
+            Cell red1 = row.getCell(1);
+            int red1Name = (int)Integer.parseInt(String.valueOf((int)red1.getNumericCellValue()));
+            Cell red2 = row.getCell(2);
+            int red2Name = (int)Integer.parseInt(String.valueOf((int)red2.getNumericCellValue()));
+            Cell blue1 = row.getCell(3);
+            int blue1Name = (int)Integer.parseInt(String.valueOf((int)blue1.getNumericCellValue()));
+            Cell blue2 = row.getCell(4);
+            int blue2Name = (int)Integer.parseInt(String.valueOf((int)blue2.getNumericCellValue()));
+            Cell redScore = row.getCell(5);
+            int rScore = (int)redScore.getNumericCellValue();
+            Cell blueScore = row.getCell(6);
+            int bScore = (int)blueScore.getNumericCellValue();
+            Match match = new Match(1, i-2, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore);
+            currentComp.addMatch(match);
+        }
+        try {
+            inp.close();
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

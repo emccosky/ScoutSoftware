@@ -103,6 +103,134 @@ public class Match
         isBlue2Surrogate = false;
     }
 
+    public int getCompetitionID() {
+        return competitionID;
+    }
+
+    public void setCompetitionID(int competitionID) {
+        this.competitionID = competitionID;
+    }
+
+    public int getMatchNum() {
+        return matchNum;
+    }
+
+    public void setMatchNum(int matchNum) {
+        this.matchNum = matchNum;
+    }
+
+    public int getRed1ID() {
+        return red1ID;
+    }
+
+    public void setRed1ID(int red1ID) {
+        this.red1ID = red1ID;
+    }
+
+    public int getRed2ID() {
+        return red2ID;
+    }
+
+    public void setRed2ID(int red2ID) {
+        this.red2ID = red2ID;
+    }
+
+    public int getBlue1ID() {
+        return blue1ID;
+    }
+
+    public void setBlue1ID(int blue1ID) {
+        this.blue1ID = blue1ID;
+    }
+
+    public int getBlue2ID() {
+        return blue2ID;
+    }
+
+    public void setBlue2ID(int blue2ID) {
+        this.blue2ID = blue2ID;
+    }
+
+    public int getRedTotalScore() {
+        return redTotalScore;
+    }
+
+    public void setRedTotalScore(int redTotalScore) {
+        this.redTotalScore = redTotalScore;
+    }
+
+    public int getRedScoreFromPenalties() {
+        return redScoreFromPenalties;
+    }
+
+    public void setRedScoreFromPenalties(int redScoreFromPenalties) {
+        this.redScoreFromPenalties = redScoreFromPenalties;
+    }
+
+    public int getRedScoreAdjusted() {
+        return redScoreAdjusted;
+    }
+
+    public void setRedScoreAdjusted(int redScoreAdjusted) {
+        this.redScoreAdjusted = redScoreAdjusted;
+    }
+
+    public int getBlueTotalScore() {
+        return blueTotalScore;
+    }
+
+    public void setBlueTotalScore(int blueTotalScore) {
+        this.blueTotalScore = blueTotalScore;
+    }
+
+    public int getBlueScoreFromPenalties() {
+        return blueScoreFromPenalties;
+    }
+
+    public void setBlueScoreFromPenalties(int blueScoreFromPenalties) {
+        this.blueScoreFromPenalties = blueScoreFromPenalties;
+    }
+
+    public int getBlueScoreAdjusted() {
+        return blueScoreAdjusted;
+    }
+
+    public void setBlueScoreAdjusted(int blueScoreAdjusted) {
+        this.blueScoreAdjusted = blueScoreAdjusted;
+    }
+
+    public boolean isIsRed1Surrogate() {
+        return isRed1Surrogate;
+    }
+
+    public void setIsRed1Surrogate(boolean isRed1Surrogate) {
+        this.isRed1Surrogate = isRed1Surrogate;
+    }
+
+    public boolean isIsRed2Surrogate() {
+        return isRed2Surrogate;
+    }
+
+    public void setIsRed2Surrogate(boolean isRed2Surrogate) {
+        this.isRed2Surrogate = isRed2Surrogate;
+    }
+
+    public boolean isIsBlue1Surrogate() {
+        return isBlue1Surrogate;
+    }
+
+    public void setIsBlue1Surrogate(boolean isBlue1Surrogate) {
+        this.isBlue1Surrogate = isBlue1Surrogate;
+    }
+
+    public boolean isIsBlue2Surrogate() {
+        return isBlue2Surrogate;
+    }
+
+    public void setIsBlue2Surrogate(boolean isBlue2Surrogate) {
+        this.isBlue2Surrogate = isBlue2Surrogate;
+    }
+    
     //TODO: ADD CONSTRUCTOR FOR PENALTIES
     public int getScore(int teamID)
     {
@@ -223,6 +351,13 @@ public class Match
             return red1ID;
         else
             return -1;
+    }
+    
+    public boolean contains(int teamID){
+        if(teamID == blue1ID || teamID == blue2ID || teamID == red1ID || teamID == red2ID)
+            return true;
+        else
+            return false;
     }
 
     public int getMatchCompetitionID()
