@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 //Excel File Read Packages
 import org.apache.poi.ss.usermodel.Cell;
@@ -42,6 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
     private String[][] rankingsData;
     private String[][] matchesData;
     private Competition currentComp;
+
     /**
      * Creates new form MainWindow
      */
@@ -119,6 +122,7 @@ public class MainWindow extends javax.swing.JFrame {
         teamAdjectiveField = new javax.swing.JTextField();
         addTeamButton = new javax.swing.JButton();
         removeTeamButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         Match_Tab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MatchTable = new javax.swing.JTable();
@@ -238,6 +242,12 @@ public class MainWindow extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
 
+        Tabs.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                TabsStateChanged(evt);
+            }
+        });
+
         TeamTable.setModel(new TeamListTableModel(teamListData));
         TeamTable.getTableHeader().setReorderingAllowed(false);
         TeamTable.addMouseListener(new MouseAdapter() {
@@ -267,11 +277,29 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
         jLabel6.setText("Name:");
 
+        teamNameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                teamNameFieldFocusLost(evt);
+            }
+        });
+
         jLabel8.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
         jLabel8.setText("Location:");
 
+        teamLocationField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                teamLocationFieldFocusLost(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Miriam", 1, 14)); // NOI18N
         jLabel10.setText("Number:");
+
+        teamNumField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                teamNumFieldFocusLost(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -564,18 +592,30 @@ public class MainWindow extends javax.swing.JFrame {
 
         removeTeamButton.setText("Remove Team");
 
+        jButton1.setText("Update Teams");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
         Team_Tab.setLayout(Team_TabLayout);
         Team_TabLayout.setHorizontalGroup(
             Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Team_TabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Team_TabLayout.createSequentialGroup()
-                        .addComponent(addTeamButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(removeTeamButton)))
+                        .addContainerGap()
+                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Team_TabLayout.createSequentialGroup()
+                                .addComponent(addTeamButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(removeTeamButton))))
+                    .addGroup(Team_TabLayout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jButton1)))
                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -630,7 +670,9 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)))
                     .addGroup(Team_TabLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addTeamButton)
@@ -640,6 +682,12 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         Tabs.addTab("Teams", Team_Tab);
+
+        Match_Tab.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Match_TabFocusGained(evt);
+            }
+        });
 
         MatchTable.setModel(new MatchTableModel(matchesData));
         jScrollPane1.setViewportView(MatchTable);
@@ -1036,9 +1084,37 @@ public class MainWindow extends javax.swing.JFrame {
         addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
+    private void Match_TabFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Match_TabFocusGained
+        System.out.println("Match Tab Accessed");
+    }//GEN-LAST:event_Match_TabFocusGained
+
+    private void TabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabsStateChanged
+        updateTabs();
+    }//GEN-LAST:event_TabsStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        updateTabs();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void teamNumFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNumFieldFocusLost
+        
+    }//GEN-LAST:event_teamNumFieldFocusLost
+
+    private void teamNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNameFieldFocusLost
+        season.changeTeamName(Integer.parseInt(teamNumLabel.getText()), teamNameField.getText());
+        viewTeamStats(teamNumLabel.getText());
+        updateTeamTab();
+    }//GEN-LAST:event_teamNameFieldFocusLost
+
+    private void teamLocationFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamLocationFieldFocusLost
+        season.changeTeamLocation(Integer.parseInt(teamNumLabel.getText()), teamLocationField.getText());
+        viewTeamStats(teamNumLabel.getText());
+    }//GEN-LAST:event_teamLocationFieldFocusLost
+
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
+        currentComp.setCompName("South SR Bluford");
         season.addCompetition(currentComp);
         teamListData = new String[10][2];
         teamMatchesData = new String[10][8];
@@ -1047,6 +1123,7 @@ public class MainWindow extends javax.swing.JFrame {
         importMatches();
     }
     
+    //Adds a team to the specified competition and season
     private void addTeam(String num, String name, int compID) {
         ArrayList<Team> tempTeams = season.getTeams();
         ArrayList<Competition> tempComps = season.getCompetitions();
@@ -1065,14 +1142,16 @@ public class MainWindow extends javax.swing.JFrame {
         }
         Competition tempComp = tempComps.get(currentCompSpot);
         tempComp.addTeam(newTeam);
+        season.addTeam(newTeam);
         tempComps.set(currentCompSpot, tempComp);
-        updateAll();
+        updateTeamTab();
     }
     
     private void viewTeamStats(Object teamNum) {
         if(teamNum != null){
             //save the info of the currently displayed team
             saveCurrentTeamStats();
+            updateTeamMatches();
             //Try-Catch not needed, team num not a number already caught
             Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
             //get team scouting info lists
@@ -1113,23 +1192,8 @@ public class MainWindow extends javax.swing.JFrame {
             teamAdjectiveField.setText(selectedTeam.getAdjective());
 
             //team Match list table
-            ArrayList<Competition> tempComps = season.getCompetitions();
-            ArrayList<Integer> tempIDs = new ArrayList<Integer>();
-            ArrayList<Match> tempMatches = new ArrayList<Match>();
-            ArrayList<Match> teamMatches = new ArrayList<Match>();
-            for(Competition comp : tempComps){
-                tempIDs = comp.getTeamIDs();
-                for (Integer id : tempIDs){
-                    if(id == selectedTeam.getTeamID()){
-                        tempMatches = comp.getMatches();
-                        for(Match tempMatch : tempMatches){
-                            if(tempMatch.contains(selectedTeam.getTeamID())){
-                                teamMatches.add(tempMatch);
-                            }
-                        }
-                    }
-                }
-            }
+            
+            ArrayList<Match> teamMatches = selectedTeam.getMatches();
             teamMatchesData = new String[teamMatches.size()][8];
             if(teamMatches.size()>0){
                 for(int i = 0; i < teamMatches.size(); i++){
@@ -1232,8 +1296,8 @@ public class MainWindow extends javax.swing.JFrame {
             int rScore = (int)redScore.getNumericCellValue();
             Cell blueScore = row.getCell(6);
             int bScore = (int)blueScore.getNumericCellValue();
-            Match match = new Match(1, i-2, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore);
-            currentComp.addMatch(match);
+            Match match = new Match(currentComp.getCompetitionID(), i-1, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore);
+            season.addMatch(match);
         }
         try {
             inp.close();
@@ -1277,7 +1341,21 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
 
-    public void updateStats() //Call this method when the user leaves the match editing page
+    private void checkTeams(){
+        ArrayList<Team> tempTeams = season.getTeams();
+        ArrayList<Competition> tempComps = season.getCompetitions();
+        ArrayList<Integer> compTeams = new ArrayList<Integer>();
+        for(Competition comp : tempComps){
+            compTeams = comp.getTeamIDs();
+            for(Integer team : compTeams){
+                if(!season.hasTeam(team))
+                    season.addTeam(new Team(team));
+            }
+        }
+    }
+    
+    //Spencers code (What does this do?)
+    private void updateStats() //Call this method when the user leaves the match editing page
     {
         int maxMatchNum = 0;
         for(int i = 1 ; i < maxMatchNum; i++)
@@ -1298,8 +1376,34 @@ public class MainWindow extends javax.swing.JFrame {
         }   
     }
     
-    //Update all the things
-    public void updateAll() {
+    private void updateTabs(){
+        //peform data updates based on what tab is selected
+        switch(Tabs.getSelectedIndex()){
+            
+            //Team Tab accessed
+            case 0:
+                updateTeamTab();
+                break;
+                
+            //Match Tab Accessed
+            case 1:
+                updateMatchTab();
+                break;
+                
+            //Rankings tab accessed
+            case 2:
+                break;
+                
+            //There isn't any other option but heres a default anyways
+            default:
+                break;
+        }
+    }
+    
+    //Update the data on for the team tab
+    //Called whenever the team tab is selected or the team list is changed
+    private void updateTeamTab() {
+        updateTeamMatches();
         //team tab team list
         ArrayList<Team> tempTeams = season.getTeams();
         teamListData = new String[tempTeams.size()][2];
@@ -1308,6 +1412,58 @@ public class MainWindow extends javax.swing.JFrame {
             teamListData[i][1] = tempTeams.get(i).getTeamName();
         }
         TeamTable.setModel(new TeamListTableModel(teamListData));
+    }
+    
+    //Update the matches tab
+    //Called whenever the Matches tab is selected or the match list is changed
+    private void updateMatchTab(){
+        updateTeamMatches();
+        ArrayList<Match> tempMatches = currentComp.getMatches();
+        matchesData = new String[tempMatches.size()][11];
+        for(int i = 0; i < tempMatches.size(); i++){
+            matchesData[i][0] = tempMatches.get(i).getMatchNum() + "";
+            matchesData[i][1] = season.getCompByID(tempMatches.get(i).getMatchCompetitionID()).getCompName() + "";
+            matchesData[i][2] = season.getCompByID(tempMatches.get(i).getMatchCompetitionID()).getCompDate() + "";
+            matchesData[i][3] = tempMatches.get(i).getBlue1ID() + "";
+            matchesData[i][4] = tempMatches.get(i).getBlue2ID() + "";
+            matchesData[i][5] = "-";
+            matchesData[i][6] = tempMatches.get(i).getBlueTotalScore() + "";
+            matchesData[i][7] = tempMatches.get(i).getRed1ID() + "";
+            matchesData[i][8] = tempMatches.get(i).getRed2ID() + "";
+            matchesData[i][9] = "-";
+            matchesData[i][10] = tempMatches.get(i).getRedTotalScore() + "";
+        }
+        MatchTable.setModel(new MatchTableModel(matchesData));
+    }
+    
+    //Loops through all the teams and makes sure that they have matches 
+    //assigned to them that they were in
+    private void updateTeamMatches(){
+        checkTeams();
+        ArrayList<Team> tempTeams = season.getTeams();
+        for(int i = 0; i < tempTeams.size(); i++){
+            ArrayList<Competition> tempComps = season.getCompetitions();
+            ArrayList<Integer> tempIDs = new ArrayList<Integer>();
+            ArrayList<Match> tempMatches = new ArrayList<Match>();
+            Team tempTeam = tempTeams.get(i);
+            ArrayList<Match> teamMatches = tempTeam.getMatches();
+            for(Competition comp : tempComps){
+                tempIDs = comp.getTeamIDs();
+                for (Integer id : tempIDs){
+                    if(id == tempTeams.get(i).getTeamID()){
+                        tempMatches = comp.getMatches();
+                        for(Match tempMatch : tempMatches){
+                            if(tempMatch.contains(tempTeams.get(i).getTeamID())){
+                                if (!teamMatches.contains(tempMatch))
+                                    tempTeam.addMatch(tempMatch);
+                                tempTeams.set(i, tempTeam);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        season.setTeams(tempTeams);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1366,6 +1522,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox hangBox;
     private javax.swing.JSlider hangLevelSlider;
     private javax.swing.JCheckBox highZoneBox;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

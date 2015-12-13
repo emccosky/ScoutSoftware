@@ -20,6 +20,19 @@ public class Team
 
     public Team(int id)
     {
+        labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
+        sliderLabels.addAll(Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider"));
+        this.scouting = new Boolean[labels.size()];
+        for(int i = 0; i < labels.size(); i++){
+            scouting[i] = false;
+        }
+        this.sliders = new Integer[sliderLabels.size()];
+        for(int i = 0; i < sliderLabels.size(); i++){
+            sliders[i] = 0;
+        }
+        baseType = "";
+        designComments = "";
+        adjective = "";
         teamID = id;
         teamName = "";
         teamMatches = new ArrayList<Match>();
@@ -258,5 +271,11 @@ public class Team
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         String predictedScoreRange = DataCruncher.getPredictedScoreRange(teamID, competitionMatches);
         return predictedScoreRange;
+    }
+    
+    public boolean equals(Team t){
+        if(t.getTeamID() == teamID)
+            return true;
+        return false;
     }
 }

@@ -6,12 +6,25 @@ import java.io.*;
 public class Competition 
 {
     private int competitionID;
+    private String compName;
+    private String compDate;
     protected ArrayList<Match> matches;
     protected ArrayList<Integer> teamIDs;
 
     public Competition(int compID)
     {
         competitionID = compID;
+        compName = competitionID+"";
+        compDate = "";
+        matches = new ArrayList<Match>();
+        teamIDs = new ArrayList<Integer>();
+    }
+    
+    public Competition(int compID, String name, String date)
+    {
+        competitionID = compID;
+        compName = name;
+        compDate = date;
         matches = new ArrayList<Match>();
         teamIDs = new ArrayList<Integer>();
     }
@@ -26,6 +39,21 @@ public class Competition
     public void addMatch(Match match) //Adds the match to the competition and to the teams involved
     {
         matches.add(match);
+        
+        //update the teams
+        addTeam(match.getBlue1ID());
+        addTeam(match.getBlue2ID());
+        addTeam(match.getRed1ID());
+        addTeam(match.getRed2ID());
+    }
+    
+    private void addTeam(int teamID){
+        for(Integer team : teamIDs){
+            if(team == teamID){
+                return;
+            }
+        }
+        teamIDs.add(teamID);
     }
 
     public ArrayList<Match> getMatches()
@@ -52,4 +80,21 @@ public class Competition
     {
         return competitionID;
     }
+
+    public String getCompName() {
+        return compName;
+    }
+
+    public void setCompName(String compName) {
+        this.compName = compName;
+    }
+
+    public String getCompDate() {
+        return compDate;
+    }
+
+    public void setCompDate(String compDate) {
+        this.compDate = compDate;
+    }
+    
 }

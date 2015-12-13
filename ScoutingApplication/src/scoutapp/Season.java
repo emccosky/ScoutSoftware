@@ -6,8 +6,8 @@ import java.io.*;
 public class Season {
 
     int startYear;
-    public ArrayList<Competition> competitions;
-    public ArrayList<Team> teams;
+    private ArrayList<Competition> competitions;
+    private ArrayList<Team> teams;
 
     public Season() {
         competitions = new ArrayList<Competition>();
@@ -53,13 +53,46 @@ public class Season {
     }
 
     public void addTeam(Team team) {
+        for(Team currTeam : teams){
+            if(currTeam.equals(team))
+                return;
+        }
         teams.add(team);
+    }
+    
+    public void changeTeamName(int teamID, String name){
+        for (Team t : teams) {
+            if (t.getTeamID() == teamID) {
+                t.setTeamName(name);
+            }
+        }
+    }
+    
+    public void changeTeamLocation(int teamID, String place){
+        for (Team t : teams) {
+            if (t.getTeamID() == teamID) {
+                t.setLocation(place);
+            }
+        }
+    }
+    
+    public boolean hasTeam(int teamNum) {
+        for (Team t : teams) {
+            if (t.getTeamID() == teamNum) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addMatch(Match match) {
         for (Competition comp : competitions) {
             if (comp.getCompetitionID() == match.getMatchCompetitionID()) {
                 comp.addMatch(match);
+                addTeam(new Team(match.getBlue1ID()));
+                addTeam(new Team(match.getBlue2ID()));
+                addTeam(new Team(match.getRed1ID()));
+                addTeam(new Team(match.getRed2ID()));
             }
         }
     }
@@ -72,5 +105,13 @@ public class Season {
             }
         }
         return ++highestID;
+    }
+    
+    public Competition getCompByID(int compID) {
+        for(Competition comp : competitions){
+            if (comp.getCompetitionID() == compID)
+                return comp;
+        }
+        return null;
     }
 }
