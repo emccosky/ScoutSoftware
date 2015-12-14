@@ -13,7 +13,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,13 +27,13 @@ import javax.swing.table.TableRowSorter;
 
 //Excel File Read Packages
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -177,7 +181,6 @@ public class MainWindow extends javax.swing.JFrame {
         teamAdjectiveField = new javax.swing.JTextField();
         addTeamButton = new javax.swing.JButton();
         removeTeamButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         Match_Tab = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         MatchTable = new javax.swing.JTable();
@@ -298,14 +301,12 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        addMatchDialog.setMaximumSize(new java.awt.Dimension(430, 600));
         addMatchDialog.setMinimumSize(new java.awt.Dimension(430, 600));
         addMatchDialog.setModal(true);
-        addMatchDialog.setPreferredSize(new java.awt.Dimension(430, 600));
         addMatchDialog.setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
         jPanel2.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel2.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -386,7 +387,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
         jPanel3.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel3.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -509,14 +510,12 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        editMatchDialog.setMaximumSize(new java.awt.Dimension(430, 600));
         editMatchDialog.setMinimumSize(new java.awt.Dimension(430, 600));
         editMatchDialog.setModal(true);
-        editMatchDialog.setPreferredSize(new java.awt.Dimension(430, 600));
         editMatchDialog.setResizable(false);
 
         jPanel6.setBackground(new java.awt.Color(0, 102, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
         jPanel6.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel6.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -597,7 +596,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
         jPanel7.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel7.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -1074,30 +1073,18 @@ public class MainWindow extends javax.swing.JFrame {
 
         removeTeamButton.setText("Remove Team");
 
-        jButton1.setText("Update Teams");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout Team_TabLayout = new javax.swing.GroupLayout(Team_Tab);
         Team_Tab.setLayout(Team_TabLayout);
         Team_TabLayout.setHorizontalGroup(
             Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Team_TabLayout.createSequentialGroup()
-                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(Team_TabLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(Team_TabLayout.createSequentialGroup()
-                                .addComponent(addTeamButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(removeTeamButton))))
-                    .addGroup(Team_TabLayout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jButton1)))
+                        .addComponent(addTeamButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeTeamButton)))
                 .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Team_TabLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -1152,9 +1139,7 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)))
                     .addGroup(Team_TabLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Team_TabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addTeamButton)
@@ -1449,8 +1434,18 @@ public class MainWindow extends javax.swing.JFrame {
         Tabs.addTab("Matches", Match_Tab);
 
         ThisCompRadio.setText("This Competition");
+        ThisCompRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ThisCompRadioActionPerformed(evt);
+            }
+        });
 
         SeasonRadio.setText("Season");
+        SeasonRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeasonRadioActionPerformed(evt);
+            }
+        });
 
         RankTable.setModel(new RankingsTableModel(rankingsData));
         jScrollPane2.setViewportView(RankTable);
@@ -1662,10 +1657,6 @@ public class MainWindow extends javax.swing.JFrame {
         updateTabs();
     }//GEN-LAST:event_TabsStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        updateTabs();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void teamNumFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNumFieldFocusLost
         
     }//GEN-LAST:event_teamNumFieldFocusLost
@@ -1816,6 +1807,22 @@ public class MainWindow extends javax.swing.JFrame {
         editMatchDialog.setVisible(false);
         editMatchDialog.dispose();
     }//GEN-LAST:event_CancelAddDialogButton1ActionPerformed
+
+    private void ThisCompRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThisCompRadioActionPerformed
+        if(ThisCompRadio.isSelected()){
+            SeasonRadio.setSelected(false);
+        } else {
+            SeasonRadio.setSelected(true);
+        }
+    }//GEN-LAST:event_ThisCompRadioActionPerformed
+
+    private void SeasonRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeasonRadioActionPerformed
+        if(SeasonRadio.isSelected()){
+            ThisCompRadio.setSelected(false);
+        } else {
+            ThisCompRadio.setSelected(true);
+        }
+    }//GEN-LAST:event_SeasonRadioActionPerformed
 
     private void initData() {
         season = new Season();
@@ -2094,28 +2101,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    //Spencers code (What does this do?)
-    private void updateStats() //Call this method when the user leaves the match editing page
-    {
-        int maxMatchNum = 0;
-        for(int i = 1 ; i < maxMatchNum; i++)
-        {
-            int curComp = 0; //Set this to the competition ID of the currently selected competition
-            int matchNum = i;
-            int redScore = 0; //Set this to the redScore of the correct row
-            int blueScore = 0; //Set this to the blueScore of the correct row
-            int red1ID = 0; //Set this to the LEFT redID of the correct row
-            int red2ID = 0; //Set this to the RIGHT redID of the correct row
-            int blue1ID = 0; //Set this to the LEFT blueID of the correct row
-            int blue2ID = 0; //Set this to the RIGHT blueID of the correct row
-            Match a = new Match(curComp, matchNum, red1ID, red2ID, blue1ID, blue2ID, redScore, blueScore,"","");
-            if(!a.equals(a)) //Checks if its equal to the match it would be replacing
-            {
-                //Replace the other match with this one
-            }
-        }   
-    }
-    
     private void updateTabs(){
         //peform data updates based on what tab is selected
         switch(Tabs.getSelectedIndex()){
@@ -2132,6 +2117,7 @@ public class MainWindow extends javax.swing.JFrame {
                 
             //Rankings tab accessed
             case 2:
+                //updateRankTab();
                 break;
                 
             //There isn't any other option but heres a default anyways
@@ -2175,6 +2161,39 @@ public class MainWindow extends javax.swing.JFrame {
         }
         MatchTable.setModel(new MatchTableModel(matchesData));
     }
+    
+    /*private void updateRankTab(){
+        updateTeamMatches();
+        ArrayList<Team> tempTeams = season.getTeams();
+        TreeMap teamMMRs = new TreeMap<Integer,Integer>();
+        ArrayList<Integer> rankTeams = new ArrayList<Integer>();
+        ArrayList<Integer> rankMMRs = new ArrayList<Integer>();
+        for (Team t : tempTeams) {
+            teamMMRs.put(t.getTeamID(), t.getMMRAtCompetition(currentComp.getCompetitionID()));
+        }
+        int highestMMR = Integer.MIN_VALUE;
+        int highestTeam = 0000;
+        while(!teamMMRs.isEmpty()){
+            for (Iterator it = teamMMRs.entrySet().iterator(); it.hasNext();) {
+                Map.Entry<Integer,Integer> entry = (Entry)it.next();
+                Integer team = entry.getKey();
+                Integer mmr = entry.getValue();
+                if(mmr > highestMMR){
+                    highestTeam = team;
+                    highestMMR = mmr;
+                }
+            }
+            rankTeams.add(highestTeam);
+            rankMMRs.add(highestMMR);
+            teamMMRs.remove(highestTeam);
+        }
+        rankingsData = new String[rankTeams.size()][9];
+        for(int i = 0; i < rankTeams.size(); i++){
+            rankingsData[i][0] = i + "";
+            rankingsData[i][1] = rankTeams.get(i) + "";
+            rankingsData[i][2] = rankMMRs.get(i) + "";
+        }
+    }*/
     
     //Loops through all the teams and makes sure that they have matches 
     //assigned to them that they were in
@@ -2290,7 +2309,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox hangBox;
     private javax.swing.JSlider hangLevelSlider;
     private javax.swing.JCheckBox highZoneBox;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
