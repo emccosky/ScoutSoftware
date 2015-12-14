@@ -22,6 +22,9 @@ public class Match
     boolean isRed2Surrogate;
     boolean isBlue1Surrogate;
     boolean isBlue2Surrogate;
+    
+    String blueComments;
+    String redComments;
 
     public Match(int compID, int mNum)
     {
@@ -41,6 +44,8 @@ public class Match
         isRed2Surrogate = false;
         isBlue1Surrogate = false;
         isBlue2Surrogate = false;
+        blueComments = "";
+        redComments = "";
     }
 
     public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID)
@@ -61,9 +66,11 @@ public class Match
         isRed2Surrogate = false;
         isBlue1Surrogate = false;
         isBlue2Surrogate = false;
+        blueComments = "";
+        redComments = "";
     }
 
-    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore)
+    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore, String bComments, String rComments)
     {
         competitionID = compID;
         matchNum = mNum;
@@ -81,9 +88,11 @@ public class Match
         isRed2Surrogate = false;
         isBlue1Surrogate = false;
         isBlue2Surrogate = false;
+        blueComments = bComments;
+        redComments = rComments;
     }
 
-    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore, boolean red1S, boolean red2S, boolean blue1S, boolean blue2S)
+    public Match(int compID, int mNum, int red1ID, int red2ID, int blue1ID, int blue2ID, int rTotScore, int bTotScore, boolean red1S, boolean red2S, boolean blue1S, boolean blue2S, String bComments, String rComments)
     { 
         competitionID = compID;
         matchNum = mNum;
@@ -97,10 +106,12 @@ public class Match
         blueTotalScore = bTotScore;
         blueScoreFromPenalties = -1;
         blueScoreAdjusted = -1;
-        isRed1Surrogate = false;
-        isRed2Surrogate = false;
-        isBlue1Surrogate = false;
-        isBlue2Surrogate = false;
+        isRed1Surrogate = red1S;
+        isRed2Surrogate = red2S;
+        isBlue1Surrogate = blue1S;
+        isBlue2Surrogate = blue2S;
+        blueComments = bComments;
+        redComments = rComments;
     }
 
     public int getCompetitionID() {
@@ -229,6 +240,22 @@ public class Match
 
     public void setIsBlue2Surrogate(boolean isBlue2Surrogate) {
         this.isBlue2Surrogate = isBlue2Surrogate;
+    }
+
+    public String getBlueComments() {
+        return blueComments;
+    }
+
+    public void setBlueComments(String blueComments) {
+        this.blueComments = blueComments;
+    }
+
+    public String getRedComments() {
+        return redComments;
+    }
+
+    public void setRedComments(String redComments) {
+        this.redComments = redComments;
     }
     
     //TODO: ADD CONSTRUCTOR FOR PENALTIES

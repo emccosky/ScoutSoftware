@@ -61,6 +61,21 @@ public class Competition
         return matches;
     }
 
+    public Match getMatchByNum(int matchNum){
+        for(Match m : matches){
+            if(m.getMatchNum() == matchNum)
+                return m;
+        }
+        return null;
+    }
+    
+    public void replaceMatch(int matchNum, Match newMatch){
+        for(int i = 0; i < matches.size(); i++){
+            if(matches.get(i).getMatchNum() == matchNum)
+                matches.set(i, newMatch);
+        }
+    }
+    
     public ArrayList<Integer> getTeamIDs()
     {
         return teamIDs;
@@ -97,4 +112,13 @@ public class Competition
         this.compDate = compDate;
     }
     
+    public int getNextMatchID() {
+        int highestID = -1;
+        for (Match m : matches) {
+            if (m.getMatchNum() > highestID){
+                highestID = m.getMatchNum();
+            }
+        }
+        return ++highestID;
+    }
 }

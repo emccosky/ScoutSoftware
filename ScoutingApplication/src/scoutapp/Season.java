@@ -114,4 +114,17 @@ public class Season {
         }
         return null;
     }
+    
+    public Competition getCompByName(String compName) {
+        for(Competition comp : competitions){
+            if (comp.getCompName().equals(compName))
+                return comp;
+        }
+        return null;
+    }
+    
+    public void replaceComp(int compID, Competition newComp){
+        int index = competitions.indexOf(getCompByID(compID));
+        competitions.set(index, newComp);
+    }
 }
