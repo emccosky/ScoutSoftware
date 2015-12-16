@@ -1601,9 +1601,11 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-/* TOP NAVBAR NOT YET IMPLEMENTED
-    TODO: FIGURE OUT HOW TO WORK THE FILE EXPORT STUFF
-=======================================================*/
+    
+    /* TOP NAVBAR NOT YET IMPLEMENTED
+     TODO: FIGURE OUT HOW TO WORK THE FILE EXPORT STUFF AND MULTI USER SHARING
+     =========================================================================*/
+    
     private void seasonSaveOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonSaveOptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_seasonSaveOptionActionPerformed
@@ -1684,13 +1686,13 @@ public class MainWindow extends javax.swing.JFrame {
 
 //Team number is an immutable attribute, it would then be a different team
     private void teamNumFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNumFieldFocusLost
-        
+
     }//GEN-LAST:event_teamNumFieldFocusLost
 
 //When the user is done editing the team name
     private void teamNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNameFieldFocusLost
         season.changeTeamName(Integer.parseInt(teamNumLabel.getText()), teamNameField.getText());
-        
+
         //Update the team display
         viewTeamStats(teamNumLabel.getText());
         updateTeamTab();
@@ -1699,7 +1701,7 @@ public class MainWindow extends javax.swing.JFrame {
     //When the user is done editing the team loation
     private void teamLocationFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamLocationFieldFocusLost
         season.changeTeamLocation(Integer.parseInt(teamNumLabel.getText()), teamLocationField.getText());
-        
+
         //Update the team display
         viewTeamStats(teamNumLabel.getText());
         updateTeamTab();
@@ -1717,7 +1719,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 //Once again, can't get rid of auto-gen code
     private void RedCommentsFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_RedCommentsFieldFocusLost
-       
+
     }//GEN-LAST:event_RedCommentsFieldFocusLost
 
 //When the user is done adding a match, add the match to the current competition
@@ -1731,38 +1733,43 @@ public class MainWindow extends javax.swing.JFrame {
         int blueTotalScore = 0;
         String blueComments = "";
         String redComments = "";
-        
+
         //catch any number format errors
-        try{
+        try {
             red1ID = Integer.parseInt(Red1Field.getText());
-        }  catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
+        }
+        try {
             red2ID = Integer.parseInt(Red2Field.getText());
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
+        }
+        try {
             blue1ID = Integer.parseInt(Blue1Field.getText());
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
+        }
+        try {
             blue2ID = Integer.parseInt(Blue2Field.getText());
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
+        }
+        try {
             redTotalScore = Integer.parseInt(RedScoreField.getText());
-        } catch(NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Score must be a number!");
-        } try {
-            blueTotalScore = Integer.parseInt(BlueScoreField.getText());
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Score must be a number!");
         }
-        
+        try {
+            blueTotalScore = Integer.parseInt(BlueScoreField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Score must be a number!");
+        }
+
         //get the match comments
         blueComments = BlueComments.getText();
         redComments = RedComments.getText();
-        
+
         //add a match to the season, in doing so, the match is added to the correct competition and the team list is checked/updated
         season.addMatch(new Match(currentComp.getCompetitionID(), currentComp.getNextMatchID(), red1ID, red2ID, blue1ID, blue2ID, redTotalScore, blueTotalScore, blueComments, redComments));
         addMatchDialog.setVisible(false);
@@ -1770,43 +1777,56 @@ public class MainWindow extends javax.swing.JFrame {
         updateTabs();
     }//GEN-LAST:event_ConfirmAddDialogButtonActionPerformed
 
+//When the add match button is clicked, open the add match window
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         addMatchDialog.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+//When the add match window cancel button is clicked, close the add match window without saving
     private void CancelAddDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelAddDialogButtonActionPerformed
         addMatchDialog.setVisible(false);
         addMatchDialog.dispose();
     }//GEN-LAST:event_CancelAddDialogButtonActionPerformed
 
+//When clicks the confirm button on the Edit match window
     private void ConfirmAddDialogButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmAddDialogButton1ActionPerformed
-        try{
-            currentMatch.setRed1ID((int)Integer.parseInt(Red1Field1.getText()));
-        }  catch(NumberFormatException e) {
+        //check for anc catch all number format errors
+        try {
+            currentMatch.setRed1ID((int) Integer.parseInt(Red1Field1.getText()));
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
-            currentMatch.setRed2ID((int)Integer.parseInt(Red2Field1.getText()));
-        } catch(NumberFormatException e) {
+        }
+        try {
+            currentMatch.setRed2ID((int) Integer.parseInt(Red2Field1.getText()));
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
-            currentMatch.setBlue1ID((int)Integer.parseInt(Blue1Field1.getText()));
-        } catch(NumberFormatException e) {
+        }
+        try {
+            currentMatch.setBlue1ID((int) Integer.parseInt(Blue1Field1.getText()));
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
-            currentMatch.setBlue2ID((int)Integer.parseInt(Blue2Field1.getText()));
-        } catch(NumberFormatException e) {
+        }
+        try {
+            currentMatch.setBlue2ID((int) Integer.parseInt(Blue2Field1.getText()));
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team Numbers must be numbers!");
-        } try {
-           currentMatch.setRedTotalScore((int)Integer.parseInt(RedScoreField1.getText()));
-        } catch(NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Score must be a number!");
-        } try {
-            currentMatch.setBlueTotalScore((int)Integer.parseInt(BlueScoreField1.getText()));
-        } catch(NumberFormatException e) {
+        }
+        try {
+            currentMatch.setRedTotalScore((int) Integer.parseInt(RedScoreField1.getText()));
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Score must be a number!");
         }
+        try {
+            currentMatch.setBlueTotalScore((int) Integer.parseInt(BlueScoreField1.getText()));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Score must be a number!");
+        }
+
+        //set the match comments
         currentMatch.setBlueComments(BlueComments1.getText());
         currentMatch.setRedComments(RedComments1.getText());
+
+        //replace the match and update all comp data with the new edited match
         currentComp.replaceMatch(currentMatch.getMatchNum(), currentMatch);
         season.replaceComp(currentComp.getCompetitionID(), currentComp);
         editMatchDialog.setVisible(false);
@@ -1814,37 +1834,49 @@ public class MainWindow extends javax.swing.JFrame {
         updateTabs();
     }//GEN-LAST:event_ConfirmAddDialogButton1ActionPerformed
 
+//When the edit match window cancel button is clicked, close the edit match window without saving
     private void CancelAddDialogButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelAddDialogButton1ActionPerformed
         editMatchDialog.setVisible(false);
         editMatchDialog.dispose();
     }//GEN-LAST:event_CancelAddDialogButton1ActionPerformed
 
+//radio button in rankings tab for viewing just this competition
     private void ThisCompRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThisCompRadioActionPerformed
-        if(ThisCompRadio.isSelected()){
+        //make sure only one to the radio buttons is selected
+        if (ThisCompRadio.isSelected()) {
             SeasonRadio.setSelected(false);
         } else {
             SeasonRadio.setSelected(true);
         }
+
+        //set the selection variable (used to update the rank tab)
         compSelection = "current";
         updateTabs();
     }//GEN-LAST:event_ThisCompRadioActionPerformed
 
+//radio button in rankings tab for viewing the whole season
     private void SeasonRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeasonRadioActionPerformed
-        if(SeasonRadio.isSelected()){
+        //make sure only one to the radio buttons is selected
+        if (SeasonRadio.isSelected()) {
             ThisCompRadio.setSelected(false);
         } else {
             ThisCompRadio.setSelected(true);
         }
+
+        //set the selection variable (used to update the rank tab)
         compSelection = "all";
         updateTabs();
     }//GEN-LAST:event_SeasonRadioActionPerformed
 
+// a button that takes you to the team's page when they are selected on the ranking table
+    //Double clicking also does this
     private void GoToTeamPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoToTeamPageActionPerformed
-        String teamID = (String)RankTable.getValueAt(RankTable.getSelectedRow(), 1);
+        String teamID = (String) RankTable.getValueAt(RankTable.getSelectedRow(), 1);
         Tabs.setSelectedIndex(0);
         viewTeamStats(teamID);
     }//GEN-LAST:event_GoToTeamPageActionPerformed
 
+    //initialize data and variables when first opening application
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
@@ -1855,52 +1887,72 @@ public class MainWindow extends javax.swing.JFrame {
         teamMatchesData = new String[10][8];
         rankingsData = new String[10][9];
         matchesData = new String[10][11];
+
+        //Import the match data from the match spreadsheet
         importMatches();
     }
-    
-    //Adds a team to the specified competition and season
+
+    //Adds a team to the specified competition and season (For use with the add team dialog)
     private void addTeam(String num, String name, int compID) {
+        //Create temporary data arrays and initialize variables
         ArrayList<Team> tempTeams = season.getTeams();
         ArrayList<Competition> tempComps = season.getCompetitions();
         Team newTeam = null;
+
+        //Catch team number format errors
         try {
             newTeam = new Team(Integer.parseInt(num), name);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Team number must be a number!");
         }
+
+        //add a team to the team list
         tempTeams.add(newTeam);
+
+        //find the desired competition in the unsorted list 
         int currentCompSpot = 0;
-        for(int i = 0; i < tempComps.size(); i++) {
+        for (int i = 0; i < tempComps.size(); i++) {
             if (tempComps.get(i).getCompetitionID() == compID) {
                 currentCompSpot = i;
             }
         }
+
+        //update the team list for that competition
         Competition tempComp = tempComps.get(currentCompSpot);
         tempComp.addTeam(newTeam);
         season.addTeam(newTeam);
         tempComps.set(currentCompSpot, tempComp);
+
+        //update gui
         updateTeamTab();
     }
-    
+
+    //Called to display the team info on the team page
     private void viewTeamStats(Object teamNum) {
-        if(teamNum != null){
+        if (teamNum != null) {
             //save the info of the currently displayed team
             saveCurrentTeamStats();
+
+            //update match info to make sure the user sees the correct info
             updateTeamMatches();
+
             //Try-Catch not needed, team num not a number already caught
-            Team selectedTeam = season.getTeam((int)Integer.parseInt((String)teamNum));
-            //get team scouting info lists
+            Team selectedTeam = season.getTeam((int) Integer.parseInt((String) teamNum));
+
+            //get the scouting data for the team to be displayed
             ArrayList<String> labels = selectedTeam.getLabels();
             ArrayList<String> sliderLabels = selectedTeam.getSliderLabels();
             Boolean[] scouting = selectedTeam.getScouting();
             Integer[] sliders = selectedTeam.getSliders();
+
+            //Set the text-based basic team info data
             teamNumLabel.setText(selectedTeam.getTeamID() + "");
             teamNameLabel.setText(selectedTeam.getTeamName() + "");
             teamNumField.setText(selectedTeam.getTeamID() + "");
             teamNameField.setText(selectedTeam.getTeamName() + "");
             teamLocationField.setText(selectedTeam.getLocation() + "");
 
-            //Checkbox value setting
+            //Set the checkbox scouting data
             autoBeaconBox.setSelected(scouting[labels.indexOf("autoBeaconBox")]);
             autoClimbersBox.setSelected(scouting[labels.indexOf("autoClimbersBox")]);
             autoHighZoneBox.setSelected(scouting[labels.indexOf("autoHighZoneBox")]);
@@ -1918,7 +1970,7 @@ public class MainWindow extends javax.swing.JFrame {
             hangBox.setSelected(scouting[labels.indexOf("hangBox")]);
             noneEndgameBox.setSelected(scouting[labels.indexOf("noneEndgameBox")]);
 
-            //slider and text feld setting
+            //set the slider and text feld scouting data
             debrisLevelSlider.setValue(sliders[sliderLabels.indexOf("debrisLevelSlider")]);
             climbLevelSlider.setValue(sliders[sliderLabels.indexOf("climbLevelSlider")]);
             hangLevelSlider.setValue(sliders[sliderLabels.indexOf("hangLevelSlider")]);
@@ -1926,12 +1978,12 @@ public class MainWindow extends javax.swing.JFrame {
             robotDesignField.setText(selectedTeam.getDesignComments());
             teamAdjectiveField.setText(selectedTeam.getAdjective());
 
-            //team Match list table
-            
+            //update the team Match list table
             ArrayList<Match> teamMatches = selectedTeam.getMatches();
             teamMatchesData = new String[teamMatches.size()][8];
-            if(teamMatches.size()>0){
-                for(int i = 0; i < teamMatches.size(); i++){
+            if (teamMatches.size() > 0) {
+                //display each row (one per match)
+                for (int i = 0; i < teamMatches.size(); i++) {
                     teamMatchesData[i][0] = teamMatches.get(i).getMatchNum() + "";
                     teamMatchesData[i][1] = teamMatches.get(i).getCompetitionID() + "";
                     teamMatchesData[i][2] = teamMatches.get(i).getBlue1ID() + "";
@@ -1944,53 +1996,55 @@ public class MainWindow extends javax.swing.JFrame {
                 teamMatchesTable.setModel(new TeamMatchesTableModel(teamMatchesData));
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No teams added!");
+            //prevent from trying to view data if there is none to view
+            JOptionPane.showMessageDialog(this, "No Data to View!");
         }
     }
-    
-    private void saveCurrentTeamStats(){
-        if(!teamNumLabel.getText().equals("####")){
-            Team currentTeam = season.getTeam((int)Integer.parseInt(teamNumLabel.getText()));
+
+    //Save the scouting form info for the currently displaed team
+    private void saveCurrentTeamStats() {
+        //check if there even is a team currently displayed
+        if (!teamNumLabel.getText().equals("####")) {
+
+            //initialize data lists
+            Team currentTeam = season.getTeam((int) Integer.parseInt(teamNumLabel.getText()));
             ArrayList<String> labels = currentTeam.getLabels();
             ArrayList<String> sliderLabels = currentTeam.getSliderLabels();
             Boolean[] scouting = currentTeam.getScouting();
             Integer[] sliders = currentTeam.getSliders();
-            
+
             //set the team values based on whats in the fields
-            
             //checkbox values
             scouting[labels.indexOf("autoBeaconBox")] = autoBeaconBox.isSelected();
-            scouting[labels.indexOf("autoClimbersBox")]= autoClimbersBox.isSelected();
+            scouting[labels.indexOf("autoClimbersBox")] = autoClimbersBox.isSelected();
             scouting[labels.indexOf("autoHighZoneBox")] = autoHighZoneBox.isSelected();
-            scouting[labels.indexOf("autoLowZoneBox")]=autoLowZoneBox.isSelected();
-            scouting[labels.indexOf("autoMidZoneBox")]=autoMidZoneBox.isSelected();
-            scouting[labels.indexOf("autoNoneBox")]=autoNoneBox.isSelected();
-            scouting[labels.indexOf("autoPartlyBox")]=autoPartlyBox.isSelected();
-            scouting[labels.indexOf("debrisFloorBox")]=debrisFloorBox.isSelected();
-            scouting[labels.indexOf("debrisHighBox")]=debrisHighBox.isSelected();
-            scouting[labels.indexOf("debrisLowBox")]=debrisLowBox.isSelected();
-            scouting[labels.indexOf("debrisMidBox")]=debrisMidBox.isSelected();
-            scouting[labels.indexOf("midZoneBox")]=midZoneBox.isSelected();
-            scouting[labels.indexOf("highZoneBox")]=highZoneBox.isSelected();
-            scouting[labels.indexOf("lowZoneBox")]=lowZoneBox.isSelected();
-            scouting[labels.indexOf("hangBox")]=hangBox.isSelected();
-            scouting[labels.indexOf("noneEndgameBox")]=noneEndgameBox.isSelected();
+            scouting[labels.indexOf("autoLowZoneBox")] = autoLowZoneBox.isSelected();
+            scouting[labels.indexOf("autoMidZoneBox")] = autoMidZoneBox.isSelected();
+            scouting[labels.indexOf("autoNoneBox")] = autoNoneBox.isSelected();
+            scouting[labels.indexOf("autoPartlyBox")] = autoPartlyBox.isSelected();
+            scouting[labels.indexOf("debrisFloorBox")] = debrisFloorBox.isSelected();
+            scouting[labels.indexOf("debrisHighBox")] = debrisHighBox.isSelected();
+            scouting[labels.indexOf("debrisLowBox")] = debrisLowBox.isSelected();
+            scouting[labels.indexOf("debrisMidBox")] = debrisMidBox.isSelected();
+            scouting[labels.indexOf("midZoneBox")] = midZoneBox.isSelected();
+            scouting[labels.indexOf("highZoneBox")] = highZoneBox.isSelected();
+            scouting[labels.indexOf("lowZoneBox")] = lowZoneBox.isSelected();
+            scouting[labels.indexOf("hangBox")] = hangBox.isSelected();
+            scouting[labels.indexOf("noneEndgameBox")] = noneEndgameBox.isSelected();
 
             //slider and text feld values
-            sliders[sliderLabels.indexOf("debrisLevelSlider")]=debrisLevelSlider.getValue();
-            sliders[sliderLabels.indexOf("climbLevelSlider")]=climbLevelSlider.getValue();
-            sliders[sliderLabels.indexOf("hangLevelSlider")]=hangLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("debrisLevelSlider")] = debrisLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("climbLevelSlider")] = climbLevelSlider.getValue();
+            sliders[sliderLabels.indexOf("hangLevelSlider")] = hangLevelSlider.getValue();
             currentTeam.setBaseType(baseTypeField.getText());
             currentTeam.setDesignComments(robotDesignField.getText());
             currentTeam.setAdjective(teamAdjectiveField.getText());
         }
     }
-    
-    private void importMatches(){
-        ArrayList<Team> teams;
-        ArrayList<Match> matches;
-        teams = new ArrayList<Team>();
-        matches = new ArrayList<Match>();
+
+    //import matches from a spreadsheet
+    private void importMatches() {
+        //Read the file and open it as an Excel workbook with the Apache POI libraries
         File myFile = new File("src/scoutapp/Data/SR_South_Bluford.xlsx");
         InputStream inp = null;
         try {
@@ -2013,25 +2067,24 @@ public class MainWindow extends javax.swing.JFrame {
         //get the number of matches
         Double matchNum = amount.getNumericCellValue();
 
-        //import each match and add to the matches list
+        //import each match and add it to the season
         System.out.println("Importing Matches...");
-        for(int i = 2; i < matchNum + 2; i++)
-        {
+        for (int i = 2; i < matchNum + 2; i++) {
             //get the teams and score data
             Row row = matchList.getRow(i);
             Cell red1 = row.getCell(1);
-            int red1Name = (int)Integer.parseInt(String.valueOf((int)red1.getNumericCellValue()));
+            int red1Name = (int) Integer.parseInt(String.valueOf((int) red1.getNumericCellValue()));
             Cell red2 = row.getCell(2);
-            int red2Name = (int)Integer.parseInt(String.valueOf((int)red2.getNumericCellValue()));
+            int red2Name = (int) Integer.parseInt(String.valueOf((int) red2.getNumericCellValue()));
             Cell blue1 = row.getCell(3);
-            int blue1Name = (int)Integer.parseInt(String.valueOf((int)blue1.getNumericCellValue()));
+            int blue1Name = (int) Integer.parseInt(String.valueOf((int) blue1.getNumericCellValue()));
             Cell blue2 = row.getCell(4);
-            int blue2Name = (int)Integer.parseInt(String.valueOf((int)blue2.getNumericCellValue()));
+            int blue2Name = (int) Integer.parseInt(String.valueOf((int) blue2.getNumericCellValue()));
             Cell redScore = row.getCell(5);
-            int rScore = (int)redScore.getNumericCellValue();
+            int rScore = (int) redScore.getNumericCellValue();
             Cell blueScore = row.getCell(6);
-            int bScore = (int)blueScore.getNumericCellValue();
-            Match match = new Match(currentComp.getCompetitionID(), i-1, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore,"","");
+            int bScore = (int) blueScore.getNumericCellValue();
+            Match match = new Match(currentComp.getCompetitionID(), i - 1, red1Name, red2Name, blue1Name, blue2Name, rScore, bScore, "", "");
             season.addMatch(match);
         }
         try {
@@ -2040,12 +2093,16 @@ public class MainWindow extends javax.swing.JFrame {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void viewMatchStats(Object matchNum, Object compName){
-        Competition tempComp = season.getCompByName((String)compName);
-        if (tempComp != null){
-            Match tempMatch = tempComp.getMatchByNum((int)Integer.parseInt((String)matchNum));
-            if(tempMatch != null){
+
+    //View info for a match (Sets the values for the detail view below match list)
+    //Accessed by the mouse click listener
+    private void viewMatchStats(Object matchNum, Object compName) {
+        //get the desired competition
+        Competition tempComp = season.getCompByName((String) compName);
+        if (tempComp != null) {
+            //set the fields for the selected match
+            Match tempMatch = tempComp.getMatchByNum((int) Integer.parseInt((String) matchNum));
+            if (tempMatch != null) {
                 Blue1Label.setText(tempMatch.getBlue1ID() + "");
                 Blue2Label.setText(tempMatch.getBlue2ID() + "");
                 BlueCommentsField.setText(tempMatch.getBlueComments());
@@ -2060,10 +2117,11 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void editMatch(Object matchNum, Object compID){
-        Competition tempComp = season.getCompByName((String)compID);
-        currentMatch = tempComp.getMatchByNum((int)Integer.parseInt((String)matchNum));
+
+    //When the edit match window is opened (Match is double clicked) open the edit window and populate the fields witht he current data
+    private void editMatch(Object matchNum, Object compID) {
+        Competition tempComp = season.getCompByName((String) compID);
+        currentMatch = tempComp.getMatchByNum((int) Integer.parseInt((String) matchNum));
         Blue1Field1.setText(currentMatch.getBlue1ID() + "");
         Blue2Field1.setText(currentMatch.getBlue2ID() + "");
         Red1Field1.setText(currentMatch.getRed1ID() + "");
@@ -2074,14 +2132,15 @@ public class MainWindow extends javax.swing.JFrame {
         RedComments1.setText(currentMatch.getRedComments());
         editMatchDialog.setVisible(true);
     }
-    
+
+    //checks the radio buttons on the rank tab for viewing just the current competition or the whole season
     private boolean isCurrentCompSelected() {
-        if(compSelection.equals("current")){
+        if (compSelection.equals("current")) {
             return true;
         }
         return false;
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -2108,7 +2167,7 @@ public class MainWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -2117,65 +2176,72 @@ public class MainWindow extends javax.swing.JFrame {
         });
     }
 
-    private void checkTeams(){
-        ArrayList<Team> tempTeams = season.getTeams();
+    //make sure the season has all the teams it needs to (the ones that are in matches)
+    private void checkTeams() {
         ArrayList<Competition> tempComps = season.getCompetitions();
         ArrayList<Integer> compTeams = new ArrayList<Integer>();
-        for(Competition comp : tempComps){
+        for (Competition comp : tempComps) {
             compTeams = comp.getTeamIDs();
-            for(Integer team : compTeams){
-                if(!season.hasTeam(team))
+            for (Integer team : compTeams) {
+                if (!season.hasTeam(team)) {
                     season.addTeam(new Team(team));
+                }
             }
         }
     }
-    
-    private void updateTabs(){
+
+    //update the data displayed in the tabs
+    private void updateTabs() {
         //peform data updates based on what tab is selected
-        switch(Tabs.getSelectedIndex()){
-            
+        switch (Tabs.getSelectedIndex()) {
+
             //Team Tab accessed
             case 0:
                 updateTeamTab();
                 break;
-                
+
             //Match Tab Accessed
             case 1:
                 updateMatchTab();
                 break;
-                
+
             //Rankings tab accessed
             case 2:
                 updateRankTab();
                 break;
-                
+
             //There isn't any other option but heres a default anyways
             default:
                 break;
         }
     }
-    
+
     //Update the data on for the team tab
     //Called whenever the team tab is selected or the team list is changed
     private void updateTeamTab() {
         updateTeamMatches();
-        //team tab team list
+        //update the list of teams in the season (left side of window)
         ArrayList<Team> tempTeams = season.getTeams();
         teamListData = new String[tempTeams.size()][2];
-        for(int i = 0; i < tempTeams.size(); i++){
+        for (int i = 0; i < tempTeams.size(); i++) {
             teamListData[i][0] = tempTeams.get(i).getTeamID() + "";
             teamListData[i][1] = tempTeams.get(i).getTeamName();
         }
         TeamTable.setModel(new TeamListTableModel(teamListData));
     }
-    
+
     //Update the matches tab
     //Called whenever the Matches tab is selected or the match list is changed
-    private void updateMatchTab(){
+    private void updateMatchTab() {
+        //make sure all the matches are correctly assigned to teams
         updateTeamMatches();
+
+        //set the data in the match table
         ArrayList<Match> tempMatches = currentComp.getMatches();
         matchesData = new String[tempMatches.size()][11];
-        for(int i = 0; i < tempMatches.size(); i++){
+
+        //add data for each row (one row per match)
+        for (int i = 0; i < tempMatches.size(); i++) {
             matchesData[i][0] = tempMatches.get(i).getMatchNum() + "";
             matchesData[i][1] = season.getCompByID(tempMatches.get(i).getMatchCompetitionID()).getCompName() + "";
             matchesData[i][2] = season.getCompByID(tempMatches.get(i).getMatchCompetitionID()).getCompDate() + "";
@@ -2190,50 +2256,65 @@ public class MainWindow extends javax.swing.JFrame {
         }
         MatchTable.setModel(new MatchTableModel(matchesData));
     }
-    
-    private void updateRankTab(){
+
+    //update the rankings tab with ranking data
+    private void updateRankTab() {
+        //make sure all the matches are correctly assigned to teams
         updateTeamMatches();
+
+        //initialize temporary data lists
         ArrayList<Team> tempTeams = season.getTeams();
-        TreeMap teamMMRs = new TreeMap<Integer,Integer>();
+        TreeMap teamMMRs = new TreeMap<Integer, Integer>();
         ArrayList<Integer> rankTeams = new ArrayList<Integer>();
         ArrayList<Integer> rankMMRs = new ArrayList<Integer>();
+
+        //add the teams and thier mmr to a tree map
         for (Team t : tempTeams) {
-            System.out.println("Team 1st Access");
-            if(isCurrentCompSelected()){
+            //System.out.println("Team 1st Access");
+            if (isCurrentCompSelected()) {
                 teamMMRs.put(t.getTeamID(), t.getMMRAtCompetition(currentComp.getCompetitionID()));
             } else {
                 teamMMRs.put(t.getTeamID(), t.getMMR());
             }
-            System.out.println("Team MMR Got");
+            //System.out.println("Team MMR Got");
         }
+
+        //sort the teams by MMR
         int highestMMR = Integer.MIN_VALUE;
         int highestTeam = 0000;
-        while(!teamMMRs.isEmpty()){
+        //while teams left in the staging tree map
+        while (!teamMMRs.isEmpty()) {
             Iterator teamItr = teamMMRs.keySet().iterator();
-            while(teamItr.hasNext()) {
-                Integer team = (Integer)teamItr.next();
-                Integer mmr = (Integer)teamMMRs.get(team);
-                if(mmr > highestMMR){
+            //find the highest
+            while (teamItr.hasNext()) {
+                Integer team = (Integer) teamItr.next();
+                Integer mmr = (Integer) teamMMRs.get(team);
+                if (mmr > highestMMR) {
                     highestTeam = team;
                     highestMMR = mmr;
-                    System.out.println("Highest MMR Team Found");
+                    //System.out.println("Highest MMR Team Found");
                 }
             }
-            System.out.println("Removing team and starting over");
+            //Add the highest team's number to a sorted list and remove them from the staging tree map and prepare to start again
+            //System.out.println("Removing team and starting over");
             rankTeams.add(highestTeam);
             rankMMRs.add(highestMMR);
             teamMMRs.remove(highestTeam);
             highestMMR = Integer.MIN_VALUE;
             highestTeam = 0000;
         }
-        System.out.println("All teams ranked");
+        //System.out.println("All teams ranked");
+
+        //Set the data in the rankings table (one row per team)
         rankingsData = new String[rankTeams.size()][9];
-        for(int i = 0; i < rankTeams.size(); i++){
+        for (int i = 0; i < rankTeams.size(); i++) {
             rankingsData[i][0] = i + 1 + "";
             rankingsData[i][1] = rankTeams.get(i) + "";
             rankingsData[i][2] = rankMMRs.get(i) + "";
             rankingsData[i][3] = season.getTeam(rankTeams.get(i)).getAvgScoreAtCompetition(i) + "";
-            if(isCurrentCompSelected()){
+
+            //data depending on the radio button selected (Current comp only or whole season)
+            if (isCurrentCompSelected()) {
                 rankingsData[i][3] = season.getTeam(rankTeams.get(i)).getAvgScoreAtCompetition(currentComp.getCompetitionID()) + "";
                 rankingsData[i][4] = season.getTeam(rankTeams.get(i)).getPredictedScoreRangeAtCompetition(currentComp.getCompetitionID()) + "";
                 rankingsData[i][5] = season.getTeam(rankTeams.get(i)).getConsistencyAtCompetition(currentComp.getCompetitionID()) + "";
@@ -2251,27 +2332,38 @@ public class MainWindow extends javax.swing.JFrame {
         }
         RankTable.setModel(new RankingsTableModel(rankingsData));
     }
-    
+
     //Loops through all the teams and makes sure that they have matches 
     //assigned to them that they were in
-    private void updateTeamMatches(){
+    private void updateTeamMatches() {
+        //make sure all the teams exist
         checkTeams();
+
+        //temporary data list initialization
         ArrayList<Team> tempTeams = season.getTeams();
-        for(int i = 0; i < tempTeams.size(); i++){
+
+        //for each team, look through each match, and if it they are in it, make sure they have it in their list
+        for (int i = 0; i < tempTeams.size(); i++) {
             ArrayList<Competition> tempComps = season.getCompetitions();
             ArrayList<Integer> tempIDs = new ArrayList<Integer>();
             ArrayList<Match> tempMatches = new ArrayList<Match>();
             Team tempTeam = tempTeams.get(i);
             ArrayList<Match> teamMatches = tempTeam.getMatches();
-            for(Competition comp : tempComps){
+            //for each competition
+            for (Competition comp : tempComps) {
                 tempIDs = comp.getTeamIDs();
-                for (Integer id : tempIDs){
-                    if(id == tempTeams.get(i).getTeamID()){
+                //First see if the team in question is even in that competition
+                for (Integer id : tempIDs) {
+                    if (id == tempTeams.get(i).getTeamID()) {
                         tempMatches = comp.getMatches();
-                        for(Match tempMatch : tempMatches){
-                            if(tempMatch.contains(tempTeams.get(i).getTeamID())){
-                                if (!teamMatches.contains(tempMatch))
+                        //if they are, loom through each match
+                        for (Match tempMatch : tempMatches) {
+                            //if they are in the match
+                            if (tempMatch.contains(tempTeams.get(i).getTeamID())) {
+                                //make sure the team has that match
+                                if (!teamMatches.contains(tempMatch)) {
                                     tempTeam.addMatch(tempMatch);
+                                }
                                 tempTeams.set(i, tempTeam);
                             }
                         }
@@ -2279,6 +2371,7 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
         }
+        //put the updated team list abck into the season
         season.setTeams(tempTeams);
     }
 
