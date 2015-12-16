@@ -2117,7 +2117,7 @@ public class MainWindow extends javax.swing.JFrame {
                 
             //Rankings tab accessed
             case 2:
-                //updateRankTab();
+                updateRankTab();
                 break;
                 
             //There isn't any other option but heres a default anyways
@@ -2162,38 +2162,46 @@ public class MainWindow extends javax.swing.JFrame {
         MatchTable.setModel(new MatchTableModel(matchesData));
     }
     
-    /*private void updateRankTab(){
+    private void updateRankTab(){
         updateTeamMatches();
         ArrayList<Team> tempTeams = season.getTeams();
         TreeMap teamMMRs = new TreeMap<Integer,Integer>();
         ArrayList<Integer> rankTeams = new ArrayList<Integer>();
         ArrayList<Integer> rankMMRs = new ArrayList<Integer>();
         for (Team t : tempTeams) {
+            System.out.println("Team 1st Access");
             teamMMRs.put(t.getTeamID(), t.getMMRAtCompetition(currentComp.getCompetitionID()));
+            System.out.println("Team MMR Got");
         }
         int highestMMR = Integer.MIN_VALUE;
         int highestTeam = 0000;
         while(!teamMMRs.isEmpty()){
-            for (Iterator it = teamMMRs.entrySet().iterator(); it.hasNext();) {
-                Map.Entry<Integer,Integer> entry = (Entry)it.next();
-                Integer team = entry.getKey();
-                Integer mmr = entry.getValue();
+            Iterator teamItr = teamMMRs.keySet().iterator();
+            while(teamItr.hasNext()) {
+                Integer team = (Integer)teamItr.next();
+                Integer mmr = (Integer)teamMMRs.get(team);
                 if(mmr > highestMMR){
                     highestTeam = team;
                     highestMMR = mmr;
+                    System.out.println("Highest MMR Team Found");
                 }
             }
+            System.out.println("Removing team and starting over");
             rankTeams.add(highestTeam);
             rankMMRs.add(highestMMR);
             teamMMRs.remove(highestTeam);
+            highestMMR = Integer.MIN_VALUE;
+            highestTeam = 0000;
         }
+        System.out.println("All teams ranked");
         rankingsData = new String[rankTeams.size()][9];
         for(int i = 0; i < rankTeams.size(); i++){
-            rankingsData[i][0] = i + "";
+            rankingsData[i][0] = i + 1 + "";
             rankingsData[i][1] = rankTeams.get(i) + "";
             rankingsData[i][2] = rankMMRs.get(i) + "";
         }
-    }*/
+        RankTable.setModel(new RankingsTableModel(rankingsData));
+    }
     
     //Loops through all the teams and makes sure that they have matches 
     //assigned to them that they were in
