@@ -885,6 +885,9 @@
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="topMenuBar">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="seasonMenu">
           <Properties>
@@ -2313,6 +2316,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="RankTable.addMouseListener(new MouseAdapter() {&#xa;  public void mouseClicked(MouseEvent e) {&#xa;    if (e.getClickCount() == 2) {&#xa;      JTable target = (JTable)e.getSource();&#xa;      int row = target.getSelectedRow();&#xa;      int column = target.getSelectedColumn();&#xa;      Tabs.setSelectedIndex(0);&#xa;      viewTeamStats(RankTable.getValueAt(row, 1));&#xa;    } &#xa;  }&#xa;});"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -2320,6 +2326,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Go to Team Page"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoToTeamPageActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

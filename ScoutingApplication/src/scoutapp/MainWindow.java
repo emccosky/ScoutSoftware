@@ -49,6 +49,7 @@ public class MainWindow extends javax.swing.JFrame {
     private String[][] matchesData;
     private Competition currentComp;
     private Match currentMatch;
+    String compSelection;
 
     /**
      * Creates new form MainWindow
@@ -306,7 +307,7 @@ public class MainWindow extends javax.swing.JFrame {
         addMatchDialog.setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
         jPanel2.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel2.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -387,7 +388,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
         jPanel3.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel3.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -515,7 +516,7 @@ public class MainWindow extends javax.swing.JFrame {
         editMatchDialog.setResizable(false);
 
         jPanel6.setBackground(new java.awt.Color(0, 102, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blue Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
         jPanel6.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel6.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -596,7 +597,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jPanel7.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), java.awt.Color.white)); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Red Alliance", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, java.awt.Color.white));
         jPanel7.setMaximumSize(new java.awt.Dimension(392, 200));
         jPanel7.setMinimumSize(new java.awt.Dimension(392, 200));
 
@@ -1448,9 +1449,25 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         RankTable.setModel(new RankingsTableModel(rankingsData));
+        RankTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable)e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = target.getSelectedColumn();
+                    Tabs.setSelectedIndex(0);
+                    viewTeamStats(RankTable.getValueAt(row, 1));
+                }
+            }
+        });
         jScrollPane2.setViewportView(RankTable);
 
         GoToTeamPage.setText("Go to Team Page");
+        GoToTeamPage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GoToTeamPageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Rank_TabLayout = new javax.swing.GroupLayout(Rank_Tab);
         Rank_Tab.setLayout(Rank_TabLayout);
@@ -1486,6 +1503,8 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         Tabs.addTab("Rankings", Rank_Tab);
+
+        topMenuBar.setEnabled(false);
 
         seasonMenu.setText("Season");
 
@@ -1814,6 +1833,8 @@ public class MainWindow extends javax.swing.JFrame {
         } else {
             SeasonRadio.setSelected(true);
         }
+        compSelection = "current";
+        updateTabs();
     }//GEN-LAST:event_ThisCompRadioActionPerformed
 
     private void SeasonRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeasonRadioActionPerformed
@@ -1822,13 +1843,22 @@ public class MainWindow extends javax.swing.JFrame {
         } else {
             ThisCompRadio.setSelected(true);
         }
+        compSelection = "all";
+        updateTabs();
     }//GEN-LAST:event_SeasonRadioActionPerformed
+
+    private void GoToTeamPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoToTeamPageActionPerformed
+        String teamID = (String)RankTable.getValueAt(RankTable.getSelectedRow(), 1);
+        Tabs.setSelectedIndex(0);
+        viewTeamStats(teamID);
+    }//GEN-LAST:event_GoToTeamPageActionPerformed
 
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
         currentComp.setCompName("South SR Bluford");
         season.addCompetition(currentComp);
+        compSelection = "current";
         teamListData = new String[10][2];
         teamMatchesData = new String[10][8];
         rankingsData = new String[10][9];
@@ -2053,6 +2083,13 @@ public class MainWindow extends javax.swing.JFrame {
         editMatchDialog.setVisible(true);
     }
     
+    private boolean isCurrentCompSelected() {
+        if(compSelection.equals("current")){
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -2170,7 +2207,11 @@ public class MainWindow extends javax.swing.JFrame {
         ArrayList<Integer> rankMMRs = new ArrayList<Integer>();
         for (Team t : tempTeams) {
             System.out.println("Team 1st Access");
-            teamMMRs.put(t.getTeamID(), t.getMMRAtCompetition(currentComp.getCompetitionID()));
+            if(isCurrentCompSelected()){
+                teamMMRs.put(t.getTeamID(), t.getMMRAtCompetition(currentComp.getCompetitionID()));
+            } else {
+                teamMMRs.put(t.getTeamID(), t.getMMR());
+            }
             System.out.println("Team MMR Got");
         }
         int highestMMR = Integer.MIN_VALUE;
