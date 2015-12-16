@@ -16,23 +16,23 @@ public class TeamListTableModel extends AbstractTableModel{
     
     private String[] headings = {"Number", "Name"};
     private String[][]  data;
-    
-    public TeamListTableModel (String[][] tableData){
+
+    public TeamListTableModel (String[][] tableData){ //Sets the data to the parameter
        data = tableData; 
     }
     
     @Override
-    public String getColumnName(int col) {
+    public String getColumnName(int col) { //Returns name of the column in the 
         return headings[col];
     }
    
     @Override
-    public int getRowCount() {
+    public int getRowCount() { //Returns number of rows
         return data.length;
     }
 
     @Override
-    public int getColumnCount() {
+    public int getColumnCount() { //Returns the number of columns
         return data[0].length;    
     }
     
@@ -44,7 +44,8 @@ public class TeamListTableModel extends AbstractTableModel{
     }*/
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
+    public Object getValueAt(int rowIndex, int columnIndex) //Retrieves value from the data set
+    {
        return data[rowIndex][columnIndex];
     }
 }

@@ -1665,6 +1665,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_TabsStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         updateTabs();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1705,6 +1706,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_BlueCommentsFieldFocusLost
 
     private void RedCommentsFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_RedCommentsFieldFocusLost
+        
         String matchNum = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),0);
         String compName = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),1);
         Competition tempComp = season.getCompByName((String)compName);
@@ -1721,6 +1723,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_RedCommentsFieldFocusLost
 
     private void ConfirmAddDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmAddDialogButtonActionPerformed
+        
         int red1ID = 0;
         int red2ID = 0;
         int blue1ID = 0;
@@ -1772,6 +1775,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelAddDialogButtonActionPerformed
 
     private void ConfirmAddDialogButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmAddDialogButton1ActionPerformed
+        //Dialog 
         int red1ID = 0;
         int red2ID = 0;
         int blue1ID = 0;
@@ -1819,7 +1823,7 @@ public class MainWindow extends javax.swing.JFrame {
         editMatchDialog.dispose();
     }//GEN-LAST:event_CancelAddDialogButton1ActionPerformed
 
-    private void initData() {
+    private void initData() { //Loads specified competition
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
         currentComp.setCompName("South SR Bluford");
@@ -1830,7 +1834,7 @@ public class MainWindow extends javax.swing.JFrame {
         matchesData = new String[10][11];
         importMatches();
     }
-    
+
     //Adds a team to the specified competition and season
     private void addTeam(String num, String name, int compID) {
         ArrayList<Team> tempTeams = season.getTeams();
@@ -1854,7 +1858,7 @@ public class MainWindow extends javax.swing.JFrame {
         tempComps.set(currentCompSpot, tempComp);
         updateTeamTab();
     }
-    
+
     private void viewTeamStats(Object teamNum) {
         if(teamNum != null){
             //save the info of the currently displayed team
@@ -1920,7 +1924,7 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No teams added!");
         }
     }
-    
+
     private void saveCurrentTeamStats(){
         if(!teamNumLabel.getText().equals("####")){
             Team currentTeam = season.getTeam((int)Integer.parseInt(teamNumLabel.getText()));
@@ -2121,7 +2125,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }
-    
+
     //Spencers code (What does this do?)
     private void updateStats() //Call this method when the user leaves the match editing page
     {
@@ -2143,7 +2147,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }   
     }
-    
+
     private void updateTabs(){
         //peform data updates based on what tab is selected
         switch(Tabs.getSelectedIndex()){

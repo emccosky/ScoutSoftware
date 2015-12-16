@@ -3,7 +3,7 @@ package scoutapp;
 import java.util.*;
 import java.io.*;
 
-public class Team implements Comparable
+public class Team
 {
     int teamID;
     String teamName;
@@ -18,7 +18,7 @@ public class Team implements Comparable
     private ArrayList<Match> teamMatches;
     
 
-    public Team(int id)
+    public Team(int id) //Team constructor with just an ID
     {
         labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
         sliderLabels.addAll(Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider"));
@@ -37,7 +37,8 @@ public class Team implements Comparable
         teamName = "";
         teamMatches = new ArrayList<Match>();
     }
-    public Team(int id, String name)
+
+    public Team(int id, String name) //Team constructor with an ID and name
     {
         labels.addAll(Arrays.asList("pushbotRadio", "notPushbotRadio", "debrisFloorBox","debrisLowBox","debrisMidBox","debrisHighBox","lowZoneBox","midZoneBox","highZoneBox","hangBox","noneEndgameBox","autoClimbersBox","autoNoneBox","autoLowZoneBox","autoMidZoneBox","autoHighZoneBox","autoBeaconBox","autoPartlyBox"));
         sliderLabels.addAll(Arrays.asList("debrisLevelSlider","climbLevelSlider","hangLevelSlider"));
@@ -57,99 +58,117 @@ public class Team implements Comparable
         teamMatches = new ArrayList<Match>();
     }
 
-    public String getTeamName() {
+    public String getTeamName() //Returns the team name
+    {
         return teamName;
     }
 
-    public void setTeamName(String teamName) {
+    public void setTeamName(String teamName) //Sets the team name
+    {
         this.teamName = teamName;
     }
 
-    public ArrayList<Match> getTeamMatches() {
+    public ArrayList<Match> getTeamMatches() //Gets 
+    {
         return teamMatches;
     }
 
-    public void setTeamMatches(ArrayList<Match> teamMatches) {
+    public void setTeamMatches(ArrayList<Match> teamMatches) //Sets the team matches
+    {
         this.teamMatches = teamMatches;
     }
 
-    public void addMatch(Match match)
+    public void addMatch(Match match) //Adds match
     {
         teamMatches.add(match);
     }
 
-    public void clearMatches()
+    public void clearMatches() //Clears your moms matches
     {
         teamMatches.clear();
     }
 
-    public int getTeamID()
+    public int getTeamID() //Gets the ID of the team
     {
         return teamID;
     }
     
-    public String getLocation() {
+    public String getLocation() //Returns location
+    {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(String location) //Sets the location
+    {
         this.location = location;
     }
 
-    public ArrayList<String> getLabels() {
+    public ArrayList<String> getLabels() //Returns the labels object
+    {
         return labels;
     }
     
-    public ArrayList<String> getSliderLabels() {
+    public ArrayList<String> getSliderLabels() //Returns the slider labels
+    {
         return sliderLabels;
     }
 
-    public Boolean[] getScouting() {
+    public Boolean[] getScouting() //Returns scouting array
+    {
         return scouting;
     }
 
-    public void setScouting(Boolean[] scouting) {
+    public void setScouting(Boolean[] scouting) //Sets scouting boolean array
+    {
         this.scouting = scouting;
     }
 
-    public Integer[] getSliders() {
+    public Integer[] getSliders() //Returns all the slider info
+    {
         return sliders;
     }
 
-    public void setSliders(Integer[] sliders) {
+    public void setSliders(Integer[] sliders) //Sets the sliders array
+    {
         this.sliders = sliders;
     }
 
-    public String getBaseType() {
+    public String getBaseType() //Sets the type of base
+    {
         return baseType;
     }
 
-    public void setBaseType(String baseType) {
+    public void setBaseType(String baseType) //Sets the base type
+    {
         this.baseType = baseType;
     }
 
-    public String getDesignComments() {
+    public String getDesignComments() //Returns the comments on the design
+    {
         return designComments;
     }
 
-    public void setDesignComments(String designComments) {
+    public void setDesignComments(String designComments) //Sets the design comments
+    {
         this.designComments = designComments;
     }
-    
-    public String getAdjective() {
+
+    public String getAdjective() //Returns the "team adjective"
+    {
         return adjective;
     }
 
-    public void setAdjective(String adjective) {
+    public void setAdjective(String adjective) //Sets the "team adjective"
+    {
         this.adjective = adjective;
     }
-    
-    public ArrayList<Match> getMatches()
+
+    public ArrayList<Match> getMatches() //Gets the team's matches
     {
         return teamMatches;
     }
 
-    public ArrayList<Match> getMatchesFromCompetition(int compID)
+    public ArrayList<Match> getMatchesFromCompetition(int compID) //Gets the matches from a specific competition
     {
         ArrayList<Match> competitionMatches = new ArrayList<Match>();
         for(Match m : teamMatches)
@@ -162,13 +181,13 @@ public class Team implements Comparable
         return competitionMatches;
     }
 
-    public double getAvgScore()
+    public double getAvgScore() //Returns the team's average score for the whole season
     {
         double avg = DataCruncher.getAvgMatchScore(teamID, teamMatches);
         return avg;
     }
 
-    public double getAvgScoreAtCompetition(int compID)
+    public double getAvgScoreAtCompetition(int compID) //Get average competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         for(Match m : teamMatches)
@@ -182,107 +201,98 @@ public class Team implements Comparable
         return avg; //Format to two decimal places
     }
 
-    public int getMMR()
+    public int getMMR() //Gets the team's MMR
     {
         int MMR = DataCruncher.getMMR(teamID, teamMatches);
         return MMR;
     }
 
-    public int getMMRAtCompetition(int compID)
+    public int getMMRAtCompetition(int compID) //Gets team's MMR at a specific competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int MMR = DataCruncher.getMMR(teamID, competitionMatches);
         return MMR;
     }
 
-    public double getAvgPartnerMMR()
+    public double getAvgPartnerMMR() //Gets the team's partner's MMR for the whole season
     {
         double avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, teamMatches);
         return avgPartnerMMR;
     }
 
-    public double getAvgPartnerMMRAtCompetition(int compID)
+    public double getAvgPartnerMMRAtCompetition(int compID) //Gets the team's partner's MMR for a specific competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         double avgPartnerMMR = DataCruncher.getAvgMMROfPartners(teamID, competitionMatches);
         return avgPartnerMMR;
     }
 
-    public double getConsistency()
+    public double getConsistency() //Returns the team's consistency
     {
         double consistency = DataCruncher.getConsistency(teamID, teamMatches);
         return consistency; //Format to two decimal places
     }
 
-    public double getConsistencyAtCompetition(int compID)
+    public double getConsistencyAtCompetition(int compID) //Returns the team's consistency at a competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         double consistency = DataCruncher.getConsistency(teamID, competitionMatches);
         return consistency;
     }
 
-    public double getDefensiveness()
+    public double getDefensiveness() //Returns team's defensiveness
     {
         double defensiveness = DataCruncher.getDefensiveness(teamID, teamMatches);
         return defensiveness;
     }
 
-    public double getDefensivenessAtCompetition(int compID)
+    public double getDefensivenessAtCompetition(int compID) //Returns team's defensiveness
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         double defensiveness = DataCruncher.getDefensiveness(teamID, competitionMatches);
         return defensiveness;
     }
 
-    public int getQP()
+    public int getQP() //Returns the team's QP for the whole season
     {
         int QP = DataCruncher.getQP(teamID, teamMatches);
         return QP;
     }
 
-    public int getQPAtCompetition(int compID)
+    public int getQPAtCompetition(int compID) //Returns the team's QP at a specific competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int QP = DataCruncher.getQP(teamID, competitionMatches);
         return QP;
     }
 
-    public int getRP()
+    public int getRP() //Returns the team's RP for the whole season
     {
         int RP = DataCruncher.getRP(teamID, teamMatches);
         return RP;
     }
 
-    public int getRPAtCompetition(int compID)
+    public int getRPAtCompetition(int compID) //Returns the team's RP for the competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         int RP = DataCruncher.getRP(teamID, competitionMatches);
         return RP;
     }
 
-    public String getPredictedScoreRange()
+    public String getPredictedScoreRange() //Returns the team's predicted score range for the whole season
     {
         String predictedScoreRange = DataCruncher.getPredictedScoreRange(teamID, teamMatches);
         return predictedScoreRange;
     }
 
-    public String getPredictedScoreRangeAtCompetition(int compID)
+    public String getPredictedScoreRangeAtCompetition(int compID) //Returns the team's predicted score range at a competition
     {
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         String predictedScoreRange = DataCruncher.getPredictedScoreRange(teamID, competitionMatches);
         return predictedScoreRange;
     }
-
-    @Override
-    public int compareTo(Object a)
-    {
-        Team team = (Team) a;
-        int diff = 0;
-        diff = team.getTeamID() - this.getTeamID();
-        return diff;
-    }
     
-    public boolean equals(Team t){
+    public boolean equals(Team t){ //Compares the team to another team
         if(t.getTeamID() == teamID)
             return true;
         return false;

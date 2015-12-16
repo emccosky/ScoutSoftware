@@ -46,7 +46,7 @@ public final class DataCruncher
         return format(score);
     }
 
-    public static double getDefensiveness(int teamID, ArrayList<Match> matches)
+    public static double getDefensiveness(int teamID, ArrayList<Match> matches) //Returns the defensiveness of the team
     {
         double defensiveness = -1.0;
 

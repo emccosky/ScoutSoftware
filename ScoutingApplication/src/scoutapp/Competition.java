@@ -11,7 +11,7 @@ public class Competition
     protected ArrayList<Match> matches;
     protected ArrayList<Integer> teamIDs;
 
-    public Competition(int compID)
+    public Competition(int compID) //Constructor for competition with just an ID
     {
         competitionID = compID;
         compName = competitionID+"";
@@ -20,7 +20,7 @@ public class Competition
         teamIDs = new ArrayList<Integer>();
     }
     
-    public Competition(int compID, String name, String date)
+    public Competition(int compID, String name, String date) //Constructor for competition with name and date
     {
         competitionID = compID;
         compName = name;
@@ -47,7 +47,7 @@ public class Competition
         addTeam(match.getRed2ID());
     }
     
-    private void addTeam(int teamID){
+    private void addTeam(int teamID){ //Adds a team to the competition
         for(Integer team : teamIDs){
             if(team == teamID){
                 return;
@@ -56,12 +56,12 @@ public class Competition
         teamIDs.add(teamID);
     }
 
-    public ArrayList<Match> getMatches()
+    public ArrayList<Match> getMatches() //Returns matches from the competition
     {
         return matches;
     }
 
-    public Match getMatchByNum(int matchNum){
+    public Match getMatchByNum(int matchNum){ //Returns match by the match number
         for(Match m : matches){
             if(m.getMatchNum() == matchNum)
                 return m;
@@ -69,50 +69,55 @@ public class Competition
         return null;
     }
     
-    public void replaceMatch(int matchNum, Match newMatch){
+    public void replaceMatch(int matchNum, Match newMatch){ //Replaces match with another match
         for(int i = 0; i < matches.size(); i++){
             if(matches.get(i).getMatchNum() == matchNum)
                 matches.set(i, newMatch);
         }
     }
     
-    public ArrayList<Integer> getTeamIDs()
+    public ArrayList<Integer> getTeamIDs() //Returns all teamIDs in the competition
     {
         return teamIDs;
     }
 
-    public void setMatches(ArrayList<Match> a)
+    public void setMatches(ArrayList<Match> a) //Sets the whole match arraylist
     {
         matches = a;
     }
 
-    public void setTeamIDs(ArrayList<Integer> IDs)
+    public void setTeamIDs(ArrayList<Integer> IDs) //Sets the teamIDs arraylist
     {
         teamIDs = IDs;
     }
 
-    public int getCompetitionID()
+    public int getCompetitionID() //Returns the competition ID
     {
         return competitionID;
     }
 
-    public String getCompName() {
+    public String getCompName() //Returns the name of the competition
+    {
         return compName;
     }
 
-    public void setCompName(String compName) {
+    public void setCompName(String compName) //Sets the competition name
+    {
         this.compName = compName;
     }
 
-    public String getCompDate() {
+    public String getCompDate() //Sets the competition date
+    {
         return compDate;
     }
 
-    public void setCompDate(String compDate) {
+    public void setCompDate(String compDate) //Sets competition date
+    {
         this.compDate = compDate;
     }
     
-    public int getNextMatchID() {
+    public int getNextMatchID() //Returns the next available match ID
+    {
         int highestID = -1;
         for (Match m : matches) {
             if (m.getMatchNum() > highestID){
