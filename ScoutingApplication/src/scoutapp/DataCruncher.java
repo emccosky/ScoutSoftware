@@ -136,10 +136,10 @@ public final class DataCruncher
             {
                //Calcs MMR for each team in the match (edits mmrs)
                Match match = matches.get(m);
-               mmrs.put(match.getMatchRed1ID(), calcMMR(mmrs.get(match.getMatchRed1ID()),mmrs.get(match.getMatchRed2ID()),match.getMatchRedScoreAdjusted()));
-               mmrs.put(match.getMatchRed2ID(), calcMMR(mmrs.get(match.getMatchRed2ID()),mmrs.get(match.getMatchRed1ID()),match.getMatchRedScoreAdjusted()));
-               mmrs.put(match.getMatchBlue1ID(), calcMMR(mmrs.get(match.getMatchBlue1ID()),mmrs.get(match.getMatchBlue2ID()),match.getMatchBlueScoreAdjusted()));
-               mmrs.put(match.getMatchBlue2ID(), calcMMR(mmrs.get(match.getMatchBlue2ID()),mmrs.get(match.getMatchBlue1ID()),match.getMatchBlueScoreAdjusted()));
+               mmrs.put(match.getMatchRed1ID(), calcMMR(mmrs.get(match.getMatchRed1ID()),mmrs.get(match.getMatchRed2ID()),match.getMatchRedTotalScore()));
+               mmrs.put(match.getMatchRed2ID(), calcMMR(mmrs.get(match.getMatchRed2ID()),mmrs.get(match.getMatchRed1ID()),match.getMatchRedTotalScore()));
+               mmrs.put(match.getMatchBlue1ID(), calcMMR(mmrs.get(match.getMatchBlue1ID()),mmrs.get(match.getMatchBlue2ID()),match.getMatchBlueTotalScore()));
+               mmrs.put(match.getMatchBlue2ID(), calcMMR(mmrs.get(match.getMatchBlue2ID()),mmrs.get(match.getMatchBlue1ID()),match.getMatchBlueTotalScore()));
             }
             for(int i = 0; i < teams.size(); i++)
             {
@@ -163,7 +163,7 @@ public final class DataCruncher
                 c++;
             }
         }
-        mmr /= 5;
+        mmr /= c;
         return mmr;
     }
 

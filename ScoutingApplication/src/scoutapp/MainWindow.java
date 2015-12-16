@@ -1601,6 +1601,9 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+/* TOP NAVBAR NOT YET IMPLEMENTED
+    TODO: FIGURE OUT HOW TO WORK THE FILE EXPORT STUFF
+=======================================================*/
     private void seasonSaveOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seasonSaveOptionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_seasonSaveOptionActionPerformed
@@ -1649,15 +1652,18 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_seasonOpenOptionActionPerformed
 
+//When add team button pressed
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
         addTeamDialog.setVisible(true);
     }//GEN-LAST:event_addTeamButtonActionPerformed
 
+//Cancel button on the add team dialog box
     private void addDialog_cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_cancelButtonActionPerformed
         addTeamDialog.dispose();
         addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_cancelButtonActionPerformed
 
+//When add button on add team dialog pressed, add a match to the current season
     private void addDialog_addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDialog_addButtonActionPerformed
         String num = addDialog_teamNumField.getText();
         String name = addDialog_teamNameField.getText();
@@ -1666,67 +1672,57 @@ public class MainWindow extends javax.swing.JFrame {
         addTeamDialog.setVisible(false);
     }//GEN-LAST:event_addDialog_addButtonActionPerformed
 
+//Something I tried, didn't work, don't know how to get rid of this aut-gen code
     private void Match_TabFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Match_TabFocusGained
-        System.out.println("Match Tab Accessed");
+
     }//GEN-LAST:event_Match_TabFocusGained
 
+//When the user switches tabs, call the updateTabs() method
     private void TabsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_TabsStateChanged
         updateTabs();
     }//GEN-LAST:event_TabsStateChanged
 
+//Team number is an immutable attribute, it would then be a different team
     private void teamNumFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNumFieldFocusLost
         
     }//GEN-LAST:event_teamNumFieldFocusLost
 
+//When the user is done editing the team name
     private void teamNameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamNameFieldFocusLost
         season.changeTeamName(Integer.parseInt(teamNumLabel.getText()), teamNameField.getText());
+        
+        //Update the team display
         viewTeamStats(teamNumLabel.getText());
         updateTeamTab();
     }//GEN-LAST:event_teamNameFieldFocusLost
 
+    //When the user is done editing the team loation
     private void teamLocationFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_teamLocationFieldFocusLost
         season.changeTeamLocation(Integer.parseInt(teamNumLabel.getText()), teamLocationField.getText());
+        
+        //Update the team display
         viewTeamStats(teamNumLabel.getText());
         updateTeamTab();
     }//GEN-LAST:event_teamLocationFieldFocusLost
 
+//Once again, can't get rid of auto-gen code
     private void MatchTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MatchTableKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_MatchTableKeyPressed
 
+//Once again, can't get rid of auto-gen code
     private void BlueCommentsFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_BlueCommentsFieldFocusLost
-        String matchNum = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),0);
-        String compName = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),1);
-        Competition tempComp = season.getCompByName((String)compName);
-        Match tempMatch = null;
-        if (tempComp != null){
-            tempMatch = tempComp.getMatchByNum((int)Integer.parseInt((String)matchNum));
-            if(tempMatch != null){
-                tempMatch.setBlueComments(BlueCommentsField.getText());
-            }
-        }
-        tempComp.replaceMatch((int)Integer.parseInt((String)matchNum),tempMatch);
-        season.replaceComp(tempComp.getCompetitionID(), tempComp);
-        updateMatchTab();
+
     }//GEN-LAST:event_BlueCommentsFieldFocusLost
 
+//Once again, can't get rid of auto-gen code
     private void RedCommentsFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_RedCommentsFieldFocusLost
-        String matchNum = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),0);
-        String compName = (String) MatchTable.getValueAt(MatchTable.getSelectedRow(),1);
-        Competition tempComp = season.getCompByName((String)compName);
-        Match tempMatch = null;
-        if (tempComp != null){
-            tempMatch = tempComp.getMatchByNum((int)Integer.parseInt((String)matchNum));
-            if(tempMatch != null){
-                tempMatch.setRedComments(RedCommentsField.getText());
-            }
-        }
-        tempComp.replaceMatch((int)Integer.parseInt((String)matchNum),tempMatch);
-        season.replaceComp(tempComp.getCompetitionID(), tempComp);
-        updateMatchTab();
+       
     }//GEN-LAST:event_RedCommentsFieldFocusLost
 
+//When the user is done adding a match, add the match to the current competition
     private void ConfirmAddDialogButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmAddDialogButtonActionPerformed
+        //initial variable declarations
         int red1ID = 0;
         int red2ID = 0;
         int blue1ID = 0;
@@ -1735,6 +1731,8 @@ public class MainWindow extends javax.swing.JFrame {
         int blueTotalScore = 0;
         String blueComments = "";
         String redComments = "";
+        
+        //catch any number format errors
         try{
             red1ID = Integer.parseInt(Red1Field.getText());
         }  catch(NumberFormatException e) {
@@ -1760,8 +1758,12 @@ public class MainWindow extends javax.swing.JFrame {
         } catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Score must be a number!");
         }
+        
+        //get the match comments
         blueComments = BlueComments.getText();
         redComments = RedComments.getText();
+        
+        //add a match to the season, in doing so, the match is added to the correct competition and the team list is checked/updated
         season.addMatch(new Match(currentComp.getCompetitionID(), currentComp.getNextMatchID(), red1ID, red2ID, blue1ID, blue2ID, redTotalScore, blueTotalScore, blueComments, redComments));
         addMatchDialog.setVisible(false);
         addMatchDialog.dispose();
@@ -1778,14 +1780,6 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_CancelAddDialogButtonActionPerformed
 
     private void ConfirmAddDialogButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmAddDialogButton1ActionPerformed
-        int red1ID = 0;
-        int red2ID = 0;
-        int blue1ID = 0;
-        int blue2ID = 0;
-        int redTotalScore = 0;
-        int blueTotalScore = 0;
-        String blueComments = "";
-        String redComments = "";
         try{
             currentMatch.setRed1ID((int)Integer.parseInt(Red1Field1.getText()));
         }  catch(NumberFormatException e) {
