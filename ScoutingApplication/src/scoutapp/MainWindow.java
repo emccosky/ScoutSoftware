@@ -1969,6 +1969,7 @@ public class MainWindow extends javax.swing.JFrame {
         ArrayList<Match> matches;
         teams = new ArrayList<>();
         matches = new ArrayList<Match>();
+        ArrayList<Integer> teamInts = new ArrayList<Integer>();
         File myFile = new File("src/scoutapp/Data/SR_South_Bluford.xlsx");
         InputStream inp = null;
         try {
@@ -2018,7 +2019,7 @@ public class MainWindow extends javax.swing.JFrame {
         Row r1 = teamNames.getRow(0);
         Cell teamCountCell = r1.getCell(0);
         int teamCount = (int)teamCountCell.getNumericCellValue();
-        out.println("YOLO" + teamCount);
+        //out.println("YOLO" + teamCount);
         for(int i = 1; i < teamCount + 1; i++)
         {
             out.println(i);
@@ -2029,9 +2030,26 @@ public class MainWindow extends javax.swing.JFrame {
             Cell teamNameCell = teamInfoRow.getCell(1);
             String teamName = teamNameCell.getStringCellValue();
             teams.add(new Team(teamNum, teamName));
+            teamInts.add(teamNum);
         }
-        Collections.sort(teams);
         ArrayList<Team> teams2 = new ArrayList<Team>();
+        for(int q = 0; q < teams.size(); q++)
+        {
+            int min = teamInts.get(0);
+            int index = 0;
+            for(int i = 1; i < teams.size(); i++)
+            {
+                if(teamInts.get(i) < min)
+                {
+                    index = i;
+                    min = teamInts.get(i);
+                }
+            }
+            teams2.add(teams.get(index));
+            teamInts.remove(index);
+            teams.remove(index);
+        }
+        
         for(int i = 0; i < teams.size();i++)
         {
             teams2.add((Team)teams.get(i));

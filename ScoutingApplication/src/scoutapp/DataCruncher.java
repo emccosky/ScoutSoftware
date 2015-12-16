@@ -7,6 +7,7 @@ package scoutapp;
 
 import java.util.*;
 import java.io.*;
+import static java.lang.System.out;
 import java.text.DecimalFormat;
 
 /**
@@ -46,18 +47,37 @@ public final class DataCruncher
         return format(score);
     }
 
-    public static double getDefensiveness(int teamID, ArrayList<Match> matches) //Returns the defensiveness of the team
+    public static double getDefensiveness(int teamID, ArrayList<Match> matches) //Returns the defensiveness estimated of each team
     {
         double defensiveness = -1.0;
 
         return format(defensiveness);
     }
 
-    public static double getConsistency(int teamID, ArrayList<Match> matches)
+    public static double getConsistency(int teamID, ArrayList<Match> matches) //Returns the consistency estimated of each team
     {
         double consistency = -1.0;
-
-        return format(consistency);
+        int avg = (int)getAvgMatchScore(teamID, matches);
+        ArrayList<Integer> vars = new ArrayList<Integer>();
+        ArrayList<Integer> scores = new ArrayList<Integer>();
+        
+        for(Match m : matches)
+        {
+            if(m.getScore(teamID) != -1)
+                scores.add(m.getScore(teamID));
+        }
+        //get differences between each score and avg
+        for(Integer score : scores)
+        {
+            vars.add(Math.abs(score - avg));
+        }
+        Double var = 0.0;
+        for (Integer item : vars)
+        {
+            var += Math.pow(item, 2);
+        }
+        Double std = Math.sqrt(var/scores.size());
+        return format(std);
     }
 
     private static int calcMMR(int curMMR, int allyMMR, int score)
@@ -68,37 +88,23 @@ public final class DataCruncher
         double divisor = newMMR;
         double subtract = dAllyMMR * dAllyMMR;
         subtract /= 10000;
-        //subtract = subtract / divisor;
-        //subtract = subtract / 1100000;
         if(curMMR < 1200)
             divisor = 1200.0 / 1500.0;
         else if(curMMR < 2000)
             divisor = newMMR / 2000;
         else
             divisor = newMMR / 1500;
-        //System.out.println(divisor);
         double add = score * 44;
-        //System.out.println(add);
         add = add * add;
-        //System.out.println(add);
         add = Math.pow(add, 1.0/3);
         add = add / divisor;
-        //System.out.println(add);
-        // if(divisor < 1)
-        //   add = add * (1/divisor);
-        //else
-          //  add = add / divisor;
-        //System.out.println(newMMR);
-        //System.out.println(add);
         newMMR += add;
-        //System.out.println(newMMR);
         newMMR -= subtract;
-        //System.out.println(newMMR);
         int finalMMR = (int) Math.round(newMMR);
         return finalMMR;
     }
 
-    public static int getMMR(int teamID, ArrayList<Match> matches)
+    public static int getMMR(int teamID, ArrayList<Match> matches) //Returns the MMR of any team
     {
         int mmr = -1;
         TreeMap<Integer,Integer> mmrs = new TreeMap(); //Key is team #, other thing is MMR
@@ -136,55 +142,81 @@ public final class DataCruncher
             {
                //Calcs MMR for each team in the match (edits mmrs)
                Match match = matches.get(m);
-               mmrs.put(match.getMatchRed1ID(), calcMMR(mmrs.get(match.getMatchRed1ID()),mmrs.get(match.getMatchRed2ID()),match.getMatchRedScoreAdjusted()));
-               mmrs.put(match.getMatchRed2ID(), calcMMR(mmrs.get(match.getMatchRed2ID()),mmrs.get(match.getMatchRed1ID()),match.getMatchRedScoreAdjusted()));
-               mmrs.put(match.getMatchBlue1ID(), calcMMR(mmrs.get(match.getMatchBlue1ID()),mmrs.get(match.getMatchBlue2ID()),match.getMatchBlueScoreAdjusted()));
-               mmrs.put(match.getMatchBlue2ID(), calcMMR(mmrs.get(match.getMatchBlue2ID()),mmrs.get(match.getMatchBlue1ID()),match.getMatchBlueScoreAdjusted()));
+               mmrs.put(match.getMatchRed1ID(), calcMMR(mmrs.get(match.getMatchRed1ID()),mmrs.get(match.getMatchRed2ID()),match.getMatchRedTotalScore()));
+               mmrs.put(match.getMatchRed2ID(), calcMMR(mmrs.get(match.getMatchRed2ID()),mmrs.get(match.getMatchRed1ID()),match.getMatchRedTotalScore()));
+               mmrs.put(match.getMatchBlue1ID(), calcMMR(mmrs.get(match.getMatchBlue1ID()),mmrs.get(match.getMatchBlue2ID()),match.getMatchBlueTotalScore()));
+               mmrs.put(match.getMatchBlue2ID(), calcMMR(mmrs.get(match.getMatchBlue2ID()),mmrs.get(match.getMatchBlue1ID()),match.getMatchBlueTotalScore()));
             }
-            for(int i = 0; i < teams.size(); i++)
+            /*for(int i = 0; i < teams.size(); i++)
             {
                 teams.get(i).clearMatches();
-            }
+            }*/
         }
         mmr = mmrs.get(teamID);
         return mmr;
     }
 
-    public static double getAvgMMROfPartners(int teamID, ArrayList<Match> matches)
+    public static double getAvgMMROfPartners(int teamID, ArrayList<Match> matches) //Returns the average MMR of all your partners
     {
-        double mmr = -1;
+        double mmr = 0;
         DataCruncher cruncher = new DataCruncher();
         int c = 0;
         for(Match m : matches)
         {
-            
-        }
-        for(Match m : matches)
-        {
-            if(m.getAlliancePartnerID(teamID) != -1)
+            if(m.getScore(teamID) != -1)
             {
-                mmr += cruncher.getMMR(m.getAlliancePartnerID(teamID),matches);
+                mmr += (cruncher.getMMR(m.getAlliancePartnerID(teamID),matches)*2.5);
                 c++;
             }
         }
+       // out.println(c);
         mmr /= c;
         return mmr;
     }
 
     public static String getPredictedScoreRange(int teamID, ArrayList<Match> matches)
     {
-        return "STRING-1STRING";
+        DataCruncher cruncher = new DataCruncher();
+        int dev = (int)cruncher.getConsistency(teamID, matches);
+        int avg = (int)cruncher.getAvgMatchScore(teamID, matches);
+        String returnString = "";
+        int q1 = (int)(avg - (1.25*dev));
+        if(q1 < 0)
+            q1 = 0;
+        int q3 = (int)(avg + (1.25*dev));
+        returnString += q1;
+        returnString += " - ";
+        returnString += q3;
+        
+        return returnString;
     }
 
-    public static int getRP(int teamID, ArrayList<Match> matches)
+    public static int getRP(int teamID, ArrayList<Match> matches) //Returns the RP of any team
     {
         int rp = -1;
+        for(Match m : matches)
+        {
+            if(m.getScore(teamID) != -1)
+            {
+                rp += m.getOpponentScore(teamID);
+            }
+        }
         return rp;
     }
 
-    public static int getQP(int teamID, ArrayList<Match> matches)
+    public static int getQP(int teamID, ArrayList<Match> matches) //Returns the QP of any team
     {
-        int qp = -1;
+        int qp = 0;
+        for(Match m : matches)
+        {
+            if(m.getScore(teamID) != -1)
+            {
+                if(m.getScore(teamID) > m.getOpponentScore(teamID))
+                    qp += 2;
+                else if(m.getScore(teamID) == m.getOpponentScore(teamID))
+                    qp += 1;
+            }
+        }
         return qp;
     }
 }
