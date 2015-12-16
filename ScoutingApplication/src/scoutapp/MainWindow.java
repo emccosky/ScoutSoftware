@@ -1504,8 +1504,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         Tabs.addTab("Rankings", Rank_Tab);
 
-        topMenuBar.setEnabled(false);
-
         seasonMenu.setText("Season");
 
         seasonOpenOption.setText("Open");
@@ -2240,6 +2238,22 @@ public class MainWindow extends javax.swing.JFrame {
             rankingsData[i][0] = i + 1 + "";
             rankingsData[i][1] = rankTeams.get(i) + "";
             rankingsData[i][2] = rankMMRs.get(i) + "";
+            rankingsData[i][3] = season.getTeam(rankTeams.get(i)).getAvgScoreAtCompetition(i) + "";
+            if(isCurrentCompSelected()){
+                rankingsData[i][3] = season.getTeam(rankTeams.get(i)).getAvgScoreAtCompetition(currentComp.getCompetitionID()) + "";
+                rankingsData[i][4] = season.getTeam(rankTeams.get(i)).getPredictedScoreRangeAtCompetition(currentComp.getCompetitionID()) + "";
+                rankingsData[i][5] = season.getTeam(rankTeams.get(i)).getConsistencyAtCompetition(currentComp.getCompetitionID()) + "";
+                rankingsData[i][6] = season.getTeam(rankTeams.get(i)).getAvgPartnerMMRAtCompetition(currentComp.getCompetitionID()) + "";
+                rankingsData[i][7] = season.getTeam(rankTeams.get(i)).getQPAtCompetition(currentComp.getCompetitionID()) + "";
+                rankingsData[i][8] = season.getTeam(rankTeams.get(i)).getRPAtCompetition(currentComp.getCompetitionID()) + "";
+            } else {
+                rankingsData[i][3] = season.getTeam(rankTeams.get(i)).getAvgScore() + "";
+                rankingsData[i][4] = season.getTeam(rankTeams.get(i)).getPredictedScoreRange() + "";
+                rankingsData[i][5] = season.getTeam(rankTeams.get(i)).getConsistency() + "";
+                rankingsData[i][6] = season.getTeam(rankTeams.get(i)).getAvgPartnerMMR() + "";
+                rankingsData[i][7] = season.getTeam(rankTeams.get(i)).getQP() + "";
+                rankingsData[i][8] = season.getTeam(rankTeams.get(i)).getRP() + "";
+            }
         }
         RankTable.setModel(new RankingsTableModel(rankingsData));
     }

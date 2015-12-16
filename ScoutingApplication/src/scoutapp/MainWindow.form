@@ -885,9 +885,6 @@
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="topMenuBar">
-      <Properties>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="seasonMenu">
           <Properties>
