@@ -80,14 +80,15 @@ public final class DataCruncher
         return format(std);
     }
 
-    private static int calcMMR(int curMMR, int allyMMR, int score)
+    private static int calcMMR(int curMMR, int allyMMR, int score) //Calculates the MMR given the current MMR, alliance partner MMR, and the score of the match
     {
         double newMMR = (double) curMMR;
         double dAllyMMR = (double) allyMMR;
         double dScore = (double) score;
         double divisor = newMMR;
-        double subtract = dAllyMMR * dAllyMMR;
+        double subtract = dAllyMMR * dAllyMMR; //Factors in alliance MMR
         subtract /= 10000;
+        //These curb upward scores
         if(curMMR < 1200)
             divisor = 1200.0 / 1500.0;
         else if(curMMR < 2000)
@@ -108,8 +109,8 @@ public final class DataCruncher
     {
         int mmr = -1;
         TreeMap<Integer,Integer> mmrs = new TreeMap(); //Key is team #, other thing is MMR
-        ArrayList<Team> teams = new ArrayList();
-        ArrayList<Integer> teamInts = new ArrayList();
+        ArrayList<Team> teams = new ArrayList(); //Arraylist of all team objects used
+        ArrayList<Integer> teamInts = new ArrayList(); //Arraylist of team numbers
 
         for(int m = 0; m < matches.size(); m++) //Adds all the teams to teamInts
         {
@@ -131,13 +132,13 @@ public final class DataCruncher
                 teamInts.add(match.getMatchBlue2ID());
             }
         }
-        for(int i = 0; i < teamInts.size(); i++)
+        for(int i = 0; i < teamInts.size(); i++) //Adds all the teams to teams, sets their MMRs to 1500
         {
             teams.add(new Team(teamInts.get(i)));
             mmrs.put(teamInts.get(i),1500);
         }
-        for(int rep = 0; rep < 2; rep++) //Calc MMR (5 times total)
-        {
+        for(int rep = 0; rep < 2; rep++) //Calc MMR (2 times total)
+        { //This loop is to give the teams sort of decided MMRs at the second runthru, making it more accurate
             for(int m = 0; m < matches.size(); m++) //Loop thru each match
             {
                //Calcs MMR for each team in the match (edits mmrs)
@@ -147,10 +148,6 @@ public final class DataCruncher
                mmrs.put(match.getMatchBlue1ID(), calcMMR(mmrs.get(match.getMatchBlue1ID()),mmrs.get(match.getMatchBlue2ID()),match.getMatchBlueTotalScore()));
                mmrs.put(match.getMatchBlue2ID(), calcMMR(mmrs.get(match.getMatchBlue2ID()),mmrs.get(match.getMatchBlue1ID()),match.getMatchBlueTotalScore()));
             }
-            /*for(int i = 0; i < teams.size(); i++)
-            {
-                teams.get(i).clearMatches();
-            }*/
         }
         mmr = mmrs.get(teamID);
         return mmr;
@@ -174,7 +171,7 @@ public final class DataCruncher
         return mmr;
     }
 
-    public static String getPredictedScoreRange(int teamID, ArrayList<Match> matches)
+    public static String getPredictedScoreRange(int teamID, ArrayList<Match> matches) //Returns the predicted score range of the team (75% of matches should be in this score range)
     {
         DataCruncher cruncher = new DataCruncher();
         int dev = (int)cruncher.getConsistency(teamID, matches);
