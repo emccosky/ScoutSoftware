@@ -3,7 +3,7 @@ package scoutapp;
 import java.util.*;
 import java.io.*;
 
-public class Team
+public class Team implements Comparable
 {
     int teamID;
     String teamName;
@@ -271,6 +271,15 @@ public class Team
         ArrayList<Match> competitionMatches = this.getMatchesFromCompetition(compID);
         String predictedScoreRange = DataCruncher.getPredictedScoreRange(teamID, competitionMatches);
         return predictedScoreRange;
+    }
+
+    @Override
+    public int compareTo(Object a)
+    {
+        Team team = (Team) a;
+        int diff = 0;
+        diff = team.getTeamID() - this.getTeamID();
+        return diff;
     }
     
     public boolean equals(Team t){

@@ -157,13 +157,17 @@ public final class DataCruncher
         int c = 0;
         for(Match m : matches)
         {
+            
+        }
+        for(Match m : matches)
+        {
             if(m.getAlliancePartnerID(teamID) != -1)
             {
                 mmr += cruncher.getMMR(m.getAlliancePartnerID(teamID),matches);
                 c++;
             }
         }
-        mmr /= 5;
+        mmr /= c;
         return mmr;
     }
 

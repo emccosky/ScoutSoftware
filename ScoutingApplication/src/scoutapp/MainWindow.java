@@ -12,7 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.System.out;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1956,11 +1958,12 @@ public class MainWindow extends javax.swing.JFrame {
             currentTeam.setAdjective(teamAdjectiveField.getText());
         }
     }
-    
-    private void importMatches(){
+
+    private void importMatches()
+    {
         ArrayList<Team> teams;
         ArrayList<Match> matches;
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         matches = new ArrayList<Match>();
         File myFile = new File("src/scoutapp/Data/SR_South_Bluford.xlsx");
         InputStream inp = null;
@@ -1986,6 +1989,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         //import each match and add to the matches list
         System.out.println("Importing Matches...");
+        //out.println("HELLO");
         for(int i = 2; i < matchNum + 2; i++)
         {
             //get the teams and score data
@@ -2005,13 +2009,37 @@ public class MainWindow extends javax.swing.JFrame {
             Match match = new Match(currentComp.getCompetitionID(), i-1, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore,"","");
             season.addMatch(match);
         }
+        
+        Sheet teamNames = wb.getSheetAt(2);
+        Row r1 = teamNames.getRow(0);
+        Cell teamCountCell = r1.getCell(0);
+        int teamCount = (int)teamCountCell.getNumericCellValue();
+        out.println("YOLO" + teamCount);
+        for(int i = 1; i < teamCount + 1; i++)
+        {
+            out.println(i);
+            Row teamInfoRow = teamNames.getRow(i);
+            Cell teamNumCell = teamInfoRow.getCell(0);
+            int teamNum = (int)teamNumCell.getNumericCellValue();
+            out.println(teamNum);
+            Cell teamNameCell = teamInfoRow.getCell(1);
+            String teamName = teamNameCell.getStringCellValue();
+            teams.add(new Team(teamNum, teamName));
+        }
+        Collections.sort(teams);
+        ArrayList<Team> teams2 = new ArrayList<Team>();
+        for(int i = 0; i < teams.size();i++)
+        {
+            teams2.add((Team)teams.get(i));
+        }
+        season.setTeams(teams2);
         try {
             inp.close();
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void viewMatchStats(Object matchNum, Object compName){
         Competition tempComp = season.getCompByName((String)compName);
         if (tempComp != null){
@@ -2031,7 +2059,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void editMatch(Object matchNum, Object compID){
         Competition tempComp = season.getCompByName((String)compID);
         currentMatch = tempComp.getMatchByNum((int)Integer.parseInt((String)matchNum));
@@ -2045,7 +2073,7 @@ public class MainWindow extends javax.swing.JFrame {
         RedComments1.setText(currentMatch.getRedComments());
         editMatchDialog.setVisible(true);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -2139,7 +2167,7 @@ public class MainWindow extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     //Update the data on for the team tab
     //Called whenever the team tab is selected or the team list is changed
     private void updateTeamTab() {
@@ -2153,7 +2181,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         TeamTable.setModel(new TeamListTableModel(teamListData));
     }
-    
+
     //Update the matches tab
     //Called whenever the Matches tab is selected or the match list is changed
     private void updateMatchTab(){
@@ -2175,7 +2203,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         MatchTable.setModel(new MatchTableModel(matchesData));
     }
-    
+
     //Loops through all the teams and makes sure that they have matches 
     //assigned to them that they were in
     private void updateTeamMatches(){
