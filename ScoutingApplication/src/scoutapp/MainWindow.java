@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -1848,7 +1849,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initData() {
         season = new Season();
         currentComp = new Competition(season.getNextCompID());
-        currentComp.setCompName("South SR Bluford");
+        currentComp.setCompName("SR SOUTH BLUFORD");
         season.addCompetition(currentComp);
         compSelection = "current";
         teamListData = new String[10][2];
@@ -1991,7 +1992,7 @@ public class MainWindow extends javax.swing.JFrame {
         ArrayList<Match> matches;
         teams = new ArrayList<Team>();
         matches = new ArrayList<Match>();
-        File myFile = new File("src/scoutapp/Data/SR_South_Bluford.xlsx");
+        File myFile = new File("src/scoutapp/Data/SR_SOUTH_BLUFORD.xlsx");
         InputStream inp = null;
         try {
             inp = new FileInputStream(myFile);
@@ -2011,7 +2012,7 @@ public class MainWindow extends javax.swing.JFrame {
         Cell amount = matchNumRow.getCell(0);
 
         //get the number of matches
-        Double matchNum = amount.getNumericCellValue();
+        double matchNum = amount.getNumericCellValue();
 
         //import each match and add to the matches list
         System.out.println("Importing Matches...");
@@ -2034,6 +2035,47 @@ public class MainWindow extends javax.swing.JFrame {
             Match match = new Match(currentComp.getCompetitionID(), i-1, red1Name,red2Name,blue1Name,blue2Name,rScore,bScore,"","");
             season.addMatch(match);
         }
+        
+        Sheet teamNames = wb.getSheetAt(2);
+        Row r1 = teamNames.getRow(0);
+        Cell teamCountCell = r1.getCell(0);
+        int teamCount = (int)teamCountCell.getNumericCellValue();
+        out.println("YOLO" + teamCount);
+        ArrayList<Integer> teamInts = new ArrayList<Integer>();
+        for(int i = 1; i < teamCount + 1; i++)
+        {
+            out.println(i);
+            Row teamInfoRow = teamNames.getRow(i);
+            Cell teamNumCell = teamInfoRow.getCell(0);
+            int teamNum = (int)teamNumCell.getNumericCellValue();
+            out.println(teamNum);
+            Cell teamNameCell = teamInfoRow.getCell(1);
+            String teamName = teamNameCell.getStringCellValue();
+            teams.add(new Team(teamNum, teamName));
+            teamInts.add(teamNum);
+        }
+        ArrayList<Team> teams2 = new ArrayList<Team>();
+        for(int q = 0; q < teamInts.size(); q++)
+        {
+            int min = teamInts.get(0);
+            int index = 0;
+            for(int i = 1; i < teamInts.size(); i++)
+            {
+                if(teamInts.get(i) < min)
+                {
+                    min = teamInts.get(i);
+                    index = i;
+                }
+                teams2.add(teams.get(index));
+                teams.remove(index);
+                teamInts.remove(index);
+            }
+        }
+        for(int i = 0; i < teams.size();i++)
+        {
+            teams2.add(teams.get(i));
+        }
+        season.setTeams(teams2);
         try {
             inp.close();
         } catch (IOException ex) {

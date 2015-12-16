@@ -268,6 +268,16 @@ public class Match
         else
             return -1;
     }
+    
+    public int getOpponentScore(int teamID)
+    {
+        if(teamID == blue1ID || teamID == blue2ID)
+            return redTotalScore;
+        else if(teamID == red1ID || teamID == red2ID)
+            return blueTotalScore;
+        else
+            return -1;
+    }
 
     public int getAdjustedScore(int teamID)
     {
