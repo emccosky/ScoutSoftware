@@ -33,24 +33,38 @@ public final class DataCruncher
     {
         double score = 0.0;
         int matchCount = 0;
-        for(Match m : matches)
+        for(Match m : matches) //Loops through all the matches
         {
-            if(m.getScore(teamID) != -1)
+            if(m.contains(teamID)) //If the match has the team
             {
-                score += m.getScore(teamID);
+                score += m.getScore(teamID); //Add the score to the total
                 matchCount++;
             }
         }
-        score /= matchCount;
-        if(matchCount == 0)
-            return -1;
-        return format(score);
+        score /= matchCount; //Divide the score by the number of matches
+        if(matchCount == 0) //If no matches found for the tema
+            return -1; //Return -1
+        return format(score); //Return the average score
     }
 
     public static double getDefensiveness(int teamID, ArrayList<Match> matches) //Returns the defensiveness estimated of each team
     {
-        double defensiveness = -1.0;
-
+        double defensiveness = 0.0;
+        int matchCount = 0;
+        DataCruncher cruncher = new DataCruncher();
+        for(Match m : matches) //Loops through all the matches
+        {
+            if(m.contains(teamID)) //If the match has the team
+            {
+                int diff = 0;
+                int avgScore = (int)cruncher.getAvgMatchScore(m.getAlliancePartnerID(teamID), matches); //Add the score to the total
+                int actualScore = m.getScore(teamID);
+                diff = avgScore - actualScore;
+                matchCount++;
+                defensiveness += diff;
+            }
+        }
+        defensiveness /= matchCount;
         return format(defensiveness);
     }
 
@@ -158,29 +172,29 @@ public final class DataCruncher
         double mmr = 0;
         DataCruncher cruncher = new DataCruncher();
         int c = 0;
-        for(Match m : matches)
+        for(Match m : matches) //Loops through matches
         {
-            if(m.getScore(teamID) != -1)
+            if(m.contains(teamID)) //Checks if match contains the team
             {
-                mmr += (cruncher.getMMR(m.getAlliancePartnerID(teamID),matches)*2.5);
+                mmr += (cruncher.getMMR(m.getAlliancePartnerID(teamID),matches)*2.5); //If it does add it to the MMR total
                 c++;
             }
         }
        // out.println(c);
-        mmr /= c;
+        mmr /= c; //Divide MMR total by # of matches
         return mmr;
     }
 
     public static String getPredictedScoreRange(int teamID, ArrayList<Match> matches) //Returns the predicted score range of the team (75% of matches should be in this score range)
     {
         DataCruncher cruncher = new DataCruncher();
-        int dev = (int)cruncher.getConsistency(teamID, matches);
-        int avg = (int)cruncher.getAvgMatchScore(teamID, matches);
+        int dev = (int)cruncher.getConsistency(teamID, matches); //STDev of the team's scores
+        int avg = (int)cruncher.getAvgMatchScore(teamID, matches); //AVG score of the tema
         String returnString = "";
-        int q1 = (int)(avg - (1.25*dev));
+        int q1 = (int)(avg - (1.25*dev)); //Lower threshold
         if(q1 < 0)
             q1 = 0;
-        int q3 = (int)(avg + (1.25*dev));
+        int q3 = (int)(avg + (1.25*dev)); //Upper threshold
         returnString += q1;
         returnString += " - ";
         returnString += q3;
